@@ -8,6 +8,36 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #9e9b9b;
+            border-radius: 10px;
+            margin-left: 50px auto;
+            margin-right: 50px auto;
+            width: auto;
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+        }
+        .header:hover {
+            transform: scale(1.04);
+            box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid #000;
+        }
+        .user-info {
+            text-align: left;
+            float: left;
+            font-size: 18px;
+        }
         div h1 {
             font-size: 23px;
         }
@@ -30,12 +60,15 @@
             box-shadow: 10px 10px 0px #000;
         }
         .footer {
+            padding-left: 20px;
+            padding-right: 20px;
             margin: 30px auto;
         }
         .footer-bottom {
             margin-top: 10px;
         }
         .button-go-to-github {
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
             background-color: #ff6600;
             color: #fff;
             padding: 10px 20px;
@@ -48,6 +81,7 @@
             width: auto;
         }
         .button-more {
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
             background-color: #ec0781;
             color: #fff;
             padding: 10px 20px;
@@ -61,6 +95,7 @@
             width: auto;
         }
         .button-linkedin {
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
             background-color: #0077B5;
             color: #fff;
             padding: 10px 20px;
@@ -74,6 +109,7 @@
             width: auto;
         }
         .button-devto {
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
             background-color: #000000;
             color: #fff;
             padding: 10px 20px;
@@ -87,6 +123,7 @@
             width: auto;
         }
         .button-resume {
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
             background-color: #13ab67;
             color: #fff;
             padding: 10px 20px;
@@ -211,12 +248,6 @@
         .fullscreen-btn:hover {
             opacity: 1;
         }
-        @media (max-width: 768px) {
-            .project-card {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-        }
         /* Modal styles */
         .modal {
             display: none;
@@ -264,6 +295,7 @@
             border: 1px solid #000000;
         }
         .container-mail-me {
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
             display: block;  
             flex-wrap: wrap;
             margin: auto;
@@ -273,13 +305,40 @@
         .container-mail-me:hover {
             transform: scale(1.10);
         }
+        /* media queries */
+        @media (max-width: 768px) {
+            .project-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+        @media (max-width: 1023px) {
+            .full-container {
+                display: ruby;
+            }
+            .project-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+        @media (min-width: 1023px) {
+            .header {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="full-container">
         <div class="container">
-            <h1>Welcome to My Portfolio</h1>
-            <p class="border-bottom">Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP</p>
+            <div class="header">
+                <img src="https://media.licdn.com/dms/image/v2/D5603AQFKoCPssKAI2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732606393962?e=1744243200&v=beta&t=YI2LkhJNXGW9RGndjHbeRFhCTnVNIAypAIYjoDRSKsw" alt="Profile Picture" class="profile-pic">
+                <div class="user-info">
+                    <div>Mikkel Septiano</div>
+                    <div>Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP</div>
+                </div>
+            </div>
             <div class="button-go-to-github">
                 <a href="https://github.com/mikkelofficial7" target="_blank">
                     <i class="fa-brands fa-github"></i> Visit My GitHub
