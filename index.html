@@ -256,6 +256,23 @@
             text-decoration: none;
             cursor: pointer;
         }
+        .contact-bottom {
+            margin-top: 30px;
+        }
+        .mail-me {
+            padding: 6px;
+            border: 1px solid #000000;
+        }
+        .container-mail-me {
+            display: block;  
+            flex-wrap: wrap;
+            margin: auto;
+            width: 20%;
+            margin-top: 10px;
+        }
+        .container-mail-me:hover {
+            transform: scale(1.10);
+        }
     </style>
 </head>
 <body>
@@ -442,6 +459,12 @@
                     </div>
                 </div>
             </div>
+            <p class="contact-bottom">For further information about me, you can</p>
+            <p class="container-mail-me">
+                <a href="mailto:mikkelseptiano86@gmail.com?subject=Contact%20Request&body=Hello,%20I%20would%20like%20to%20contact%20you." class="mail-me">
+                    <i class="fa-regular fa-envelope"></i> mail me
+                </a>
+            </p>
         </div>
         <footer>
             <div class="footer">
