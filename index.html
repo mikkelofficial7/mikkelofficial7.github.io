@@ -8,6 +8,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        div h1 {
+            font-size: 23px;
+        }
         body {
             background-color: #ffcc00;
             color: #000;
@@ -114,10 +117,30 @@
             margin-top: 10px;
         }
         .voluntary {
-            margin-top: 60px;
+            margin-top: 80px;
         }
-        .project-card, .voluntary-card {
+        .border-bottom {
+            border-bottom: 2px solid #d3d3d3;
+            width: 100%;
+            padding: 10px;
+            display: inline-block;
+        }
+        .project-card {
             background-color: #00ccff;
+            padding: 20px;
+            margin: 15px;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+            max-width: 350px;
+            width: 100%;
+            position: relative;
+            text-align: center;
+        }
+        .voluntary-card {
+            background-color: hwb(0 4% 38% / 0.487);
             padding: 20px;
             margin: 15px;
             border: 3px solid #000;
@@ -238,7 +261,7 @@
     <div class="full-container">
         <div class="container">
             <h1>Welcome to My Portfolio</h1>
-            <p>Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP</p>
+            <p class="border-bottom">Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP</p>
             <div class="button-go-to-github">
                 <a href="https://github.com/mikkelofficial7" target="_blank">
                     Visit My GitHub
@@ -384,31 +407,31 @@
                 </div>
             </div>
             <div class="voluntary">
-                <h1>Voluntary Activities</h1>
+                <h1 class="border-bottom">Voluntary Activities</h1>
                 <div class="voluntary-grid">
                     <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @Bangkit Academy</h2>
+                        <h2 class="voluntary-title">Mentoring @Bangkit Academy - Jakarta</h2>
                         <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true" class="frame-image"></img>
                         <p class="voluntary-description">Bangkit Academy is a career readiness program initiated by Google, GoTo, Tokopedia, and Traveloka, with the aim of developing high-quality technical talents in Indonesia.</p>
-                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                        <button class="fullscreen-btn"><a href="https://contributors.bangkit.academy/" target="_blank">Find More</a></button>
                     </div>
                     <div class="voluntary-card">
                         <h2 class="voluntary-title">Mentoring @ADPList</h2>
                         <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true" class="frame-image"></img>
                         <p class="voluntary-description">ADPList, or Amazing Design People List, is a global community that connects people with mentors. The platform's mission is to democratize mentorship and help people advance their careers.</p>
-                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                        <button class="fullscreen-btn"><a href="https://adplist.org/mentors/mikkel-septiano/" target="_blank">Find More</a></button>
                     </div>
                     <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @Indonesia Android Kejar</h2>
+                        <h2 class="voluntary-title">Mentoring @Indonesia Android Kejar - Jakarta</h2>
                         <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true" class="frame-image"></img>
                         <p class="voluntary-description">Indonesia Android Kejar (IAK) is a free training program from Google Developers to help Android app developers in Indonesia. This program aims to improve the skills of mobile app developers in Indonesia.</p>
-                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                        <button class="fullscreen-btn"><a href="https://www.instagram.com/androidkejar/?hl=id" target="_blank">Find More</a></button>
                     </div>
                     <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @Hour of Code</h2>
+                        <h2 class="voluntary-title">Mentoring @Hour of Code - Jakarta</h2>
                         <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true" class="frame-image"></img>
                         <p class="voluntary-description">Hour of Code is a worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.</p>
-                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                        <button class="fullscreen-btn"><a href="https://hourofcode.com/id" target="_blank">Find More</a></button>
                     </div>
                 </div>
             </div>
