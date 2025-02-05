@@ -106,7 +106,17 @@
             justify-content: center;
             margin-top: 30px;
         }
-        .project-card {
+        .voluntary-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .voluntary {
+            margin-top: 60px;
+        }
+        .project-card, .voluntary-card {
             background-color: #00ccff;
             padding: 20px;
             margin: 15px;
@@ -121,7 +131,7 @@
             text-align: center;
         }
 
-        .project-card:hover {
+        .project-card:hover, .voluntary-card:hover {
             transform: scale(1.05);
             box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.3);
         }
@@ -143,7 +153,7 @@
             margin-bottom: 5px;
         }
 
-        .project-title {
+        .project-title, .voluntary-title {
             font-size: 1.2em;
             font-weight: bold;
             color: #000;
@@ -151,7 +161,7 @@
             text-transform: capitalize;
         }
 
-        .project-description {
+        .project-description, .voluntary-description {
             font-size: 0.8em;
             margin-top: 10px;
             line-height: 1.6;
@@ -373,10 +383,39 @@
                     </div>
                 </div>
             </div>
+            <div class="voluntary">
+                <h1>Voluntary Activities</h1>
+                <div class="voluntary-grid">
+                    <div class="voluntary-card">
+                        <h2 class="voluntary-title">Mentoring @Bangkit Academy</h2>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true" class="frame-image"></img>
+                        <p class="voluntary-description">Bangkit Academy is a career readiness program initiated by Google, GoTo, Tokopedia, and Traveloka, with the aim of developing high-quality technical talents in Indonesia.</p>
+                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                    </div>
+                    <div class="voluntary-card">
+                        <h2 class="voluntary-title">Mentoring @ADPList</h2>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true" class="frame-image"></img>
+                        <p class="voluntary-description">ADPList, or Amazing Design People List, is a global community that connects people with mentors. The platform's mission is to democratize mentorship and help people advance their careers.</p>
+                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                    </div>
+                    <div class="voluntary-card">
+                        <h2 class="voluntary-title">Mentoring @Indonesia Android Kejar</h2>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true" class="frame-image"></img>
+                        <p class="voluntary-description">Indonesia Android Kejar (IAK) is a free training program from Google Developers to help Android app developers in Indonesia. This program aims to improve the skills of mobile app developers in Indonesia.</p>
+                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                    </div>
+                    <div class="voluntary-card">
+                        <h2 class="voluntary-title">Mentoring @Hour of Code</h2>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true" class="frame-image"></img>
+                        <p class="voluntary-description">Hour of Code is a worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.</p>
+                        <button class="fullscreen-btn" data-target="modal-voluntary1">See Fullscreen</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <footer>
             <div class="footer">
-                <p>Old latin saying has said <i>fortis fortuna adiuvat</i> so it means you have to be brave to reach your own happiness.<br/>Thank you for visiting my page!</p>
+                <p>Old latin saying has said <i>fortis fortuna adiuvat</i> so it means you have to be brave to reach your own happiness and make impact to others.<br/>Thank you for visiting my page!</p>
                 <p class="footer-bottom">&copy; <span id="year"></span> | All right reserved</p>
             </div>
         </footer>
