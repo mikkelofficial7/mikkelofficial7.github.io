@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikkel's Portfolio</title>
+    <link rel="icon" href="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #ffcc00;
+            color: #000;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+        }
+        .full-container {
+            display: inline-block;
+            margin: 50px auto;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            border: 5px solid #000;
+            background-color: #fff;
+            box-shadow: 10px 10px 0px #000;
+        }
+        .footer {
+            margin: 30px auto;
+        }
+        .footer-bottom {
+            margin-top: 10px;
+        }
+        .button-go-to-github {
+            background-color: #ff6600;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            margin-top: 20px;
+            display: inline-block;
+            width: auto;
+        }
+        .button-more {
+            background-color: #ec0781;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: inline-block;
+            width: auto;
+        }
+        .button-linkedin {
+            background-color: #0077B5;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: inline-block;
+            width: auto;
+        }
+        .button-devto {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: inline-block;
+            width: auto;
+        }
+        .button-resume {
+            background-color: #13ab67;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 3px solid #000;
+            box-shadow: 4px 4px 0px #000;
+            margin-top: 20px;
+            margin-left: 20px;
+            display: inline-block;
+            width: auto;
+        }
+        .button-go-to-github:hover, .button-more:hover, .button-linkedin:hover, .button-devto:hover, .button-resume:hover {
+            transform: scale(1.05);
+            box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+        }
+        .projects {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .project-card {
+            background-color: #00ccff;
+            padding: 20px;
+            margin: 15px;
+            border: 3px solid #000;
+            box-shadow: 5px 5px 0px #000;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
+            max-width: 350px;
+            width: 100%;
+            position: relative;
+            text-align: center;
+        }
+
+        .project-card:hover {
+            transform: scale(1.05);
+            box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .frame-image {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .frame-image-detail {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .project-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            text-transform: capitalize;
+        }
+
+        .project-description {
+            font-size: 0.8em;
+            margin-top: 10px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            bottom: 50%; 
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen-btn:hover {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            .project-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+        }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+            padding-top: 10px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 5px;
+            border-radius: 8px;
+            width: 50%;
+            max-width: 300px;
+        }
+
+        .close-btn {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="full-container">
+        <div class="container">
+            <h1>Welcome to My Portfolio</h1>
+            <p>Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP</p>
+            <div class="button-go-to-github">
+                <a href="https://github.com/mikkelofficial7" target="_blank">
+                    Visit My GitHub
+                </a>
+            </div>
+            <div class="button-more">
+                <a href="https://www.instagram.com/futuristech.id/" target="_blank">
+                    See More Portfolio
+                </a>
+            </div>
+            <div class="button-linkedin">
+                <a href="https://www.linkedin.com/in/mikkel-septiano-a66ba7134/" target="_blank">
+                    <i class="fab fa-linkedin"></i> Find me on LinkedIn
+                </a>
+            </div>
+            <div class="button-devto">
+                <a href="https://dev.to/mikkelofficial7" target="_blank">
+                    <i class="fab fa-dev"></i> Find me on Dev.to
+                </a>
+            </div>
+            <div class="button-resume">
+                <a href="https://www.cake.me/mikkel-septiano" target="_blank">
+                    <i class="fa fa-file"></i> Resume
+                </a>
+            </div>
+            <div class="projects">
+                <!-- <div class="project-card">
+                    <h2 class="project-title">Sama Sama Apps - C2C e-commerce secondhand product</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">​Building mobile android and web service for B2C Thrift-based marketplace similar to OLX.</p>
+                    <button class="fullscreen-btn" data-target="modal1">See Fullscreen</button>
+                </div> -->
+                <!-- Modal 1-->
+                <!-- <div class="modal" id="modal1">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal1">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div> -->
+                <div class="project-card">
+                    <h2 class="project-title">WebApp for car maintenance warehouse - Denso Kranji</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java.</p>
+                    <button class="fullscreen-btn" data-target="modal2">See Fullscreen</button>
+                </div>
+                <!-- Modal 2-->
+                <div class="modal" id="modal2">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal2">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Building mobile and web app for Tokoku sembako commerce, where user can buy their daily needs on their smartphone.</p>
+                    <button class="fullscreen-btn" data-target="modal3">See Fullscreen</button>
+                </div>
+                <!-- Modal 3-->
+                <div class="modal" id="modal3">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal3">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Guruloka - E-learning system</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Simple web based e-learning system which bridge between student and teacher with various subject and learn by online.</p>
+                    <button class="fullscreen-btn" data-target="modal4">See Fullscreen</button>
+                </div>
+                <!-- Modal 4-->
+                <div class="modal" id="modal4">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal4">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Course Center Galileo Gasing - Payroll and Absence system</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Creating web-based payroll and absence system for teachers.</p>
+                    <button class="fullscreen-btn" data-target="modal5">See Fullscreen</button>
+                </div>
+                <!-- Modal 5-->
+                <div class="modal" id="modal5">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal5">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Sentiment text checker - Android app</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Create a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meaning.</p>
+                    <button class="fullscreen-btn" data-target="modal6">See Fullscreen</button>
+                </div>
+                <!-- Modal 6-->
+                <div class="modal" id="modal6">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal6">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Movi Snap - Search Movie anytime</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Creating web-based movie search engine with TMDB API.</p>
+                    <button class="fullscreen-btn" data-target="modal7">See Fullscreen</button>
+                </div>
+                <!-- Modal 7-->
+                <div class="modal" id="modal7">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal7">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Android-Based QR scanner (For campus purpose)</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Create an Android application to scan event attendance with a QR code scanner.</p>
+                    <button class="fullscreen-btn" data-target="modal8">See Fullscreen</button>
+                </div>
+                <!-- Modal 8-->
+                <div class="modal" id="modal8">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal8">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h2 class="project-title">Web-Based Social Media (.NET)</h2>
+                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true" class="frame-image"></img>
+                    <p class="project-description">Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI</p>
+                    <button class="fullscreen-btn" data-target="modal9">See Fullscreen</button>
+                </div>
+                <!-- Modal 9-->
+                <div class="modal" id="modal9">
+                    <div class="modal-content">
+                        <span class="close-btn" id="close-btn" data-close="modal9">&times;</span>
+                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true" class="frame-image-detail"></img>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer">
+                <p>Old latin saying has said <i>fortis fortuna adiuvat</i> so it means you have to be brave to reach your own happiness.<br/>Thank you for visiting my page!</p>
+                <p class="footer-bottom">&copy; <span id="year"></span> | All right reserved</p>
+            </div>
+        </footer>
+    </div>
+</body>
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        document.querySelectorAll('.fullscreen-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetModalId = this.getAttribute('data-target');
+                const modal = document.getElementById(targetModalId);
+                modal.style.display = 'block';  // Show modal
+            });
+        });
+
+        // Close modal when close button is clicked
+        document.querySelectorAll('.close-btn').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                const targetModalId = this.getAttribute('data-close');
+                const modal = document.getElementById(targetModalId);
+                modal.style.display = 'none';  // Hide modal
+            });
+        });
+
+        // Close modal if user clicks outside the modal content
+        window.addEventListener('click', function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        });
+    </script>
+</html>
