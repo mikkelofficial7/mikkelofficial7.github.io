@@ -1,616 +1,635 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mikkel's Portfolio</title>
     <link rel="icon" href="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .header {
+        #parent {
+            width: 100%;
+            margin: 0 auto;
+        }
+        #child {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Area */
+
+        #header {
+            margin: 20px;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
-            padding: 20px;
-            background-color: #a883bc;
+            justify-content: space-between;
+        }
+        #header div {
+            width: 100%;
+        }
+        .header-content {
             border-radius: 10px;
-            margin-left: 50px auto;
-            margin-right: 50px auto;
-            width: auto;
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
+            display: flex;
+            align-items: center;
+            background-color: #f9f9f9; /* Light background */
+            padding: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
         }
-        .header:hover {
-            transform: scale(1.04);
-            box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
+
+        .header-content .header-profile-picture {
+            width: 130px;
+            height: 110px;
+            border-radius: 50%; /* Circular profile picture */
+            overflow: hidden;
+            margin-right: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
-        .profile-pic {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 15px;
-            border: 3px solid #000;
+
+        .header-content .header-profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio */
         }
-        .user-info {
-            text-align: left;
-            float: left;
-            font-size: 18px;
+
+        .header-content .header-user-info {
+            flex-grow: 1;
         }
-        div h1 {
-            font-size: 23px;
+
+        .header-content .header-user-info h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
         }
-        body {
-            background-color: #ffcc00;
-            color: #000;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            text-align: center;
+
+        .header-content .header-user-info p {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
         }
-        .full-container {
+        .header-content .header-profile-picture:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        /* Button Header Area */
+
+        .button-list {
+            margin-top: 20px;
+            display: flex;
+        }
+
+        #button-up {
             display: inline-block;
-            margin: 50px auto;
-        }
-        .container {
-            max-width: 800px;
-            padding: 20px;
+            padding: 12px 24px;
+            font-size: 13px;
+            margin: 5px;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            border: none;
             border-radius: 10px;
-            border: 5px solid #000;
-            background-color: #fff;
-            box-shadow: 10px 10px 0px #000;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
         }
-        .footer {
-            padding-left: 20px;
-            padding-right: 20px;
-            margin: 30px auto;
+        #button-up:active {
+            transform: translateY(1px);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
         }
-        .footer-bottom {
-            margin-top: 10px;
+        #button-up:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
         }
         .button-go-to-github {
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            background-color: #ff6600;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 20px;
-            display: inline-block;
-            width: auto;
+            color: white;
+            background: linear-gradient(105deg, #000000, #454545e1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-more {
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            background-color: #ec0781;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 20px;
-            margin-left: 20px;
-            display: inline-block;
-            width: auto;
+            color: white;
+            background: linear-gradient(105deg, #660303, #a11414);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-linkedin {
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            background-color: #0077B5;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 20px;
-            margin-left: 20px;
-            display: inline-block;
-            width: auto;
+            color: white;
+            background: linear-gradient(135deg, #004182, #8FCEEB);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-devto {
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            background-color: #000000;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 20px;
-            margin-left: 20px;
-            display: inline-block;
-            width: auto;
+            color: white;
+            background: linear-gradient(105deg, #000000, #454545e1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-resume {
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            background-color: #13ab67;
-            color: #fff;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-weight: bold;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0px #000;
-            margin-top: 20px;
-            margin-left: 20px;
-            display: inline-block;
-            width: auto;
-        }
-        .button-go-to-github:hover, .button-more:hover, .button-linkedin:hover, .button-devto:hover, .button-resume:hover {
-            transform: scale(1.05);
-            box-shadow: 7px 7px 10px rgba(0, 0, 0, 0.3);
-        }
-        .projects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .voluntary-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .voluntary {
-            margin-top: 80px;
-        }
-        .border-bottom {
-            border-bottom: 2px solid #d3d3d3;
-            width: 100%;
-            padding: 10px;
-            display: inline-block;
-        }
-        .project-card {
-            background-color: #00ccff;
-            padding: 20px;
-            margin: 15px;
-            border: 3px solid #000;
-            box-shadow: 5px 5px 0px #000;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            max-width: 350px;
-            width: 100%;
-            position: relative;
-            text-align: center;
-        }
-        .voluntary-card {
-            background-color: hwb(0 4% 38% / 0.487);
-            padding: 20px;
-            margin: 15px;
-            border: 3px solid #000;
-            box-shadow: 5px 5px 0px #000;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            max-width: 350px;
-            width: 100%;
-            position: relative;
-            text-align: center;
-        }
-
-        .project-card:hover, .voluntary-card:hover {
-            transform: scale(1.05);
-            box-shadow: 7px 7px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .frame-image {
-            width: 100%;
-            height: auto;
-            max-height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .frame-image-detail {
-            width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
-
-        .project-title, .voluntary-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #000;
-            margin-bottom: 15px;
-            text-transform: capitalize;
-        }
-
-        .project-description, .voluntary-description {
-            font-size: 0.8em;
-            margin-top: 10px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .fullscreen-btn {
-            position: absolute;
-            bottom: 50%; 
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: rgba(0, 0, 0, 0.6);
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            background: linear-gradient(105deg, #3eda94, #13ab67);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 680px) {
+            .button-list {
+               display: flow-root;
+            }
+        }
+
+        /* Body Project Area */
+
+        #body-content {
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+        #body-content .body-content-detail {
+            background-color: #f8f8f8; /* Soft background */
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .project-list, .voluntary-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+            grid-gap: 2rem; /* Spacing between grid items */
+            padding: 3rem;
+            color: #333; /* Dark text for contrast */
+            font-family: 'Georgia', serif; /* Elegant serif font */
+        }
+        .title-list {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #444;
+            margin-left: 10px;
+            margin-right: 10px;
+            border-bottom: 1px solid #eee; /* Subtle divider */
+            padding-bottom: 1rem;
+        }
+        .project-card, .voluntary-card {
+            position: relative;
+            display: inline-block; /* Allows container to wrap image */
+            overflow: hidden; /* Prevents overlay from overflowing */
+        }
+        .project-card h2, .voluntary-card h2 {
             font-size: 16px;
-            opacity: 0.8;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee; /* Subtle divider */
+            padding-bottom: 1rem;
+        }
+        .project-card p, .voluntary-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .project-image-container img, .voluntary-image-container img {
+            top: 20px;
+            left: 20px;
+            display: block; /* Removes extra space below image */
+            transition: transform 0.3s ease; /* Smooth zoom transition */
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-image-container:hover img, .voluntary-image-container:hover img {
+            filter: blur(5px); /* Apply blur on hover */
+        }
+        .project-image-overlay-blur, .voluntary-overlay-blur {
+            position: absolute;
+            top: 200px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Place this div in front */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            opacity: 0; /* Initially hidden */
+            background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 8px;
+            transition: opacity 0.3s ease; /* Smooth fade transition */
+        }
+        .project-image-container:hover .project-image-overlay-blur, .voluntary-image-container:hover .voluntary-overlay-blur {
+            cursor: pointer;
+            opacity: 1; /* Show overlay on hover */
+        }
+
+        /* Modal Area */
+
+        .modal-full {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column; /* Align items vertically by default */
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+            backdrop-filter: blur(5px); /* Apply blur effect */
+            z-index: 1000; /* Ensure the modal is on top */
+        }
+        .modal-content {
+            display: flex;
+            flex-direction: column; /* Align items vertically by default */
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content h2 {
+            font-weight: 600;
+        }
+        .modal-content p, .modal-content h2 {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .modal-content img {
+            width: auto;
+            height: 450px;
+        }
+
+        /* Contact me Area */
+
+        .contact-body {
+            width: 600px;
+            margin: 0 auto;
+            justify-content: center; /* Centers horizontally */
+            align-items: center; 
+        }
+        .contact-bottom, .contact-mail-me {
+            display: inline-block;
+            margin-left: 10px;
+            flex: 1 1 250px; /* Distribute space, minimum width */
+            margin-bottom: 20px;
+        }
+
+         /* Footer Area */
+
+        #footer {
+            padding: 20px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .footer-content p {
+            text-align: center;
+        }
+
+        #floatingButton {
+            display: block;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            background-color: #052751;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 100px;
+            cursor: default;
+            font-size: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: opacity 0.3s ease;
         }
 
-        .fullscreen-btn:hover {
-            opacity: 1;
-        }
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            overflow: auto;
-            padding-top: 10px;
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 5px;
-            border-radius: 8px;
-            width: 50%;
-            max-width: 300px;
-        }
-
-        .close-btn {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            cursor: pointer;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .contact-bottom {
-            margin-top: 30px;
-        }
-        .mail-me {
-            padding: 6px;
-            border: 1px solid #000000;
-        }
-        .container-mail-me {
-            transition: transform 0.3s, box-shadow 0.3s ease-in-out;
-            display: block;  
-            flex-wrap: wrap;
-            margin: auto;
-            width: 100px;
-            margin-top: 10px;
-        }
-        .container-mail-me:hover {
-            transform: scale(1.10);
-        }
-        /* media queries */
-        @media (max-width: 768px) {
-            .project-card {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-        }
-        @media (max-width: 1023px) {
-            .full-container {
-                display: ruby;
-            }
-            .project-card {
-                flex: 1 1 100%;
-                max-width: 100%;
-            }
-        }
-        @media (min-width: 1023px) {
-            .header {
-                margin-left: 20px;
-                margin-right: 20px;
-            }
+        #floatingButton:hover {
+            cursor: default;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
-    <div class="full-container">
-        <div class="container">
-            <div class="header">
-                <img src="https://media.licdn.com/dms/image/v2/D5603AQFKoCPssKAI2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732606393962?e=1744243200&v=beta&t=YI2LkhJNXGW9RGndjHbeRFhCTnVNIAypAIYjoDRSKsw" alt="Profile Picture" class="profile-pic">
-                <div class="user-info">
-                    <div>Hi folks! My name is Mikkel Septiano</div>
-                    <div>Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP</div>
-                </div>
-            </div>
-            <div class="button-go-to-github">
-                <a href="https://github.com/mikkelofficial7" target="_blank">
-                    <i class="fa-brands fa-github"></i> Visit My GitHub
-                </a>
-            </div>
-            <div class="button-more">
-                <a href="https://www.instagram.com/futuristech.id/" target="_blank">
-                    <i class="fa-brands fa-instagram"></i> See Other Portfolios
-                </a>
-            </div>
-            <div class="button-linkedin">
-                <a href="https://www.linkedin.com/in/mikkel-septiano-a66ba7134/" target="_blank">
-                    <i class="fab fa-linkedin"></i> Find me on LinkedIn
-                </a>
-            </div>
-            <div class="button-devto">
-                <a href="https://dev.to/mikkelofficial7" target="_blank">
-                    <i class="fab fa-dev"></i> Find me on Dev.to
-                </a>
-            </div>
-            <div class="button-resume">
-                <a href="https://www.cake.me/mikkel-septiano" target="_blank">
-                    <i class="fa fa-file"></i> Resume
-                </a>
-            </div>
-            <div class="projects">
-                <h1 class="border-bottom">Portfolio projects</h1>
-                <div class="project-card">
-                    <h2 class="project-title">Rupiah Cepat (Working Company Project)</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Peer-to-peer lending App</p>
-                    <button class="fullscreen-btn" data-target="modal10">See Fullscreen</button>
-                </div>
-                <!-- Modal 10-->
-                <div class="modal" id="modal10">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal10">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Yesdok (Working Company Project)</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Health care and telemedicine App</p>
-                    <button class="fullscreen-btn" data-target="modal11">See Fullscreen</button>
-                </div>
-                <!-- Modal 11-->
-                <div class="modal" id="modal11">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal10">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">AlteaCare (Working Company Project)</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Health care and telemedicine App</p>
-                    <button class="fullscreen-btn" data-target="modal12">See Fullscreen</button>
-                </div>
-                <!-- Modal 12-->
-                <div class="modal" id="modal12">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal12">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">LINE Bank (Working Company Project)</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">South Korea Digital Banking by Hana</p>
-                    <button class="fullscreen-btn" data-target="modal13">See Fullscreen</button>
-                </div>
-                <!-- Modal 13-->
-                <div class="modal" id="modal13">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal13">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <!-- <div class="project-card">
-                    <h2 class="project-title">Sama Sama Apps - C2C e-commerce secondhand product</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">​Building mobile android and web service for B2C Thrift-based marketplace similar to OLX.</p>
-                    <button class="fullscreen-btn" data-target="modal1">See Fullscreen</button>
-                </div> -->
-                <!-- Modal 1-->
-                <!-- <div class="modal" id="modal1">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal1">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div> -->
-                <div class="project-card">
-                    <h2 class="project-title">WebApp for car maintenance warehouse - Denso Kranji</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java.</p>
-                    <button class="fullscreen-btn" data-target="modal2">See Fullscreen</button>
-                </div>
-                <!-- Modal 2-->
-                <div class="modal" id="modal2">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal2">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Building mobile and web app for Tokoku sembako commerce, where user can buy their daily needs on their smartphone.</p>
-                    <button class="fullscreen-btn" data-target="modal3">See Fullscreen</button>
-                </div>
-                <!-- Modal 3-->
-                <div class="modal" id="modal3">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal3">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Guruloka - E-learning system</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Simple web based e-learning system which bridge between student and teacher with various subject and learn by online.</p>
-                    <button class="fullscreen-btn" data-target="modal4">See Fullscreen</button>
-                </div>
-                <!-- Modal 4-->
-                <div class="modal" id="modal4">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal4">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Course Center Galileo Gasing - Payroll and Absence system</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Creating web-based payroll and absence system for teachers.</p>
-                    <button class="fullscreen-btn" data-target="modal5">See Fullscreen</button>
-                </div>
-                <!-- Modal 5-->
-                <div class="modal" id="modal5">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal5">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Sentiment text checker - Android app</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Create a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meaning.</p>
-                    <button class="fullscreen-btn" data-target="modal6">See Fullscreen</button>
-                </div>
-                <!-- Modal 6-->
-                <div class="modal" id="modal6">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal6">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Movi Snap - Search Movie anytime</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Creating web-based movie search engine with TMDB API.</p>
-                    <button class="fullscreen-btn" data-target="modal7">See Fullscreen</button>
-                </div>
-                <!-- Modal 7-->
-                <div class="modal" id="modal7">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal7">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Android-Based QR scanner (For campus purpose)</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Create an Android application to scan event attendance with a QR code scanner.</p>
-                    <button class="fullscreen-btn" data-target="modal8">See Fullscreen</button>
-                </div>
-                <!-- Modal 8-->
-                <div class="modal" id="modal8">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal8">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h2 class="project-title">Web-Based Social Media (.NET)</h2>
-                    <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true" class="frame-image"></img>
-                    <p class="project-description">Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI</p>
-                    <button class="fullscreen-btn" data-target="modal9">See Fullscreen</button>
-                </div>
-                <!-- Modal 9-->
-                <div class="modal" id="modal9">
-                    <div class="modal-content">
-                        <span class="close-btn" id="close-btn" data-close="modal9">&times;</span>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true" class="frame-image-detail"></img>
-                    </div>
-                </div>
-            </div>
-            <div class="voluntary">
-                <h1 class="border-bottom">Voluntary Activities</h1>
-                <div class="voluntary-grid">
-                    <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @Bangkit Academy - Jakarta</h2>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true" class="frame-image"></img>
-                        <p class="voluntary-description">Bangkit Academy is a career readiness program initiated by Google, GoTo, Tokopedia, and Traveloka, with the aim of developing high-quality technical talents in Indonesia.</p>
-                        <button class="fullscreen-btn"><a href="https://contributors.bangkit.academy/" target="_blank">Find More</a></button>
-                    </div>
-                    <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @ADPList</h2>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true" class="frame-image"></img>
-                        <p class="voluntary-description">ADPList, or Amazing Design People List, is a global community that connects people with mentors. The platform's mission is to democratize mentorship and help people advance their careers.</p>
-                        <button class="fullscreen-btn"><a href="https://adplist.org/mentors/mikkel-septiano/" target="_blank">Find More</a></button>
-                    </div>
-                    <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @Indonesia Android Kejar - Jakarta</h2>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true" class="frame-image"></img>
-                        <p class="voluntary-description">Indonesia Android Kejar (IAK) is a free training program from Google Developers to help Android app developers in Indonesia. This program aims to improve the skills of mobile app developers in Indonesia.</p>
-                        <button class="fullscreen-btn"><a href="https://www.instagram.com/androidkejar/?hl=id" target="_blank">Find More</a></button>
-                    </div>
-                    <div class="voluntary-card">
-                        <h2 class="voluntary-title">Mentoring @Hour of Code - Jakarta</h2>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true" class="frame-image"></img>
-                        <p class="voluntary-description">Hour of Code is a worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.</p>
-                        <button class="fullscreen-btn"><a href="https://hourofcode.com/id" target="_blank">Find More</a></button>
-                    </div>
-                    <div class="voluntary-card">
-                        <h2 class="voluntary-title">Participant @1000 Startup - Jakarta</h2>
-                        <img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1000startup.jpg?raw=true" class="frame-image"></img>
-                        <p class="voluntary-description">1000 Startup Digital is a program in Indonesia that aims to create a new generation of entrepreneurs who use technology to drive the economy. The program was launched in 2016 by the Ministry of Communication and Informatics.</p>
-                        <button class="fullscreen-btn"><a href="https://1000startupdigital.id/" target="_blank">Find More</a></button>
-                    </div>
-                </div>
-            </div>
-            <p class="contact-bottom">For further information about me, you can</p>
-            <p class="container-mail-me">
-                <a href="mailto:mikkelseptiano86@gmail.com?subject=Contact%20Request&body=Hello,%20I%20would%20like%20to%20contact%20you." class="mail-me">
-                    <i class="fa-regular fa-envelope"></i> mail me
-                </a>
-            </p>
+    <div id="parent">
+        <div id="child">
+            <div id="header"></div>
+            <div id="body-content"></div>
+            <div id="footer"></div>
         </div>
-        <footer>
-            <div class="footer">
-                <p>&quot;Old latin saying has said <i>fortis fortuna adiuvat</i> so it means you have to be brave to reach your own happiness and make impact to others&quot;<br/>Thank you for visiting my page!</p>
-                <p class="footer-bottom">&copy; <span id="year"></span> | All right reserved</p>
-            </div>
-        </footer>
     </div>
 </body>
-    <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
+    <script type="text/babel">
+        const nameSection = "Hi folks! My name is Mikkel Septiano";
+        const skillSection = "Meticulous Fullstack Mobile Engineer. Playing around with Java, Kotlin, Flutter, React Native, PHP";
+        const photoUrl = "https://media.licdn.com/dms/image/v2/D5603AQFKoCPssKAI2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732606393962?e=1744243200&v=beta&t=YI2LkhJNXGW9RGndjHbeRFhCTnVNIAypAIYjoDRSKsw"
+        const githubUrl = "https://github.com/mikkelofficial7/"
+        const instagramUrl = "https://www.instagram.com/futuristech.id/"
+        const linkedinUrl = "https://www.linkedin.com/in/mikkel-septiano-a66ba7134/"
+        const devtoUrl = "https://dev.to/mikkelofficial7"
+        const resumeUrl = "https://www.cake.me/mikkel-septiano"
 
-        document.querySelectorAll('.fullscreen-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const targetModalId = this.getAttribute('data-target');
-                const modal = document.getElementById(targetModalId);
-                modal.style.display = 'block';  // Show modal
-            });
-        });
+        const dataProjects = [
+                [
+                    "Rupiah Cepat (Working Company Project)", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true", 
+                    "Fintech and Peer-to-peer lending App"
+                ],
+                [
+                    "Yesdok (Working Company Project)", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true", 
+                    "Health care and telemedicine App"
+                ],
+                [
+                    "AlteaCare (Working Company Project)", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true", 
+                    "Health care and telemedicine App"
+                ],
+                [
+                    "LINE Bank (Working Company Project)", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.jpg?raw=true", 
+                    "Leading South Korea Digital Banking by KEB Hana"
+                ],
+                [
+                    "Sama Sama Apps - C2C e-commerce secondhand product", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true", 
+                    "​Building mobile android and web service for B2C Thrift-based marketplace similar to OLX."
+                ],
+                [
+                    "WebApp for car maintenance warehouse - Denso Kranji", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.jpg?raw=true", 
+                    "Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java."
+                ],
+                [
+                    "Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true", 
+                    "Building mobile and web app for Tokoku sembako commerce, where user can buy their daily needs on their smartphone."
+                ],
+                [
+                    "Guruloka - E-learning system", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true", 
+                    "Online-to-offline web based e-learning system which bridge between student and teacher with various subject and learn by online."
+                ],
+                [
+                    "Course Center Galileo Gasing - Payroll and Absence system", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true", 
+                    "Creating web-based payroll and absence system for teachers."
+                ],
+                [
+                    "Sentiment text checker - Android app mini project", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true", 
+                    "Create a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meanings (test from Microsoft Student Partner Ambassador)."
+                ],
+                [
+                    "Movi Snap - Search Movie anytime", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true", 
+                    "Creating web-based movie search engine with TMDB API using Vanilla JS, Ajax and JQuery"
+                ],
+                [
+                    "Android-Based QR scanner (For campus purpose)", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true", 
+                    "Create an Android application to scan event attendance with a QR code scanner."
+                ],
+                [
+                    "Web-Based Social Media (.NET)", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true", 
+                    "Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI"
+                ]
+            ];
+        const dataVoluntary = [
+                [
+                    "Mentoring @Bangkit Academy - Jakarta", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true", 
+                    "Bangkit Academy is a career readiness program initiated by Google, GoTo, Tokopedia, and Traveloka, with the aim of developing high-quality technical talents in Indonesia.",
+                    "https://contributors.bangkit.academy/"
+                ],
+                [
+                    "Mentoring @ADPList", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true", 
+                    "ADPList, or Amazing Design People List, is a global community that connects people with mentors. The platform's mission is to democratize mentorship and help people advance their careers",
+                    "https://adplist.org/mentors/mikkel-septiano/"
+                ],
+                [
+                    "Mentoring @Indonesia Android Kejar - Jakarta", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true", 
+                    "Indonesia Android Kejar (IAK) is a free training program from Google Developers to help Android app developers in Indonesia. This program aims to improve the skills of mobile app developers in Indonesia.",
+                    "https://www.instagram.com/androidkejar/?hl=id"
+                ],
+                [
+                    "Mentoring @Hour of Code - Jakarta", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true", 
+                    "Hour of Code is a worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.",
+                    "https://hourofcode.com/id"
+                ],
+                [
+                    "Participant @1000 Startup - Jakarta", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1000startup.jpg?raw=true", 
+                    "1000 Startup Digital is a program in Indonesia that aims to create a new generation of entrepreneurs who use technology to drive the economy. The program was launched in 2016 by the Ministry of Communication and Informatics.",
+                    "https://1000startupdigital.id/"
+                ]
+            ];
+        const contactDetail = "For further information about me, you can contact me through"
+        const contactUrl = "mailto:mikkelseptiano86@gmail.com?subject=Contact%20Request&body=Hello,%20I%20would%20like%20to%20contact%20you."
 
-        // Close modal when close button is clicked
-        document.querySelectorAll('.close-btn').forEach(closeBtn => {
-            closeBtn.addEventListener('click', function() {
-                const targetModalId = this.getAttribute('data-close');
-                const modal = document.getElementById(targetModalId);
-                modal.style.display = 'none';  // Hide modal
-            });
-        });
+        const currentYear = new Date().getFullYear();
+        const footerQuote = `"Old Latin saying has said <i>fortis fortuna adiuvat</i> so it means you have to be brave to reach your own happiness and make an impact on others."<br/>Thank you for visiting my page!`;
+        const otherFooter = "All rights reserved"
 
-        // Close modal if user clicks outside the modal content
-        window.addEventListener('click', function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        });
+        function Header() {
+            return (
+                <div className="header-content">
+                    <img src={photoUrl} alt="Profile Picture" className="header-profile-picture" />
+                    <div className="header-user-info">
+                        <div>{nameSection}</div>
+                        <div>{skillSection}</div>
+                    </div>
+                </div>
+            );
+        }
+        function GoToGithub() {
+            return (
+                <div className="button-go-to-github" id="button-up">
+                    <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fa-brands fa-github"></i> Visit My GitHub
+                    </a>
+                </div>
+            );
+        }
+        function GoToMorePortfolio() {
+            return (
+                <div className="button-more" id="button-up">
+                    <a href={instagramUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fa-brands fa-instagram"></i> See Other Portfolios
+                    </a>
+                </div>
+            );
+        }
+        function GoToLinkedIn() {
+            return (
+                <div className="button-linkedin" id="button-up">
+                    <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fab fa-linkedin"></i> Find me on LinkedIn
+                    </a>
+                </div>
+            );
+        }
+        function GoToDevTo() {
+            return (
+                <div className="button-devto" id="button-up">
+                    <a href={devtoUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fab fa-dev"></i> Find me on Dev.to
+                    </a>
+                </div>
+            );
+        }
+        function GoToResume() {
+            return (
+                <div className="button-resume" id="button-up">
+                    <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fa fa-file"></i> Resume
+                    </a>
+                </div>
+            );
+        }
+
+        function BodyContentProject() {
+            // Close and open modal
+            const [selectedItem, setSelectedItem] = React.useState(null);
+            const openModal = (item) => {
+                setShowDialog(true)
+                setSelectedItem(item);
+            };
+            const closeModal = () => {
+                setShowDialog(false);
+                setSelectedItem(null);
+            };
+
+            // Detect page scrolling
+            const [showDialog, setShowDialog] = React.useState(false);
+            React.useEffect(() => {
+                const handleScroll = () => {
+                    setShowDialog(false);
+                };
+
+                window.addEventListener('scroll', handleScroll);
+
+                return () => window.removeEventListener('scroll', handleScroll);
+            },);
+
+            return(
+                <div>
+                    <div className="project-list">
+                        {
+                            dataProjects.map((item, index) => (
+                                <div className="project-card" key={index}>
+                                    <h2 className="project-title">{item[0]}</h2>
+                                    <div className="project-image-container">
+                                        <img src={item[1]}></img>
+                                        <div className="project-image-overlay-blur" key={index} onClick={() => openModal(item)}>See fullscreen</div>
+                                    </div>
+                                    <p className="project-description">{item[2]}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    {
+                        selectedItem && showDialog && (
+                            <div className="modal-full" onClick={closeModal}>
+                                <div className="modal-content">
+                                    <h2>{selectedItem[0]}</h2>
+                                    <img src={selectedItem[1]}></img>
+                                    <p>Tap anywhere to close (X)</p>
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
+            );
+        }
+        function BodyContentVoluntary() {
+            return(
+                <div className="voluntary-list">
+                    {dataVoluntary.map((item, index) => (
+                        <div className="voluntary-card" key={index}>
+                            <h2 className="voluntary-title">{item[0]}</h2>
+                            <div className="voluntary-image-container">
+                                <img src={item[1]}></img>
+                                <div className="voluntary-overlay-blur" key={index}>
+                                   <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
+                                </div>
+                            </div>
+                            <p className="voluntary-description">{item[2]}</p>
+                        </div>
+                    ))}
+                </div>
+            );
+        }
+        function BodyContentContact() {
+            return(
+                <div className="contact-body">
+                    <p className="contact-bottom">{contactDetail}</p>
+                    <p className="contact-mail-me">
+                        <a href={contactUrl} className="mail-me">
+                            <i className="fa-regular fa-envelope"></i> email
+                        </a>
+                    </p>
+                </div>
+            );
+        }
+
+        function Footer() {
+            React.useEffect(() => {
+                const handleScroll = () => {
+                    // Scroll to top mechanism
+                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                        document.getElementById("floatingButton").style.opacity = 1;
+                        document.getElementById("floatingButton").style.cursor = "pointer";
+                    } else {
+                        document.getElementById("floatingButton").style.opacity = 0;
+                        document.getElementById("floatingButton").style.cursor = "default";
+                    }
+                };
+
+                window.addEventListener('scroll', handleScroll);
+
+                return () => window.removeEventListener('scroll', handleScroll);
+            },);
+
+            const scrollToTop = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth', // Optional: smooth scrolling
+                });
+            };
+            return (
+                <footer>
+                    <button id="floatingButton" onClick={scrollToTop}>Back to top</button>
+                    <div className="footer-content">
+                        {/* Using dangerouslySetInnerHTML to render HTML inside the string */}
+                        <p dangerouslySetInnerHTML={{ __html: footerQuote }}></p>
+                        {/* Using actual © character and template literals */}
+                        <p className="footer-bottom">© {currentYear} | {otherFooter}</p>
+                    </div>
+                </footer>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('header')).render(
+            <div>
+                <Header />
+                <div className="button-list">
+                    <GoToGithub />
+                    <GoToMorePortfolio />
+                    <GoToLinkedIn />
+                    <GoToDevTo />
+                    <GoToResume />
+                </div>
+            </div>
+        );
+
+        ReactDOM.createRoot(document.getElementById('body-content')).render(
+            <div className="body-content-detail">
+                <h1 className="title-list">Portfolio projects</h1>
+                <BodyContentProject />
+                <h1 className="title-list">Voluntary Activities</h1>
+                <BodyContentVoluntary/>
+                <BodyContentContact />
+            </div>);
+
+        ReactDOM.createRoot(document.getElementById('footer')).render(
+            <Footer />
+        );
     </script>
 </html>
