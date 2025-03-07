@@ -149,22 +149,6 @@
             border-radius: 10px;
             padding: 10px;
         }
-        .project-list-grid, .voluntary-list-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
-            grid-gap: 2rem; /* Spacing between grid items */
-            padding: 3rem;
-            color: #333; /* Dark text for contrast */
-            font-family: 'Georgia', serif; /* Elegant serif font */
-        }
-        .project-list-linear, .voluntary-list-linear {
-            display: block;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
-            grid-gap: 2rem; /* Spacing between grid items */
-            padding: 3rem;
-            color: #333; /* Dark text for contrast */
-            font-family: 'Georgia', serif; /* Elegant serif font */
-        }
         .title-list {
             font-size: 1.8rem;
             font-weight: 600;
@@ -174,39 +158,7 @@
             border-bottom: 1px solid #eee; /* Subtle divider */
             padding-bottom: 1rem;
         }
-        .project-card, .voluntary-card {
-            width: 100%;
-            position: relative;
-            display: inline-block; /* Allows container to wrap image */
-            overflow: hidden; /* Prevents overlay from overflowing */
-        }
-        .project-card h2, .voluntary-card h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #444;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee; /* Subtle divider */
-            padding-bottom: 1rem;
-        }
-        .project-card p, .voluntary-card p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-        .project-image-container img, .voluntary-image-container img {
-            top: 20px;
-            left: 20px;
-            display: block; /* Removes extra space below image */
-            transition: transform 0.3s ease; /* Smooth zoom transition */
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .project-image-container:hover img, .voluntary-image-container:hover img {
-            filter: blur(5px); /* Apply blur on hover */
-        }
-        .project-image-overlay-blur, .voluntary-overlay-blur {
+        .project-image-overlay-blur-grid {
             position: absolute;
             top: 200px;
             left: 50%;
@@ -220,9 +172,129 @@
             border-radius: 8px;
             transition: opacity 0.3s ease; /* Smooth fade transition */
         }
-        .project-image-container:hover .project-image-overlay-blur, .voluntary-image-container:hover .voluntary-overlay-blur {
+        .project-list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+            grid-gap: 2rem; /* Spacing between grid items */
+            padding: 3rem;
+            color: #333; /* Dark text for contrast */
+            font-family: 'Georgia', serif; /* Elegant serif font */
+        }
+        .project-card-grid {
+            width: 100%;
+            position: relative;
+            display: inline-block; /* Allows container to wrap image */
+            overflow: hidden; /* Prevents overlay from overflowing */
+        }
+        .project-card-grid h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee; /* Subtle divider */
+            padding-bottom: 1rem;
+        }
+        .project-card-grid p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .project-image-container-grid img {
+            top: 20px;
+            left: 20px;
+            display: block; /* Removes extra space below image */
+            transition: transform 0.3s ease; /* Smooth zoom transition */
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-image-container-grid:hover img {
+            filter: blur(5px); /* Apply blur on hover */
+        }
+        .project-image-container-grid:hover .project-image-overlay-blur-grid {
             cursor: pointer;
             opacity: 1; /* Show overlay on hover */
+        }
+        
+        .project-image-overlay-blur-linear {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            z-index: 1; /* Place this div in front */
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+            opacity: 0; /* Initially hidden */
+            background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
+            color: #ffffff;
+            padding: 10px;
+            font-size: 12px;
+            border-radius: 8px;
+            transition: opacity 0.3s ease; /* Smooth fade transition */
+        }
+        .project-list-linear {
+            display: block;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+            grid-gap: 2rem; /* Spacing between grid items */
+            padding: 3rem;
+            color: #333; /* Dark text for contrast */
+            font-family: 'Georgia', serif; /* Elegant serif font */
+        }
+
+        .project-card-linear {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px;
+            margin-bottom: 10px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card-linear:hover  {
+            transform: translateY(-4px);
+            box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image-container-linear {
+            position: relative;
+            flex-shrink: 0;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .project-image-container-linear img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .project-image-container-linear:hover img {
+            filter: blur(5px); /* Apply blur on hover */
+        }
+        .project-image-container-linear:hover .project-image-overlay-blur-linear {
+            cursor: pointer;
+            opacity: 1; /* Show overlay on hover */
+        }
+
+        .project-title-linear {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .project-description-linear {
+            font-size: 1rem;
+            color: #666;
+            margin-top: 6px;
         }
 
         /* Modal Area */
@@ -597,16 +669,31 @@
                 <div>
                     <div className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
                         {
-                            dataProjects.map((item, index) => (
-                                <div className="project-card" key={index}>
-                                    <h2 className="project-title">{item[0]}</h2>
-                                    <div className="project-image-container">
-                                        <img src={item[1]}></img>
-                                        <div className="project-image-overlay-blur" key={index} onClick={() => openModal(item)}>See fullscreen</div>
+                            listType === dataListFormat[0] ? (
+                                dataProjects.map((item, index) => (
+                                    <div className="project-card-grid" key={index}>
+                                        <h2 className="project-title-grid">{item[0]}</h2>
+                                        <div className="project-image-container-grid">
+                                            <img src={item[1]}></img>
+                                            <div className="project-image-overlay-blur-grid" key={index} onClick={() => openModal(item)}>See fullscreen</div>
+                                        </div>
+                                        <p className="project-description-grid">{item[2]}</p>
                                     </div>
-                                    <p className="project-description">{item[2]}</p>
-                                </div>
-                            ))
+                                ))
+                            ) : (
+                                dataProjects.map((item, index) => (
+                                    <div className="project-card-linear" key={index}>
+                                        <div className="project-image-container-linear">
+                                            <img src={item[1]}></img>
+                                            <div className="project-image-overlay-blur-linear" key={index} onClick={() => openModal(item)}>See fullscreen</div>
+                                        </div>
+                                        <div>
+                                            <h2 className="project-title-linear">{item[0]}</h2>
+                                            <p className="project-description-linear">{item[2]}</p>
+                                        </div>
+                                    </div>
+                                ))
+                            )
                         }
                     </div>
                     {
@@ -625,19 +712,41 @@
         }
         function BodyContentVoluntary({ listType }) {
             return(
-                <div className={listType === dataListFormat[0] ? "voluntary-list-grid" : "voluntary-list-linear"}>
-                    {dataVoluntary.map((item, index) => (
-                        <div className="voluntary-card" key={index}>
-                            <h2 className="voluntary-title">{item[0]}</h2>
-                            <div className="voluntary-image-container">
-                                <img src={item[1]}></img>
-                                <div className="voluntary-overlay-blur" key={index}>
-                                   <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
+                <div className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
+                    {
+                        listType === dataListFormat[0] ? (
+                            dataVoluntary.map((item, index) => (
+                                <div className="project-card-grid" key={index}>
+                                    <h2 className="project-title-grid">{item[0]}</h2>
+                                    <div className="project-image-container-grid">
+                                        <img src={item[1]}></img>
+                                        <div className="project-image-overlay-blur-grid" key={index}>
+                                            <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
+                                        </div>
+                                    </div>
+                                    <p className="project-description-grid">{item[2]}</p>
                                 </div>
-                            </div>
-                            <p className="voluntary-description">{item[2]}</p>
-                        </div>
-                    ))}
+                            ))
+                        ) : (
+                            dataVoluntary.map((item, index) => (
+                                <div className="project-card-linear" key={index}>
+                                    <div className="project-card-linear" key={index}>
+                                        <div className="project-image-container-linear">
+                                            <img src={item[1]}></img>
+                                            <div className="project-image-overlay-blur-linear" key={index}>
+                                                <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h2 className="project-title-linear">{item[0]}</h2>
+                                            <p className="project-description-linear">{item[2]}</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            ))
+                        )
+                    }
                 </div>
             );
         }
