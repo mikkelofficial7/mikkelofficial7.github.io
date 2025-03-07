@@ -148,7 +148,7 @@
         }
         .project-list, .voluntary-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
             grid-gap: 2rem; /* Spacing between grid items */
             padding: 3rem;
             color: #333; /* Dark text for contrast */
@@ -250,16 +250,29 @@
         /* Contact me Area */
 
         .contact-body {
-            width: 600px;
+            position: relative;
+            width: 50%;
             margin: 0 auto;
-            justify-content: center; /* Centers horizontally */
             align-items: center; 
         }
-        .contact-bottom, .contact-mail-me {
+        .contact-bottom {
             display: inline-block;
+            text-align: center;
             margin-left: 10px;
             flex: 1 1 250px; /* Distribute space, minimum width */
             margin-bottom: 20px;
+        }
+        .contact-mail-me {
+            display: inline-block;
+            margin-left: 10px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        @media (max-width: 1114px) {
+            .contact-mail-me {
+                left: 40%;
+            }
         }
 
          /* Footer Area */
@@ -393,34 +406,40 @@
             ];
         const dataVoluntary = [
                 [
-                    "Mentoring @Bangkit Academy - Jakarta", 
+                    "Seasonal Mentor @Bangkit Academy - Jakarta", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true", 
                     "Bangkit Academy is a career readiness program initiated by Google, GoTo, Tokopedia, and Traveloka, with the aim of developing high-quality technical talents in Indonesia.",
                     "https://contributors.bangkit.academy/"
                 ],
                 [
-                    "Mentoring @ADPList", 
+                    "Seasonal Mentor @ADPList", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true", 
                     "ADPList, or Amazing Design People List, is a global community that connects people with mentors. The platform's mission is to democratize mentorship and help people advance their careers",
                     "https://adplist.org/mentors/mikkel-septiano/"
                 ],
                 [
-                    "Mentoring @Indonesia Android Kejar - Jakarta", 
+                    "Ex Facilitator @Indonesia Android Kejar - Jakarta", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true", 
                     "Indonesia Android Kejar (IAK) is a free training program from Google Developers to help Android app developers in Indonesia. This program aims to improve the skills of mobile app developers in Indonesia.",
                     "https://www.instagram.com/androidkejar/?hl=id"
                 ],
                 [
-                    "Mentoring @Hour of Code - Jakarta", 
+                    "Ex Mentor @Hour of Code - Jakarta", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true", 
                     "Hour of Code is a worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.",
                     "https://hourofcode.com/id"
                 ],
                 [
-                    "Participant @1000 Startup - Jakarta", 
+                    "Ex Participant @1000 Startup - Jakarta", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1000startup.jpg?raw=true", 
                     "1000 Startup Digital is a program in Indonesia that aims to create a new generation of entrepreneurs who use technology to drive the economy. The program was launched in 2016 by the Ministry of Communication and Informatics.",
                     "https://1000startupdigital.id/"
+                ],
+                [
+                    "Ex Member @Microsoft Student Partner", 
+                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/msp.png?raw=true", 
+                    "Become a Student Ambassador and join our global community of students who are passionate about building AI-driven solutions with Microsoft technology. Accelerate innovation and grow the skills you need to have greater impact in the projects and communities that matter to you.",
+                    "https://mvp.microsoft.com/studentambassadors/"
                 ]
             ];
         const contactDetail = "For further information about me, you can contact me through"
@@ -562,12 +581,12 @@
         function BodyContentContact() {
             return(
                 <div className="contact-body">
-                    <p className="contact-bottom">{contactDetail}</p>
-                    <p className="contact-mail-me">
+                    <span className="contact-bottom">{contactDetail}</span>
+                    <span className="contact-mail-me">
                         <a href={contactUrl} className="mail-me">
                             <i className="fa-regular fa-envelope"></i> email
                         </a>
-                    </p>
+                    </span>
                 </div>
             );
         }
