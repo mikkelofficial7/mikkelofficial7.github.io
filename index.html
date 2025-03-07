@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mikkel's Portfolio</title>
+    <title>My Portfolio</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlC-Xn7_9KgMpw7bvPmGf-Kumcf3htGkpBgg&s">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -146,8 +146,16 @@
             border-radius: 10px;
             padding: 10px;
         }
-        .project-list, .voluntary-list {
+        .project-list-grid, .voluntary-list-grid {
             display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+            grid-gap: 2rem; /* Spacing between grid items */
+            padding: 3rem;
+            color: #333; /* Dark text for contrast */
+            font-family: 'Georgia', serif; /* Elegant serif font */
+        }
+        .project-list-linear, .voluntary-list-linear {
+            display: block;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
             grid-gap: 2rem; /* Spacing between grid items */
             padding: 3rem;
@@ -164,6 +172,7 @@
             padding-bottom: 1rem;
         }
         .project-card, .voluntary-card {
+            width: 100%;
             position: relative;
             display: inline-block; /* Allows container to wrap image */
             overflow: hidden; /* Prevents overlay from overflowing */
@@ -312,6 +321,40 @@
             box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
             transform: translateY(-3px);
         }
+
+        /* List Format Area */
+
+        .parent-list-format {
+            width: auto;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .parent-list-format p {
+            margin-right: 10px;
+            margin-top: 12px;
+        }
+        .list-format-item {
+            background-color: #7e7b7b;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .list-format-item-selected {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        @media (max-width: 587px) {
+            .parent-list-format {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
@@ -449,6 +492,9 @@
         const footerQuote = `"Old Latin saying has said <i>fortis fortuna adiuvat</i> so it means you have to be brave to reach your own happiness and make an impact on others."<br/>Thank you for visiting my page!`;
         const otherFooter = "All rights reserved"
 
+        const listFormatShowAs = "Show as"
+        const dataListFormat = ["Grid", "Linear"]
+
         function Header() {
             return (
                 <div className="header-content">
@@ -506,7 +552,21 @@
             );
         }
 
-        function BodyContentProject() {
+        function ButtonChangeListFormat({ listType, setListType }) {
+            return (
+                <div className="parent-list-format">
+                    <p>{listFormatShowAs}</p>
+                    {
+                        dataListFormat.map((item, index) => (
+                            <div className={listType === item ? "list-format-item-selected" : "list-format-item"} key={index} onClick={() => setListType(item)}>
+                                <h2 className="list-format-title">{item}</h2>
+                            </div>
+                        ))
+                    }
+                </div>
+            );
+        }
+        function BodyContentProject({ listType }) {
             // Close and open modal
             const [selectedItem, setSelectedItem] = React.useState(null);
             const openModal = (item) => {
@@ -532,7 +592,7 @@
 
             return(
                 <div>
-                    <div className="project-list">
+                    <div className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
                         {
                             dataProjects.map((item, index) => (
                                 <div className="project-card" key={index}>
@@ -548,7 +608,7 @@
                     </div>
                     {
                         selectedItem && showDialog && (
-                            <div className="modal-full" onClick={closeModal}>
+                            <div className="modal-full" onClick={() => closeModal()}>
                                 <div className="modal-content">
                                     <h2>{selectedItem[0]}</h2>
                                     <img src={selectedItem[1]}></img>
@@ -560,9 +620,9 @@
                 </div>
             );
         }
-        function BodyContentVoluntary() {
+        function BodyContentVoluntary({ listType }) {
             return(
-                <div className="voluntary-list">
+                <div className={listType === dataListFormat[0] ? "voluntary-list-grid" : "voluntary-list-linear"}>
                     {dataVoluntary.map((item, index) => (
                         <div className="voluntary-card" key={index}>
                             <h2 className="voluntary-title">{item[0]}</h2>
@@ -578,6 +638,28 @@
                 </div>
             );
         }
+        
+        function BodyContentProjectAndVolunteerWithListType() {
+            const [selectedListType, setSelectedListType] = React.useState(dataListFormat[0]);
+            const changeListType = (type) => {
+                setSelectedListType(type)
+            };
+
+            return (
+                <div className="body-content-detail">
+                    { }
+                    <ButtonChangeListFormat listType={selectedListType} setListType={changeListType} />
+                    <h1 className="title-list">Portfolio projects</h1>
+                    { }
+                    <BodyContentProject listType={selectedListType} />
+                    <h1 className="title-list">Voluntary Activities</h1>
+                    { }
+                    <BodyContentVoluntary listType={selectedListType} />
+                    <BodyContentContact />
+                </div>
+            );
+        }
+
         function BodyContentContact() {
             return(
                 <div className="contact-body">
@@ -642,13 +724,8 @@
         );
 
         ReactDOM.createRoot(document.getElementById('body-content')).render(
-            <div className="body-content-detail">
-                <h1 className="title-list">Portfolio projects</h1>
-                <BodyContentProject />
-                <h1 className="title-list">Voluntary Activities</h1>
-                <BodyContentVoluntary/>
-                <BodyContentContact />
-            </div>);
+            <BodyContentProjectAndVolunteerWithListType/>
+        );
 
         ReactDOM.createRoot(document.getElementById('footer')).render(
             <Footer />
