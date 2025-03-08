@@ -730,19 +730,16 @@
                         ) : (
                             dataVoluntary.map((item, index) => (
                                 <div className="project-card-linear" key={index}>
-                                    <div className="project-card-linear" key={index}>
-                                        <div className="project-image-container-linear">
-                                            <img src={item[1]}></img>
-                                            <div className="project-image-overlay-blur-linear" key={index}>
-                                                <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h2 className="project-title-linear">{item[0]}</h2>
-                                            <p className="project-description-linear">{item[2]}</p>
+                                    <div className="project-image-container-linear">
+                                        <img src={item[1]}></img>
+                                        <div className="project-image-overlay-blur-linear" key={index}>
+                                            <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
                                         </div>
                                     </div>
-
+                                    <div>
+                                        <h2 className="project-title-linear">{item[0]}</h2>
+                                        <p className="project-description-linear">{item[2]}</p>
+                                    </div>
                                 </div>
                             ))
                         )
