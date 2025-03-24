@@ -10,6 +10,9 @@ jobs:
   review:
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: write  # ✅ Grants write access to pull requests
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
