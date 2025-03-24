@@ -1,4 +1,4 @@
-name: Ai Code Reviewer Example
+name: AI Code Reviewer Example
 
 on:
   pull_request:
@@ -10,6 +10,9 @@ jobs:
   review:
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,22 +23,28 @@ jobs:
       - name: Detect Changed Files
         id: changed_files
         run: |
-          git fetch origin main --depth=1
-          git diff --name-only origin/main > changed_files.txt || true
+          git fetch origin main --depth=1 || true
+          BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
+          if [ -z "$BASE_COMMIT" ]; then
+            echo "No base commit found, listing all files..."
+            git ls-files > changed_files.txt
+          else
+            git diff --name-only "$BASE_COMMIT" > changed_files.txt || true
+          fi
           echo "Changed files:"
           cat changed_files.txt
 
-      - name: Run ChatGPT Code Review
+      - name: Run Reka AI Code Review
         env:
           OPEN_ROUTER_API_KEY: ${{ secrets.OPEN_ROUTER_API_KEY }}
         run: |
-          echo "[]" > review_comments.json  # Initialize empty JSON array
+          echo "[]" > review_comments.json
 
           while read -r FILE; do
-            [[ -f "$FILE" ]] || continue  # Skip if file does not exist
+            [[ -f "$FILE" ]] || continue
 
             echo "Reviewing $FILE..."
-            CONTENT=$(cat "$FILE" | jq -Rs .)  # Convert file content to JSON string
+            CONTENT=$(head -n 1000 "$FILE" | jq -Rs .)  # Limit to 1000 lines
 
             REVIEW=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
               -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" \
@@ -59,14 +68,30 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_REPO: ${{ github.repository }}
         run: |
+          COMMIT_ID=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER" | jq -r '.head.sha')
+
+          echo "Latest commit ID: $COMMIT_ID"
+
           jq -c '.[]' review_comments.json | while IFS= read -r line; do
             FILE=$(echo "$line" | jq -r '.file')
             COMMENT=$(echo "$line" | jq -r '.comment')
+            POSITION=$(echo "$line" | jq -r '.position')
+            IN_REPLY_TO=$(echo "$line" | jq -r '.in_reply_to')
 
             echo "Posting comment on $FILE: $COMMENT"
 
+            if [[ "$IN_REPLY_TO" != "null" && "$IN_REPLY_TO" != "" ]]; then
+              PAYLOAD=$(jq -n --arg body "$COMMENT" --arg in_reply_to "$IN_REPLY_TO" \
+                '{body: $body, in_reply_to: $in_reply_to}')
+            else
+              PAYLOAD=$(jq -n --arg body "$COMMENT" --arg commit_id "$COMMIT_ID" --arg file "$FILE" --argjson position "$POSITION" \
+                '{body: $body, commit_id: $commit_id, path: $file, position: $position}')
+            fi
+
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-                 -H "Accept: application/vnd.github.v3+json" \
-                 -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"side\": \"RIGHT\" }" \
-                 "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER/comments"
+                -H "Accept: application/vnd.github.v3+json" \
+                -d "$PAYLOAD" \
+                "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER/comments"
+
           done
