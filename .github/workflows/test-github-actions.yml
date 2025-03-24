@@ -21,6 +21,13 @@ jobs:
           echo "Changed files:"
           cat changed_files.txt
 
+      - name: Debug PR File Changes
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Accept: application/vnd.github.v3+json" \
+               "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+
       - name: Debug - List files
         run: ls -la
 
