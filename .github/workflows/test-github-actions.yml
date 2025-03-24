@@ -79,7 +79,7 @@ jobs:
 
             # Ensure comment is not null
             if [[ "$COMMENT" == "null" || -z "$COMMENT" ]]; then
-              COMMENT="All codes are reviewed good"
+              COMMENT=""
             fi
 
             # Ensure position is valid
