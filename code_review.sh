@@ -2,34 +2,54 @@
 OUTPUT_FILE="result_comment_feedback.json"
 echo "[]" > "$OUTPUT_FILE"  # Initialize with an empty JSON array
 
-echo "🔍 Searching for TODO comments in the repository..."
+echo "🔍 Detecting changed files..."
+CHANGED_FILES=$(git diff --name-only HEAD^ HEAD || true)
 
-# Find all TODO comments in files
-TODO_LINES=$(grep -rIn --exclude-dir={.git,.github,node_modules,vendor} --include=\*.{js,ts,java,kt,php,py,sh} "TODO" . || true)
-
-if [[ -z "$TODO_LINES" ]]; then
-    echo "✅ No TODO comments found."
+if [[ -z "$CHANGED_FILES" ]]; then
+    echo "✅ No changed files detected."
     exit 0
 fi
 
-echo "⚠️ Found TODO comments. Adding them to the JSON feedback."
+echo "📂 Scanning changed files..."
+for FILE in $CHANGED_FILES; do
+    # Skip binary files
+    if file "$FILE" | grep -qE 'binary'; then
+        echo "🚫 Skipping binary file: $FILE"
+        continue
+    fi
 
-while IFS= read -r line; do
-    FILE=$(echo "$line" | cut -d':' -f1)
-    LINE_NUM=$(echo "$line" | cut -d':' -f2)
-    MESSAGE="⚠️ Found TODO comment. Please address it."
+    # Check for TODO comments
+    while IFS= read -r line; do
+        LINE_NUM=$(echo "$line" | cut -d':' -f1)
+        MESSAGE="⚠️ Found TODO comment. Please address it."
 
-    # Ensure valid JSON structure
-    TEMP_FILE="temp.json"
-    jq --arg file "$FILE" --arg line "$LINE_NUM" --arg comment "$MESSAGE" \
-      '. + [{"file": $file, "line": ($line | tonumber), "comment": $comment}]' \
-      "$OUTPUT_FILE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
+        # Append JSON entry
+        TEMP_FILE="temp.json"
+        jq --arg file "$FILE" --arg line "$LINE_NUM" --arg comment "$MESSAGE" \
+          '. + [{"file": $file, "line": ($line | tonumber), "comment": $comment}]' \
+          "$OUTPUT_FILE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
 
-done <<< "$TODO_LINES"
+    done <<< "$(grep -n "TODO" "$FILE" || true)"
 
-# Debugging - Check output file
+    # Check for missing function comments (for Python, Java, JS, etc.)
+    if grep -qE 'def |function |class ' "$FILE"; then
+        while IFS= read -r line; do
+            LINE_NUM=$(echo "$line" | cut -d':' -f1)
+            FUNC_NAME=$(echo "$line" | awk '{print $2}')
+            MESSAGE="⚠️ Function/Class '$FUNC_NAME' lacks a docstring. Please add a comment."
+
+            # Append JSON entry
+            jq --arg file "$FILE" --arg line "$LINE_NUM" --arg comment "$MESSAGE" \
+              '. + [{"file": $file, "line": ($line | tonumber), "comment": $comment}]' \
+              "$OUTPUT_FILE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
+
+        done <<< "$(grep -nE 'def |function |class ' "$FILE" | grep -v '"""' || true)"
+    fi
+done
+
+# Debugging output
 echo "📜 Review comments JSON:"
 cat "$OUTPUT_FILE"
 
-# Validate JSON structure
+# Validate JSON
 jq empty "$OUTPUT_FILE" || echo "[]" > "$OUTPUT_FILE"
