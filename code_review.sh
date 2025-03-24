@@ -1,6 +1,6 @@
 #!/bin/bash
 OUTPUT_FILE="result_comment_feedback.json"
-echo "[]" > "$OUTPUT_FILE"  # Initialize with empty JSON array
+echo "[]" > "$OUTPUT_FILE"  # Always initialize with an empty JSON array
 
 while IFS= read -r line; do
     FILE=$(echo "$line" | cut -d':' -f1)
@@ -13,3 +13,7 @@ while IFS= read -r line; do
       '. + [{"file": $file, "line": ($line | tonumber), "comment": $comment}]' \
       "$OUTPUT_FILE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
 done < <(grep -rnw '.' -e "TODO" || true)
+
+# Debug: Show the file after creation
+echo "Generated JSON content:"
+cat "$OUTPUT_FILE"
