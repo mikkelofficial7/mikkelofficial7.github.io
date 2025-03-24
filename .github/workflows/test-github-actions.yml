@@ -44,7 +44,7 @@ jobs:
             [[ -f "$FILE" ]] || continue
 
             echo "Reviewing $FILE..."
-            CONTENT=$(head -n 1000 "$FILE" | jq -Rs .)  # Limit to 1000 lines
+            CONTENT=$(head -n 300 "$FILE" | jq -Rs .)  # Limit to 300 lines
 
             REVIEW=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
               -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" \
