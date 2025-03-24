@@ -23,18 +23,19 @@ jobs:
       - name: Detect Changed Files
         id: changed_files
         run: |
+          git fetch --prune --unshallow || true
           git fetch origin main --depth=1 || true
           
-          # Find the base commit (merge-base between the PR branch and main)
-          BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
-
-          # Ensure a valid base commit
-          if [ -z "$BASE_COMMIT" ]; then
-            echo "No base commit found, using previous commit instead."
-            BASE_COMMIT=HEAD~1
+          # Determine base commit
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            BASE_COMMIT="origin/main"
+          else
+            echo "No base commit found, listing only committed files..."
+            git ls-files | grep -E '\.(html|js|css|kt|java)$' > changed_files.txt || true
+            exit 0
           fi
 
-          # Get only the changed files with specific extensions
+          # Get changed files with specific extensions
           git diff --diff-filter=AM --name-only "$BASE_COMMIT" | grep -E '\.(html|js|css|kt|java)$' > changed_files.txt || true
 
           echo "Filtered Changed Files:"
