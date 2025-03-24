@@ -62,14 +62,33 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           GITHUB_REPO: ${{ github.repository }}
         run: |
+          # Get the latest commit SHA of the PR
+          COMMIT_ID=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER" | jq -r '.head.sha')
+
+          echo "Latest commit ID: $COMMIT_ID"
+
           jq -c '.[]' review_comments.json | while IFS= read -r line; do
             FILE=$(echo "$line" | jq -r '.file')
             COMMENT=$(echo "$line" | jq -r '.comment')
+            POSITION=$(echo "$line" | jq -r '.position')  # Optional: read position
+            IN_REPLY_TO=$(echo "$line" | jq -r '.in_reply_to')  # Optional: read in_reply_to
 
             echo "Posting comment on $FILE: $COMMENT"
 
+            # Determine if we are replying to a comment or posting a new one
+            if [[ "$IN_REPLY_TO" != "null" && "$IN_REPLY_TO" != "" ]]; then
+              PAYLOAD=$(jq -n --arg body "$COMMENT" --arg in_reply_to "$IN_REPLY_TO" \
+                '{body: $body, in_reply_to: $in_reply_to}')
+            else
+              PAYLOAD=$(jq -n --arg body "$COMMENT" --arg commit_id "$COMMIT_ID" --arg file "$FILE" --argjson position "$POSITION" \
+                '{body: $body, commit_id: $commit_id, path: $file, position: $position}')
+            fi
+
             curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-                 -H "Accept: application/vnd.github.v3+json" \
-                 -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"side\": \"RIGHT\" }" \
-                 "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER/comments"
+                -H "Accept: application/vnd.github.v3+json" \
+                -d "$PAYLOAD" \
+                "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER/comments"
+
           done
+
