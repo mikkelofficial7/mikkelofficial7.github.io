@@ -44,16 +44,19 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           if [ -s result_comment_feedback.json ]; then
-            while IFS= read -r line; do
+            jq -c '.[]' result_comment_feedback.json | while IFS= read -r line; do
               FILE=$(echo "$line" | jq -r '.file')
               LINE=$(echo "$line" | jq -r '.line')
               COMMENT=$(echo "$line" | jq -r '.comment')
+
+              echo "Posting comment on $FILE at line $LINE: $COMMENT"
 
               curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
                    -H "Accept: application/vnd.github.v3+json" \
                    -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"line\": $LINE, \"side\": \"RIGHT\" }" \
                    "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/comments"
-            done < result_comment_feedback.json
+            done
           else
             echo "No review comments to post."
           fi
+
