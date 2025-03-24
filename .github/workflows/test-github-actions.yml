@@ -25,7 +25,7 @@ jobs:
           echo "Changed files:"
           cat changed_files.txt
 
-      - name: Run ChatGPT Code Review
+      - name: Run Reka Ai Code Review
         env:
           OPEN_ROUTER_API_KEY: ${{ secrets.OPEN_ROUTER_API_KEY }}
         run: |
