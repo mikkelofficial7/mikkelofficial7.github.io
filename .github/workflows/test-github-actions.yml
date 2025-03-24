@@ -47,6 +47,22 @@ jobs:
         run: |
           echo "[]" > review_comments.json
 
+          # Ensure base commit is valid
+          git fetch origin main --depth=1 || true
+          BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
+
+          if [ -z "$BASE_COMMIT" ]; then
+            echo "No base commit found. Using HEAD~1 as fallback."
+            BASE_COMMIT=$(git rev-parse HEAD~1 2>/dev/null || echo "")
+          fi
+
+          if [ -z "$BASE_COMMIT" ]; then
+            echo "Error: Could not determine BASE_COMMIT. Exiting..."
+            exit 1
+          fi
+
+          echo "Using base commit: $BASE_COMMIT"
+
           while read -r FILE; do
             [[ -f "$FILE" ]] || continue  # Skip if file doesn't exist
 
@@ -54,7 +70,7 @@ jobs:
 
             # Extract only added (+) and removed (-) lines, ignore metadata
             DIFF_CONTENT=$(git diff -U0 "$BASE_COMMIT" -- "$FILE" | grep -E '^\+|^-')
-            
+
             # If no changes exist, skip review
             if [[ -z "$DIFF_CONTENT" ]]; then
               echo "No content changes detected in $FILE, skipping..."
