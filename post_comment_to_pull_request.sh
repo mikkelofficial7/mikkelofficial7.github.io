@@ -1,6 +1,4 @@
 #!/bin/bash
-# This script reads result_comment_feedback.json and posts comments to a GitHub PR.
-
 OUTPUT_FILE="result_comment_feedback.json"
 
 if [[ ! -s "$OUTPUT_FILE" ]]; then
@@ -10,24 +8,25 @@ fi
 
 echo "📨 Posting comments to GitHub PR..."
 
-# Ensure required environment variables are set
 if [[ -z "$GITHUB_TOKEN" || -z "$PR_NUMBER" || -z "$GITHUB_REPOSITORY" ]]; then
     echo "❌ Missing required environment variables."
     exit 1
 fi
 
-# Post each comment to GitHub
-jq -c '.[]' "$OUTPUT_FILE" | while IFS= read -r line; do
-    FILE=$(echo "$line" | jq -r '.file')
-    LINE=$(echo "$line" | jq -r '.line')
-    COMMENT=$(echo "$line" | jq -r '.comment')
+COMMENTS_JSON=$(jq -c '[.[] | {path: .file, position: .line | tonumber, body: .comment}]' "$OUTPUT_FILE")
 
-    echo "💬 Commenting on $FILE at line $LINE: $COMMENT"
+# Create a GitHub PR review with inline comments + "This is comment"
+REVIEW_PAYLOAD=$(jq -n \
+  --argjson comments "$COMMENTS_JSON" \
+  --arg final_comment "This is comment" \
+  '{body: $final_comment, event: "COMMENT", comments: $comments}')
 
-    curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-         -H "Accept: application/vnd.github.v3+json" \
-         -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"line\": $LINE, \"side\": \"RIGHT\" }" \
-         "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/comments"
-done
+echo "📨 Sending review payload:"
+echo "$REVIEW_PAYLOAD"
 
-echo "✅ Review comments posted!"
+curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+     -H "Accept: application/vnd.github.v3+json" \
+     -d "$REVIEW_PAYLOAD" \
+     "https://api.github.com/repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews"
+
+echo "✅ Review posted!"
