@@ -24,19 +24,13 @@ jobs:
         id: changed_files
         run: |
           git fetch origin main --depth=1 || true
-          
-          # Find the base commit (merge-base between the PR branch and main)
           BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
-          
-          # If no base commit is found (e.g., first commit on branch), use HEAD~1
           if [ -z "$BASE_COMMIT" ]; then
-            echo "No base commit found, using previous commit instead."
-            BASE_COMMIT=HEAD~1
+            echo "No base commit found, listing all files..."
+            git ls-files > changed_files.txt
+          else
+            git diff --name-only "$BASE_COMMIT" > changed_files.txt || true
           fi
-
-          # Get only the changed files
-          git diff --name-only "$BASE_COMMIT" > changed_files.txt || true
-
           echo "Changed files:"
           cat changed_files.txt
 
