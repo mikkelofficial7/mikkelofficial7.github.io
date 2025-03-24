@@ -23,15 +23,22 @@ jobs:
       - name: Detect Changed Files
         id: changed_files
         run: |
+          git fetch --prune --unshallow || true
           git fetch origin main --depth=1 || true
-          BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
-          if [ -z "$BASE_COMMIT" ]; then
-            echo "No base commit found, listing all files..."
-            git ls-files > changed_files.txt
+          
+          # Determine base commit
+          if git rev-parse --verify origin/main >/dev/null 2>&1; then
+            BASE_COMMIT="origin/main"
           else
-            git diff --name-only "$BASE_COMMIT" > changed_files.txt || true
+            echo "No base commit found, listing only committed files..."
+            git ls-files | grep -E '\.(html|js|css|kt|java)$' > changed_files.txt || true
+            exit 0
           fi
-          echo "Changed files:"
+
+          # Get changed files with specific extensions
+          git diff --diff-filter=AM --name-only "$BASE_COMMIT" | grep -E '\.(html|js|css|kt|java)$' > changed_files.txt || true
+
+          echo "Filtered Changed Files:"
           cat changed_files.txt
 
       - name: Run Reka AI Code Review
@@ -40,20 +47,48 @@ jobs:
         run: |
           echo "[]" > review_comments.json
 
+          # Ensure base commit is valid
+          git fetch origin main --depth=1 || true
+          BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
+
+          if [ -z "$BASE_COMMIT" ]; then
+            echo "No base commit found. Using HEAD~1 as fallback."
+            BASE_COMMIT=$(git rev-parse HEAD~1 2>/dev/null || echo "")
+          fi
+
+          if [ -z "$BASE_COMMIT" ]; then
+            echo "Error: Could not determine BASE_COMMIT. Exiting..."
+            exit 1
+          fi
+
+          echo "Using base commit: $BASE_COMMIT"
+
           while read -r FILE; do
-            [[ -f "$FILE" ]] || continue
+            [[ -f "$FILE" ]] || continue  # Skip if file doesn't exist
 
             echo "Reviewing $FILE..."
-            CONTENT=$(head -n 1000 "$FILE" | jq -Rs .)  # Limit to 1000 lines
+
+            # Extract only added (+) and removed (-) lines, ignore metadata
+            DIFF_CONTENT=$(git diff -U0 "$BASE_COMMIT" -- "$FILE" | grep -E '^\+|^-')
+
+            # If no changes exist, skip review
+            if [[ -z "$DIFF_CONTENT" ]]; then
+              echo "No content changes detected in $FILE, skipping..."
+              continue
+            fi
+
+            # Convert to JSON-friendly format
+            CONTENT=$(echo "$DIFF_CONTENT" | jq -Rs .)
 
             REVIEW=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
               -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" \
               -H "Content-Type: application/json" \
               -d "{
                 \"model\": \"rekaai/reka-flash-3:free\",
-                \"messages\": [{\"role\": \"user\", \"content\": \"Review the given code and suggest improvements:\n$CONTENT\"}]
+                \"messages\": [{\"role\": \"user\", \"content\": \"Review the following code changes and suggest improvements:\n$CONTENT\"}]
               }" | jq -r '.choices[0].message.content')
 
+            echo "Review Input (Changed Content Only): $CONTENT"
             echo "Review Output: $REVIEW"
 
             jq --arg file "$FILE" --arg comment "$REVIEW" \
@@ -79,7 +114,7 @@ jobs:
 
             # Ensure comment is not null
             if [[ "$COMMENT" == "null" || -z "$COMMENT" ]]; then
-              COMMENT="All codes are reviewed good"
+              COMMENT="<auto-generate>No feedback for this, but a change was detected</auto-generate>"
             fi
 
             # Ensure position is valid
