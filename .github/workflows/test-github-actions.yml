@@ -19,6 +19,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Grant execute permission to code_review.sh
+        run: chmod +x code_review.sh
+
       - name: Run code review script
         run: ./code_review.sh | tee review_output.txt
 
