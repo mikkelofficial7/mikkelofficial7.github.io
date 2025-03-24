@@ -1,11 +1,11 @@
-name: Code Review Every Pull Request
+name: Ai Code Reviewer Example
 
 on:
   pull_request:
     branches:
-      - main 
+      - main
       - develop
-      
+
 jobs:
   review:
     runs-on: ubuntu-latest
@@ -13,67 +13,60 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 2  # Fetch last 2 commits to compare changes
 
-      - name: Find Changed Files
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Detect Changed Files
         id: changed_files
         run: |
-          git diff --name-only HEAD^ HEAD > changed_files.txt
+          git fetch origin main --depth=1
+          git diff --name-only origin/main > changed_files.txt || true
           echo "Changed files:"
           cat changed_files.txt
 
-      - name: Debug PR File Changes
+      - name: Run ChatGPT Code Review
+        env:
+          OPEN_ROUTER_API_KEY: ${{ secrets.OPEN_ROUTER_API_KEY }}
         run: |
-          echo "PR Number: ${{ github.event.pull_request.number }}"
-          curl -H "Authorization: token $GITHUB_TOKEN" \
-               -H "Accept: application/vnd.github.v3+json" \
-               "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+          echo "[]" > review_comments.json  # Initialize empty JSON array
 
-      - name: Debug - List files
-        run: ls -la
+          while read -r FILE; do
+            [[ -f "$FILE" ]] || continue  # Skip if file does not exist
 
-      - name: Grant execute permission to code_review.sh
-        run: chmod +x code_review.sh
+            echo "Reviewing $FILE..."
+            CONTENT=$(cat "$FILE" | jq -Rs .)  # Convert file content to JSON string
 
-      - name: Run code review script
-        run: ./code_review.sh | tee result_comment_feedback.txt
+            REVIEW=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
+              -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d "{
+                \"model\": \"rekaai/reka-flash-3:free\",
+                \"messages\": [{\"role\": \"user\", \"content\": \"Review the given code and suggest improvements:\n$CONTENT\"}]
+              }" | jq -r '.choices[0].message.content')
 
-      - name: Debug JSON output
-        run: |
-          if [ -f result_comment_feedback.json ]; then
-            echo "File exists ✅"
-            cat result_comment_feedback.json
-            jq empty result_comment_feedback.json || echo "Invalid JSON! Fixing it." && echo "[]" > result_comment_feedback.json
-          else
-            echo "⚠️ File does not exist. Creating empty JSON."
-            echo "[]" > result_comment_feedback.json
-          fi
+            echo "Review Output: $REVIEW"
 
-      - name: Post comments on every commit in PR
-        if: success() || failure()
+            jq --arg file "$FILE" --arg comment "$REVIEW" \
+              '. + [{"file": $file, "comment": $comment}]' \
+              review_comments.json > temp.json && mv temp.json review_comments.json
+
+          done < changed_files.txt
+
+      - name: Post Review Comments to PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
-          REPO: ${{ github.repository }}
+          GITHUB_REPO: ${{ github.repository }}
         run: |
-          if [ -s result_comment_feedback.json ]; then
-            jq -c '.[]' result_comment_feedback.json | while IFS= read -r line; do
-              FILE=$(echo "$line" | jq -r '.file')
-              LINE=$(echo "$line" | jq -r '.line')
-              COMMENT=$(echo "$line" | jq -r '.comment')
+          jq -c '.[]' review_comments.json | while IFS= read -r line; do
+            FILE=$(echo "$line" | jq -r '.file')
+            COMMENT=$(echo "$line" | jq -r '.comment')
 
-              echo "Posting comment on $FILE at line $LINE: $COMMENT"
+            echo "Posting comment on $FILE: $COMMENT"
 
-              curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-                   -H "Accept: application/vnd.github.v3+json" \
-                   -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"line\": $LINE, \"side\": \"RIGHT\" }" \
-                   "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/comments"
-            done
-          else
-            echo "No review comments to post."
-            
-          chmod +x post_review_comments.sh
-          ./post_review_comments.sh
-          fi
-
+            curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"side\": \"RIGHT\" }" \
+                 "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER/comments"
+          done
