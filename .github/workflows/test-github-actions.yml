@@ -71,13 +71,17 @@ jobs:
           COMMIT_ID=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             "https://api.github.com/repos/$GITHUB_REPO/pulls/$PR_NUMBER" | jq -r '.head.sha')
 
-          echo "Latest commit ID: $COMMIT_ID"
-
           jq -c '.[]' review_comments.json | while IFS= read -r line; do
             FILE=$(echo "$line" | jq -r '.file')
             COMMENT=$(echo "$line" | jq -r '.comment')
             POSITION=$(echo "$line" | jq -r '.position')
             IN_REPLY_TO=$(echo "$line" | jq -r '.in_reply_to')
+
+            echo "Latest commit ID: $COMMIT_ID"
+            echo "Latest path: $FILE"
+            echo "Latest position: $POSITION"
+            echo "Latest comment: $COMMENT"
+            echo "Latest in reply to: $IN_REPLY_TO"
 
             echo "Posting comment on $FILE: $COMMENT"
 
