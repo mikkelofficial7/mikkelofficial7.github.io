@@ -13,13 +13,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Fetch last 2 commits to compare changes
 
-       - name: Find Changed Files
+      - name: Find Changed Files
         id: changed_files
         run: |
           git diff --name-only HEAD^ HEAD > changed_files.txt
           echo "Changed files:"
           cat changed_files.txt
+
+      - name: Debug PR File Changes
+        run: |
+          echo "PR Number: ${{ github.event.pull_request.number }}"
+          curl -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Accept: application/vnd.github.v3+json" \
+               "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
 
       - name: Debug - List files
         run: ls -la
@@ -63,5 +72,8 @@ jobs:
             done
           else
             echo "No review comments to post."
+            
+          chmod +x post_review_comments.sh
+          ./post_review_comments.sh
           fi
 
