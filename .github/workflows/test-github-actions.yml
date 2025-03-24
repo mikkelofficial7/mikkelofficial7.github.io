@@ -48,20 +48,31 @@ jobs:
           echo "[]" > review_comments.json
 
           while read -r FILE; do
-            [[ -f "$FILE" ]] || continue
+            [[ -f "$FILE" ]] || continue  # Skip if file doesn't exist
 
             echo "Reviewing $FILE..."
-            CONTENT=$(head -n 300 "$FILE" | jq -Rs .)  # Limit to 300 lines
+
+            # Extract only added (+) and removed (-) lines, ignore metadata
+            DIFF_CONTENT=$(git diff -U0 "$BASE_COMMIT" -- "$FILE" | grep -E '^\+|^-')
+            
+            # If no changes exist, skip review
+            if [[ -z "$DIFF_CONTENT" ]]; then
+              echo "No content changes detected in $FILE, skipping..."
+              continue
+            fi
+
+            # Convert to JSON-friendly format
+            CONTENT=$(echo "$DIFF_CONTENT" | jq -Rs .)
 
             REVIEW=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
               -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" \
               -H "Content-Type: application/json" \
               -d "{
                 \"model\": \"rekaai/reka-flash-3:free\",
-                \"messages\": [{\"role\": \"user\", \"content\": \"Review the given code and suggest improvements:\n$CONTENT\"}]
+                \"messages\": [{\"role\": \"user\", \"content\": \"Review the following code changes and suggest improvements:\n$CONTENT\"}]
               }" | jq -r '.choices[0].message.content')
 
-            echo "Review Input: $CONTENT"
+            echo "Review Input (Changed Content Only): $CONTENT"
             echo "Review Output: $REVIEW"
 
             jq --arg file "$FILE" --arg comment "$REVIEW" \
