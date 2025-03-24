@@ -20,7 +20,7 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
 
-            - name: Detect Changed Files
+      - name: Detect Changed Files
         id: changed_files
         run: |
           git fetch origin main --depth=1 || true
