@@ -1,0 +1,45 @@
+name: Enabling code review every commit changes
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up environment
+        run: |
+          sudo apt update
+          sudo apt install -y shellcheck  # Example dependency
+        
+      - name: Install dependencies
+        run: |
+          pip install flake8  # Example: Install linter (modify as needed)
+
+      - name: Run Code Review Script
+        run: |
+          ./code_review.sh | tee review_output.txt # Replace with your script name
+
+      - name: Check Linter Issues (Optional)
+        run: |
+          flake8 . --count --show-source --statistics
+
+      - name: Post review comments
+        if: success() || failure()
+        run: |
+          if [ -s review_output.txt ]; then
+            echo "Code review found issues. See details below:"
+            cat review_output.txt
+            exit 1
+          else
+            echo "No issues found in code review."
+          fi
