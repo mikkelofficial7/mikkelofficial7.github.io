@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Fetch last 2 commits to compare changes
 
       - name: Find Changed Files
         id: changed_files
