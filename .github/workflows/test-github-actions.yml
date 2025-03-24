@@ -13,8 +13,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+
+       - name: Find Changed Files
+        id: changed_files
+        run: |
+          git diff --name-only HEAD^ HEAD > changed_files.txt
+          echo "Changed files:"
+          cat changed_files.txt
 
       - name: Debug - List files
         run: ls -la
@@ -30,13 +35,13 @@ jobs:
           if [ -f result_comment_feedback.json ]; then
             echo "File exists ✅"
             cat result_comment_feedback.json
-            jq empty result_comment_feedback.json || echo "Invalid JSON! Replacing with empty array." && echo "[]" > result_comment_feedback.json
+            jq empty result_comment_feedback.json || echo "Invalid JSON! Fixing it." && echo "[]" > result_comment_feedback.json
           else
             echo "⚠️ File does not exist. Creating empty JSON."
             echo "[]" > result_comment_feedback.json
           fi
 
-      - name: Post inline comments on PR
+      - name: Post comments on every commit in PR
         if: success() || failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
