@@ -38,7 +38,7 @@ jobs:
             CONTENT=$(cat "$FILE" | jq -Rs .)  # Convert file content to JSON string
 
             REVIEW=$(curl -s -X POST "https://openrouter.ai/api/v1/chat/completions" \
-              -H "Authorization: Bearer $OPEN_ROUTER_API_KEY" \
+              -H "Authorization: $OPEN_ROUTER_API_KEY" \
               -H "Content-Type: application/json" \
               -d "{
                 \"model\": \"rekaai/reka-flash-3:free\",
