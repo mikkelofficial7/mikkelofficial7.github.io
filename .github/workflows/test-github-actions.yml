@@ -30,18 +30,22 @@ jobs:
       - name: Run code review script
         run: ./code_review.sh | tee review_output.txt
 
-      - name: Post comment if issues found
-        if: failure() || success()  # Run even if script fails
+      - name: Post inline comments on PR
+        if: success() || failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMIT_SHA: ${{ github.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
-          if [ -s review_output.txt ]; then
-            COMMENT_BODY="$(cat review_output.txt)"
-            API_URL="https://api.github.com/repos/$REPO/commits/$COMMIT_SHA/comments"
-            curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
-                 -H "Accept: application/vnd.github.v3+json" \
-                 -d "{\"body\": \"$COMMENT_BODY\"}" \
-                 $API_URL
+          if [ -s review_output.json ]; then
+            while IFS= read -r line; do
+              FILE=$(echo "$line" | jq -r '.file')
+              LINE=$(echo "$line" | jq -r '.line')
+              COMMENT=$(echo "$line" | jq -r '.comment')
+
+              curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                   -H "Accept: application/vnd.github.v3+json" \
+                   -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"line\": $LINE, \"side\": \"RIGHT\" }" \
+                   "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/comments"
+            done < review_output.json
           fi
