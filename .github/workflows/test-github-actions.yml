@@ -30,6 +30,7 @@ jobs:
           if [ -f result_comment_feedback.json ]; then
             echo "File exists ✅"
             cat result_comment_feedback.json
+            jq empty result_comment_feedback.json || echo "Invalid JSON! Replacing with empty array." && echo "[]" > result_comment_feedback.json
           else
             echo "⚠️ File does not exist. Creating empty JSON."
             echo "[]" > result_comment_feedback.json
