@@ -1,45 +1,39 @@
-name: Enabling code review every commit changes
+name: Code Review Every Commit
 
 on:
   push:
     branches:
       - main
       - develop
+      
   pull_request:
     branches:
-      - main
+      - main 
       - develop
+      
 jobs:
   review:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Set up environment
-        run: |
-          sudo apt update
-          sudo apt install -y shellcheck  # Example dependency
-        
-      - name: Install dependencies
-        run: |
-          pip install flake8  # Example: Install linter (modify as needed)
+      - name: Run code review script
+        run: ./code_review.sh | tee review_output.txt
 
-      - name: Run Code Review Script
-        run: |
-          ./code_review.sh | tee review_output.txt # Replace with your script name
-
-      - name: Check Linter Issues (Optional)
-        run: |
-          flake8 . --count --show-source --statistics
-
-      - name: Post review comments
-        if: success() || failure()
+      - name: Post comment if issues found
+        if: failure() || success()  # Run even if script fails
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ github.sha }}
+          REPO: ${{ github.repository }}
         run: |
           if [ -s review_output.txt ]; then
-            echo "Code review found issues. See details below:"
-            cat review_output.txt
-            exit 1
-          else
-            echo "No issues found in code review."
+            COMMENT_BODY="$(cat review_output.txt)"
+            API_URL="https://api.github.com/repos/$REPO/commits/$COMMIT_SHA/comments"
+            curl -X POST -H "Authorization: token $GITHUB_TOKEN" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 -d "{\"body\": \"$COMMENT_BODY\"}" \
+                 $API_URL
           fi
