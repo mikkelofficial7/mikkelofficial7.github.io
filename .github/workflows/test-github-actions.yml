@@ -1,11 +1,6 @@
-name: Code Review Every Commit
+name: Code Review Every Pull Request
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-      
   pull_request:
     branches:
       - main 
