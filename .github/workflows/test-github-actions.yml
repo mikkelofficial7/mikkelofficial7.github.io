@@ -114,7 +114,7 @@ jobs:
 
             # Ensure comment is not null
             if [[ "$COMMENT" == "null" || -z "$COMMENT" ]]; then
-              COMMENT=""
+              COMMENT="<auto-generate>No feedback for this, but a change was detected</auto-generate>"
             fi
 
             # Ensure position is valid
