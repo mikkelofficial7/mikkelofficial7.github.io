@@ -2,6 +2,7 @@
 OUTPUT_FILE="result_comment_feedback.json"
 echo "[]" > "$OUTPUT_FILE"  # Always initialize with an empty JSON array
 
+# Find TODO comments and store them in JSON format
 while IFS= read -r line; do
     FILE=$(echo "$line" | cut -d':' -f1)
     LINE_NUM=$(echo "$line" | cut -d':' -f2)
@@ -14,6 +15,5 @@ while IFS= read -r line; do
       "$OUTPUT_FILE" > "$TEMP_FILE" && mv "$TEMP_FILE" "$OUTPUT_FILE"
 done < <(grep -rnw '.' -e "TODO" || true)
 
-# Debug: Show the file after creation
-echo "Generated JSON content:"
-cat "$OUTPUT_FILE"
+# Debugging - Ensure the JSON file is valid
+cat "$OUTPUT_FILE" || echo "[]" > "$OUTPUT_FILE"
