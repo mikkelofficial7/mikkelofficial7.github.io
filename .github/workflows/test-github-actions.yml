@@ -73,4 +73,7 @@ jobs:
           else
             echo "No review comments to post."
           fi
+          |
+          chmod +x post_review_comments.sh
+          ./post_review_comments.sh
 
