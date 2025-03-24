@@ -28,7 +28,10 @@ jobs:
         run: chmod +x code_review.sh
 
       - name: Run code review script
-        run: ./code_review.sh | tee review_output.txt
+        run: ./code_review.sh | tee result_comment_feedback.txt
+
+      - name: Debug JSON output
+        run: cat result_comment_feedback.json || echo "No JSON output found."
 
       - name: Post inline comments on PR
         if: success() || failure()
@@ -37,7 +40,7 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
-          if [ -s review_output.json ]; then
+          if [ -s result_comment_feedback.json ]; then
             while IFS= read -r line; do
               FILE=$(echo "$line" | jq -r '.file')
               LINE=$(echo "$line" | jq -r '.line')
@@ -47,5 +50,5 @@ jobs:
                    -H "Accept: application/vnd.github.v3+json" \
                    -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"line\": $LINE, \"side\": \"RIGHT\" }" \
                    "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/comments"
-            done < review_output.json
+            done < result_comment_feedback.json
           fi
