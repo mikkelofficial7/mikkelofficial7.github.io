@@ -26,7 +26,14 @@ jobs:
         run: ./code_review.sh | tee result_comment_feedback.txt
 
       - name: Debug JSON output
-        run: cat result_comment_feedback.json || echo "No JSON output found."
+        run: |
+          if [ -f result_comment_feedback.json ]; then
+            echo "File exists ✅"
+            cat result_comment_feedback.json
+          else
+            echo "⚠️ File does not exist. Creating empty JSON."
+            echo "[]" > result_comment_feedback.json
+          fi
 
       - name: Post inline comments on PR
         if: success() || failure()
@@ -46,4 +53,6 @@ jobs:
                    -d "{\"body\": \"$COMMENT\", \"path\": \"$FILE\", \"line\": $LINE, \"side\": \"RIGHT\" }" \
                    "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/comments"
             done < result_comment_feedback.json
+          else
+            echo "No review comments to post."
           fi
