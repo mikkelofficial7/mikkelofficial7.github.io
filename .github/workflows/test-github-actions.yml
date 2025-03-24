@@ -20,18 +20,24 @@ jobs:
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      - name: Detect Changed Files
+            - name: Detect Changed Files
         id: changed_files
         run: |
           git fetch origin main --depth=1 || true
+          
+          # Find the base commit (merge-base between the PR branch and main)
           BASE_COMMIT=$(git merge-base HEAD origin/main || echo "")
+
+          # Ensure a valid base commit
           if [ -z "$BASE_COMMIT" ]; then
-            echo "No base commit found, listing all files..."
-            git ls-files > changed_files.txt
-          else
-            git diff --name-only "$BASE_COMMIT" > changed_files.txt || true
+            echo "No base commit found, using previous commit instead."
+            BASE_COMMIT=HEAD~1
           fi
-          echo "Changed files:"
+
+          # Get only the changed files with specific extensions
+          git diff --diff-filter=AM --name-only "$BASE_COMMIT" | grep -E '\.(html|js|css|kt|java)$' > changed_files.txt || true
+
+          echo "Filtered Changed Files:"
           cat changed_files.txt
 
       - name: Run Reka AI Code Review
