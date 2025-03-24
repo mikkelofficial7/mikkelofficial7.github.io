@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT_FILE="review_output.json"
+OUTPUT_FILE="result_comment_feedback.json"
 echo "[]" > "$OUTPUT_FILE"  # Initialize with empty JSON array
 
 while IFS= read -r line; do
