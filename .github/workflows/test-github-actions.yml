@@ -54,6 +54,7 @@ jobs:
                 \"messages\": [{\"role\": \"user\", \"content\": \"Review the given code and suggest improvements:\n$CONTENT\"}]
               }" | jq -r '.choices[0].message.content')
 
+            echo "Review Input: $CONTENT"
             echo "Review Output: $REVIEW"
 
             jq --arg file "$FILE" --arg comment "$REVIEW" \
