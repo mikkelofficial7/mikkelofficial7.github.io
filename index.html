@@ -77,6 +77,55 @@
             transition: transform 0.3s ease;
         }
 
+        .tag {
+            padding: 0.4rem 0.8rem;
+            background-color: #ffe0e0;
+            color: #cc0000;
+            border-radius: 999px;
+            margin-right: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .header-tag-group {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag:hover {
+            background-color: #f4a7a7;
+        }
+
+        @media(max-width: 520px) {
+            .header-content .header-profile-picture {
+                width: 110px;
+                height: 110px;
+                border-radius: 50%; /* Circular profile picture */
+                overflow: hidden;
+                margin-right: 2rem;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            }
+            .header-content {
+                display: flex;
+                flex-direction: column; 
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+                background-color: #f9f9f9;
+                border-bottom: 1px solid #e0e0e0;
+                text-align: center;
+                gap: 1rem;        
+            }
+            .header-tag-group {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
         /* Button Header Area */
 
         .button-list {
@@ -446,7 +495,7 @@
     <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
     <script type="text/babel">
         const nameSection = "Hi folks! My name is Mikkel Septiano";
-        const skillSection = "Coffee Junkie ☕ | Fullstack Mobile Engineer who playing around with #Java, #Kotlin, #Flutter, #React Native, #PHP";
+        const shortDetail = "Coffee Junkie ☕ | Fullstack Mobile Engineer with 6 years experiences 📱";
         const photoUrl = "https://media.licdn.com/dms/image/v2/D5603AQFKoCPssKAI2A/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1732606393962?e=1744243200&v=beta&t=YI2LkhJNXGW9RGndjHbeRFhCTnVNIAypAIYjoDRSKsw"
         const githubUrl = "https://github.com/mikkelofficial7/"
         const instagramUrl = "https://www.instagram.com/futuristech.id/"
@@ -575,7 +624,14 @@
                     <img src={photoUrl} alt="Profile Picture" className="header-profile-picture" />
                     <div className="header-user-info">
                         <div>{nameSection}</div>
-                        <div>{skillSection}</div>
+                        <div>{shortDetail}</div>
+                        <div className="header-tag-group">
+                            <span class="tag">Java</span>
+                            <span class="tag">Kotlin</span>
+                            <span class="tag">Flutter</span>
+                            <span class="tag">React Native</span>
+                            <span class="tag">PHP</span>
+                        </div>
                     </div>
                 </div>
             );
