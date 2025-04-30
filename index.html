@@ -83,8 +83,8 @@
 
         .tag {
             padding: 0.4rem 0.8rem;
-            background-color: #ffe0e0;
-            color: #cc0000;
+            background-color: #398ee4;
+            color: #e0e0e0;
             border-radius: 999px;
             margin-right: 5px;
             font-size: 14px;
@@ -100,7 +100,8 @@
         }
 
         .tag:hover {
-            background-color: #f4a7a7;
+            background-color: #2e78c1;
+            color: #e0e0e0;
         }
 
         @media(max-width: 520px) {
@@ -109,7 +110,7 @@
                 height: 110px;
                 border-radius: 50%; /* Circular profile picture */
                 overflow: hidden;
-                margin-right: 2rem;
+                margin: 1.2rem;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             }
             .header-content {
@@ -118,8 +119,6 @@
                 align-items: center;
                 justify-content: center;
                 border-radius: 10px;
-                background-color: #f9f9f9;
-                border-bottom: 1px solid #e0e0e0;
                 text-align: center;
                 gap: 1rem;        
             }
@@ -159,27 +158,27 @@
             transform: translateY(-3px);
         }
         .button-go-to-github {
-            color: white;
+            color: #cbcccd;
             background: linear-gradient(105deg, #000000, #454545e1);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-more {
-            color: white;
+            color: #cbcccd;
             background: linear-gradient(105deg, #660303, #a11414);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-linkedin {
-            color: white;
+            color: #cbcccd;
             background: linear-gradient(135deg, #004182, #8FCEEB);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-devto {
-            color: white;
+            color: #cbcccd;
             background: linear-gradient(105deg, #000000, #454545e1);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
         .button-resume {
-            color: white;
+            color: #cbcccd;
             background: linear-gradient(105deg, #3eda94, #13ab67);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         }
@@ -233,7 +232,7 @@
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
             opacity: 0; /* Initially hidden */
             background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
-            color: #ffffff;
+            color: #cbcccd;
             padding: 10px;
             border-radius: 8px;
             transition: opacity 0.3s ease; /* Smooth fade transition */
@@ -463,14 +462,13 @@
             bottom: 20px;
             right: 30px;
             background-color: #052751;
-            color: white;
+            color: #cbcccd;
             padding: 15px 20px;
             border: none;
             border-radius: 100px;
             cursor: default;
             font-size: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: opacity 0.3s ease;
         }
 
         #floatingButton:hover {
@@ -493,19 +491,26 @@
         }
         .list-format-item {
             background-color: #7e7b7b;
-            color: #ffffff;
+            color: #cbcccd;
             padding: 8px 12px;
             border-radius: 5px;
             margin: 5px;
             cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .list-format-item:hover {
+            cursor: pointer;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+            transform: scale(1.05);
+            transform: translateY(-3px);
         }
         .list-format-item-selected {
-            background-color: #000000;
-            color: #ffffff;
+            background-color: #081c2f;
+            color: #cbcccd;
             padding: 8px 12px;
             border-radius: 5px;
             margin: 5px;
-            cursor: pointer;
+            cursor: default;
         }
         @media (max-width: 587px) {
             .parent-list-format {
@@ -587,7 +592,7 @@
                 [
                     "Course Center Galileo Gasing - Payroll and Absence system", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true", 
-                    "Creating web-based payroll and absence system for teachers."
+                    "Creating web-based payroll and absence system for teachers in elementary to high school course center."
                 ],
                 [
                     "Sentiment text checker - Android app mini project", 
@@ -891,6 +896,12 @@
             const changeListType = (type) => {
                 setSelectedListType(type)
             };
+
+            React.useEffect(() => {
+                const browserWidth = window.innerWidth;
+                const defaultLayoutItemList = browserWidth > 587 ? selectedListType : dataListFormat[1];
+                setSelectedListType(defaultLayoutItemList)
+            },);
 
             return (
                 <div className="body-content-detail">
