@@ -2,10 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Mikkel - Portfolio</title>
     <link rel="icon" href="https://avatars.githubusercontent.com/u/25360843?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        body {
+            background-color: #1860a8;
+        }
         img {
             background-image: url("https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=");
         }
@@ -22,7 +25,7 @@
         #header {
             margin: 20px;
             border-radius: 10px;
-            background-color: #f0f0f0;
+            background-color: #13497f;
             padding: 15px 20px;
             display: flex;
             align-items: center;
@@ -35,9 +38,10 @@
             border-radius: 10px;
             display: flex;
             align-items: center;
-            background-color: #f9f9f9; /* Light background */
+            background-color: #0e365d; /* Light background */
             padding: 2rem;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid #000000;
+            color: #cbcccd;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
         }
 
@@ -193,14 +197,15 @@
             margin-right: 20px;
         }
         #body-content .body-content-detail {
-            background-color: #f8f8f8; /* Soft background */
+            color: #cbcccd;
+            background-color: #13497f; /* Soft background */
             border-radius: 10px;
             padding: 10px;
         }
         .title-list {
             font-size: 1.8rem;
             font-weight: 600;
-            color: #444;
+            color: #cbcccd;
             margin-left: 10px;
             margin-right: 10px;
             border-bottom: 1px solid #eee; /* Subtle divider */
@@ -238,7 +243,7 @@
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
             grid-gap: 2rem; /* Spacing between grid items */
             padding: 3rem;
-            color: #333; /* Dark text for contrast */
+            color: #cbcccd; /* Dark text for contrast */
             font-family: 'Georgia', serif; /* Elegant serif font */
         }
         .project-card-grid {
@@ -250,7 +255,7 @@
         .project-card-grid h2 {
             font-size: 16px;
             font-weight: 600;
-            color: #444;
+            color: #cbcccd;
             margin-bottom: 10px;
             border-bottom: 1px solid #eee; /* Subtle divider */
             padding-bottom: 1rem;
@@ -258,7 +263,7 @@
         .project-card-grid p {
             font-size: 1.1rem;
             line-height: 1.7;
-            color: #666;
+            color: #cbcccd;
             margin-bottom: 2rem;
         }
         .project-image-container-grid img {
@@ -287,7 +292,7 @@
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
             opacity: 0; /* Initially hidden */
             background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
-            color: #ffffff;
+            color: #cbcccd;
             padding: 10px;
             font-size: 12px;
             border-radius: 8px;
@@ -309,7 +314,7 @@
             padding: 16px;
             margin-bottom: 10px;
             border-radius: 12px;
-            background: #ffffff;
+            background: #cbcccd;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -349,6 +354,23 @@
             font-weight: bold;
             color: #333;
             margin: 0;
+        }
+
+        .project-title-grid {
+            text-align: center;
+            align-items: center;
+            min-height: 60px;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; 
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-description-grid {
+            margin-top: 15px;
+            text-align: center;
         }
 
         .project-description-linear {
@@ -715,7 +737,15 @@
                 </div>
             );
         }
+
         function BodyContentProject({ listType }) {
+            React.useEffect(() => {
+                const titles = document.querySelectorAll('.project-title-grid');
+
+                // Apply trimText to each element
+                titles.forEach(el => trimTextAndSetEllipsize(el, 3));
+            }, [listType]);
+            
             // Close and open modal
             const [selectedItem, setSelectedItem] = React.useState(null);
             const openModal = (item) => {
@@ -746,7 +776,7 @@
                             listType === dataListFormat[0] ? (
                                 dataProjects.map((item, index) => (
                                     <div className="project-card-grid" key={index}>
-                                        <h2 className="project-title-grid">{item[0]}</h2>
+                                        <h2 className="project-title-grid">{ item[0] }</h2>
                                         <div className="project-image-container-grid">
                                             <img src={item[1]}></img>
                                             <div className={item.length > 3 ? "project-image-overlay-blur-grid force-center-top" : "project-image-overlay-blur-grid force-center"} key={index} onClick={() => openModal(item)}>See fullscreen</div>
@@ -793,6 +823,7 @@
                 </div>
             );
         }
+                                
         function BodyContentVoluntary({ listType }) {
             return(
                 <div className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
@@ -829,6 +860,30 @@
                     }
                 </div>
             );
+        }
+
+        function trimTextAndSetEllipsize(el, maxLines = 3) {
+            if (!el) {
+                console.error('Element not found');
+                return;
+            }
+
+            // Get the text content of the element and trim any extra spaces
+            let text = el.textContent.trim();
+
+            // Calculate the approximate maxHeight based on line height and maxLines
+            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
+            const maxHeight = lineHeight * maxLines;
+
+            el.textContent = text;  // Reset the original content
+
+            // If the text exceeds the container height, trim it
+            while (el.scrollHeight > maxHeight && text.length > 0) {
+                text = text.slice(0, -1);
+                el.textContent = text + '...';
+            }
+
+            return el.textContent;  // Return the updated text
         }
         
         function BodyContentProjectAndVolunteerWithListType() {
