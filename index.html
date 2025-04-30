@@ -10,7 +10,10 @@
             background-color: #1860a8;
         }
         img {
-            background-image: url("https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=");
+            background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
         }
         #parent {
             width: 100%;
@@ -783,7 +786,7 @@
                                     <div className="project-card-grid" key={index}>
                                         <h2 className="project-title-grid">{ item[0] }</h2>
                                         <div className="project-image-container-grid">
-                                            <img src={item[1]}></img>
+                                            <img src={item[1]} alt={ item[0] }></img>
                                             <div className={item.length > 3 ? "project-image-overlay-blur-grid force-center-top" : "project-image-overlay-blur-grid force-center"} key={index} onClick={() => openModal(item)}>See fullscreen</div>
                                                 {
                                                     item.length > 3 && (
@@ -802,7 +805,7 @@
                                 dataProjects.map((item, index) => (
                                     <div className="project-card-linear" key={index}>
                                         <div className="project-image-container-linear">
-                                            <img src={item[1]}></img>
+                                            <img src={item[1]} alt={ item[0] }></img>
                                             <div className="project-image-overlay-blur-linear" key={index} onClick={() => openModal(item)}>See fullscreen</div>
                                         </div>
                                         <div>
@@ -838,7 +841,7 @@
                                 <div className="project-card-grid" key={index}>
                                     <h2 className="project-title-grid">{item[0]}</h2>
                                     <div className="project-image-container-grid">
-                                        <img src={item[1]}></img>
+                                        <img src={item[1]} alt={ item[0] }></img>
                                         <div className="project-image-overlay-blur-grid force-center" key={index}>
                                             <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
                                         </div>
@@ -850,7 +853,7 @@
                             dataVoluntary.map((item, index) => (
                                 <div className="project-card-linear" key={index}>
                                     <div className="project-image-container-linear">
-                                        <img src={item[1]}></img>
+                                        <img src={item[1]} alt={ item[0] }></img>
                                         <div className="project-image-overlay-blur-linear" key={index}>
                                             <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
                                         </div>
