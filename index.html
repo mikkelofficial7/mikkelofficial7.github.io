@@ -252,33 +252,23 @@
             border-bottom: 1px solid #eee; /* Subtle divider */
             padding-bottom: 1rem;
         }
-        .force-center {
-            top: 200px;
-            left: 50%;
-        }
-    
-        .force-center-top {
-            top: 160px;
-            left: 50%;
-        }
-
-        .force-center-bottom {
-            top: 230px;
-            left: 50%;
-        }
 
         .project-image-overlay-blur-grid {
             position: absolute;
-            transform: translate(-50%, -50%);
+            left: 50%;
+            justify-content: center; /* Center horizontally */
+            align-items: center; 
             z-index: 1; /* Place this div in front */
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-            opacity: 0; /* Initially hidden */
-            background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
-            color: #cbcccd;
-            padding: 10px;
             border-radius: 8px;
-            transition: opacity 0.3s ease; /* Smooth fade transition */
         }
+        .translate-vertical-90 {
+            transform: translate(-50%, -90%);
+        }
+
+        .translate-vertical-150 {
+            transform: translate(-50%, -150%);
+        }
+
         .project-list-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
@@ -302,7 +292,6 @@
             padding-bottom: 1rem;
         }
         .project-card-grid p {
-            font-size: 1.1rem;
             line-height: 1.7;
             color: #cbcccd;
             margin-bottom: 2rem;
@@ -320,7 +309,7 @@
         .project-image-container-grid:hover img {
             filter: blur(5px); /* Apply blur on hover */
         }
-        .project-image-container-grid:hover .project-image-overlay-blur-grid {
+        .project-image-container-grid:hover .project-image-overlay-button {
             cursor: pointer;
             opacity: 1; /* Show overlay on hover */
         }
@@ -339,7 +328,7 @@
             color: #cbcccd;
             padding: 10px;
             z-index: 1; /* Place this div in front */
-            font-size: 10px;
+            font-size: 11px;
             border-radius: 8px;
             transition: opacity 0.3s ease; /* Smooth fade transition */
         }
@@ -867,16 +856,10 @@
                                         <h2 className="project-title-grid">{ item[0] }</h2>
                                         <div className="project-image-container-grid">
                                             <img src={item[1]} alt={ item[0] }></img>
-                                            <div className={item.length > 3 ? "project-image-overlay-blur-grid force-center-top" : "project-image-overlay-blur-grid force-center"} key={index} onClick={() => openModal(item)}>See fullscreen</div>
-                                                {
-                                                    item.length > 3 && (
-                                                        <div className="project-image-overlay-blur-grid force-center-bottom">
-                                                            <a href={item[3]} target="_blank" rel="noopener noreferrer">
-                                                                Visit Page
-                                                            </a>
-                                                        </div>
-                                                    )
-                                                }
+                                            <div className="project-image-overlay-blur-grid translate-vertical-90" key={index}>
+                                                <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
+                                                <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                            </div>
                                         </div>
                                         <p className="project-description-grid">{item[2]}</p>
                                         <ul className="header-tag-group-small">
@@ -946,8 +929,8 @@
                                     <h2 className="project-title-grid">{item[0]}</h2>
                                     <div className="project-image-container-grid">
                                         <img src={item[1]} alt={ item[0] }></img>
-                                        <div className="project-image-overlay-blur-grid force-center" key={index}>
-                                            <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
+                                        <div className="project-image-overlay-blur-grid translate-vertical-150" key={index}>
+                                            <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
                                         </div>
                                     </div>
                                     <p className="project-description-grid">{item[2]}</p>
@@ -959,7 +942,6 @@
                                     <div className="project-image-container-linear">
                                         <img src={item[1]} alt={ item[0] }></img>
                                         <div className="project-image-overlay-blur-linear" key={index}>
-                                            <div className="space-top"></div>
                                             <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
                                         </div>
                                     </div>
