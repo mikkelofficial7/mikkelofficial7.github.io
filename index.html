@@ -454,14 +454,15 @@
 
         .contact-body {
             position: relative;
-            width: 50%;
+            width: 100%;
             margin: 0 auto;
             align-items: center; 
+            display: flex; 
+            justify-content: center; 
         }
         .contact-bottom {
             display: inline-block;
             text-align: center;
-            flex: 1 1 250px; /* Distribute space, minimum width */
             margin-bottom: 20px;
         }
         .contact-mail-me {
@@ -471,12 +472,25 @@
             position: relative;
         }
 
-        @media (max-width: 1094px) {
-            .contact-mail-me {
-                left: 40%;
+        @media (max-width: 690px) {
+            .contact-body {
+                position: relative;
+                width: 100%;
+                margin: 0 auto;
+                align-items: center; 
+                display: grid; 
+                justify-content: center; 
             }
-            .contact-bottom {
+            .contact-mail-me {
+                display: flex;
+                justify-content: center;
+                position: relative;
+                background-color: #0e365d;
+                padding: 10px;
+                font-size: 20px;
+                margin-left: 0px;
                 margin-bottom: 10px;
+                border-radius: 8px;
             }
         }
 
@@ -1016,7 +1030,7 @@
                     <span className="contact-bottom">{contactDetail}</span>
                     <span className="contact-mail-me">
                         <a href={contactUrl} className="mail-me">
-                            <i className="fa-regular fa-envelope"></i> email
+                            <i className="fa-regular fa-envelope"></i> Email
                         </a>
                     </span>
                 </div>
