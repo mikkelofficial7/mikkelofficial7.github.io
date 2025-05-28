@@ -97,7 +97,12 @@
             transform: scale(1.13);
             transition: transform 0.3s ease;
         }
-
+        .header-tag-group {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
         .tag {
             padding: 0.4rem 0.8rem;
             background-color: #398ee4;
@@ -109,14 +114,30 @@
             transition: transform 0.3s;
             cursor: pointer;
         }
-        .header-tag-group {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
+        .tag:hover {
+            background-color: #2e78c1;
+            transform: scale(1.13);
+            color: #e0e0e0;
         }
 
-        .tag:hover {
+        .header-tag-group-small {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .tag-small {
+            padding: 0.2rem 0.4rem;
+            background-color: #398ee4;
+            color: #e0e0e0;
+            border-radius: 999px;
+            margin-right: 5px;
+            font-size: 11px;
+            white-space: nowrap;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .tag-small:hover {
             background-color: #2e78c1;
             transform: scale(1.13);
             color: #e0e0e0;
@@ -397,10 +418,6 @@
             margin-top: 6px;
         }
 
-        @media (max-width: 480px) {
-            
-        }
-
         /* Modal Area */
 
         .modal-full {
@@ -580,74 +597,100 @@
                 [
                     "Rupiah Cepat (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true", 
-                    "Financial Institution (Peer-to-peer lending) App"
+                    "Building an Android Apps for Financial Institution (Peer-to-peer lending) App with Loan and Investment side features",
+                    "",
+                    "Java (Android);Retrofit;MVVM;RxJava;Dagger2;Firebase;CustomUI"
                 ],
                 [
                     "Yesdok (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true", 
-                    "Health care and telemedicine App"
+                    "Building an Android Apps for Health care and telemedicine App of Altea Care (part of Mitra Keluarga)",
+                    "",
+                    "Java (Android);Kotlin (Android);Retrofit;MVP;RxJava;Dagger2;OneSignal;Appsflyer;CustomUI"
                 ],
                 [
                     "AlteaCare (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true", 
-                    "Health care and telemedicine App"
+                    "Building an Android Apps for Health care and telemedicine App YesDok Indonesia (now acquired by Singapore)",
+                    "",
+                    "Kotlin (Android);Retrofit;MVVM;RxJava;Coroutine;Firebase;Dagger2;Koin;CustomUI"
                 ],
                 [
                     "LINE Bank (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.jpg?raw=true", 
-                    "A Leading South Korea Digital Banking by KEB Hana"
+                    "Building an Android Apps for LINE Bank, a Leading South Korea Digital Banking by KEB Hana",
+                    "",
+                    "Kotlin (Android);Retrofit;MVVM;Coroutine;Firebase;CustomUI"
                 ],
                 [
                     "Spoticlone - A Music Player inspired by Spotify", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/14.png?raw=true", 
-                    "An Android Music Player inspired by Spotify with embedded gemini-2.0-flash AI-Model for daily-vibe tracks/playlists suggestion",
-                    "https://github.com/mikkelofficial7/android-spotify-clone"
+                    "An Android Music Player with Spotify UI-Look (inspired by Spotify) with embedded gemini-2.0-flash AI-Model for daily-vibe tracks/playlists suggestion",
+                    "https://github.com/mikkelofficial7/android-spotify-clone",
+                    "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Exoplayer;JetpackCompose;GeminiAI"
                 ],
                 [
                     "Sama Sama Apps - C2C e-commerce secondhand product", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true", 
-                    "​Building mobile android and web service for B2C Thrift-based marketplace similar to OLX."
+                    "​Building mobile android and web service for backend for B2C Thrift-based marketplace similar to OLX. We're using Springboot Java and Google Cloud Platform for Backend",
+                    "",
+                    "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Springboot (Java);Google Cloud Platform (GCP);PostgresQL"
                 ],
                 [
                     "WebApp for car maintenance warehouse - Denso Kranji", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.jpg?raw=true", 
-                    "Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java."
+                    "Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java.",
+                    "",
+                    "PHP 7;Codeigniter 3; Javascript;HTML 5 + CSS 3; JQuery;MYSQL"
                 ],
                 [
                     "Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true", 
-                    "Building mobile and web app for Tokoku sembako commerce, where user can buy their daily needs on their smartphone."
+                    "Building mobile and web app for Tokoku sembako commerce, where user can buy their daily needs on their smartphone.",
+                    "",
+                    "Android (Java);MVP;Dagger2;Retrofit PHP 5;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
                 ],
                 [
                     "Guruloka - E-learning system", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true", 
-                    "Online-to-offline web based e-learning system which bridge between student and teacher with various subject and learn by online."
+                    "Online-to-offline web based e-learning system which bridge between student and teacher with various subject and learn by online.",
+                    "",
+                    "PHP 5; Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
                 ],
                 [
                     "Course Center Galileo Gasing - Payroll and Absence system", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true", 
-                    "Creating web-based payroll and absence system for teachers in elementary to high school course center."
+                    "Creating web-based payroll and absence system for teachers in elementary to high school course center.",
+                    "",
+                    "PHP 5;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
                 ],
                 [
                     "Sentiment text checker - Android app mini project", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true", 
                     "Create a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meanings (test from Microsoft Student Partner Ambassador).",
-                    "https://github.com/mikkelofficial7/Xamarin.android-Sentiment-Recognition-Text"
+                    "https://github.com/mikkelofficial7/Xamarin.android-Sentiment-Recognition-Text",
+                    ".NET MAUI;Xamarin (Android);C#;Azure;SQL Server;Microsoft Vision AI"
                 ],
                 [
                     "Movi Snap - Search Movie anytime", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true", 
-                    "Creating web-based movie search engine with TMDB API using Vanilla JS, Ajax and JQuery"
+                    "Creating web-based movie search engine with TMDB API using Vanilla JS, Ajax and JQuery",
+                    "",
+                    "Javascript;HTML 5 + CSS 3;JQuery;AJAX"
                 ],
                 [
                     "Android-Based QR scanner (For campus purpose)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true", 
-                    "Create an Android application to scan event attendance with a QR code scanner."
+                    "Create an Android application to scan event attendance with a QR code scanner.",
+                    "",
+                    "Java (Android);Geolocation;Firebase"
                 ],
                 [
                     "Web-Based Social Media (.NET)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true", 
-                    "Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI"
+                    "Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI",
+                    "",
+                    "ASP.NET;C#;SQL Server;Microsoft Vision AI"
                 ]
             ];
         const dataVoluntary = [
@@ -830,6 +873,16 @@
                                                 }
                                         </div>
                                         <p className="project-description-grid">{item[2]}</p>
+                                        <ul className="header-tag-group-small">
+                                                {
+                                                    (() => {
+                                                        const tagNotEmpty = item[4] ? item[4].split(";") : [];
+                                                            return tagNotEmpty.map((tag, index) => (
+                                                                <li className="tag-small" key={index}>{tag}</li>
+                                                            ));
+                                                     })()
+                                                }
+                                            </ul>
                                     </div>
                                 ))
                             ) : (
@@ -842,6 +895,16 @@
                                         <div>
                                             <h2 className="project-title-linear">{item[0]}</h2>
                                             <p className="project-description-linear">{item[2]}</p>
+                                            <ul className="header-tag-group-small">
+                                                {
+                                                    (() => {
+                                                        const tagNotEmpty = item[4] ? item[4].split(";") : [];
+                                                            return tagNotEmpty.map((tag, index) => (
+                                                                <li className="tag-small" key={index}>{tag}</li>
+                                                            ));
+                                                     })()
+                                                }
+                                            </ul>
                                         </div>
                                     </div>
                                 ))
