@@ -397,6 +397,10 @@
             margin-top: 6px;
         }
 
+        @media (max-width: 480px) {
+            
+        }
+
         /* Modal Area */
 
         .modal-full {
@@ -806,7 +810,7 @@
 
             return(
                 <div>
-                    <div className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
+                    <div className={listType === dataListFormat[1] ? "project-list-linear" : "project-list-grid"}>
                         {
                             listType === dataListFormat[0] ? (
                                 dataProjects.map((item, index) => (
@@ -922,14 +926,14 @@
         }
         
         function BodyContentProjectAndVolunteerWithListType() {
-            const [selectedListType, setSelectedListType] = React.useState(dataListFormat[0]);
+            const [selectedListType, setSelectedListType] = React.useState(dataListFormat[1]);
             const changeListType = (type) => {
                 setSelectedListType(type)
             };
 
             React.useEffect(() => {
                 const browserWidth = window.innerWidth;
-                const defaultLayoutItemList = browserWidth > 587 ? selectedListType : dataListFormat[1];
+                const defaultLayoutItemList = browserWidth > 587 ? selectedListType : dataListFormat[0];
                 setSelectedListType(defaultLayoutItemList)
             },);
 
