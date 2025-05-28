@@ -104,6 +104,7 @@
             margin-top: 10px;
             display: flex;
             flex-wrap: wrap;
+            opacity: 1;
             gap: 0.5rem;
         }
         .tag {
@@ -113,6 +114,7 @@
             border-radius: 999px;
             margin-right: 5px;
             font-size: 14px;
+            opacity: 1;
             white-space: nowrap;
             transition: transform 0.3s;
             cursor: pointer;
@@ -355,9 +357,26 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .project-card-linear:hover  {
+        .project-card-linear-full:hover  {
             transform: translateY(-4px);
             box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card-linear-full {
+            position: relative;
+        }
+
+        .project-card-linear-full span {
+            position: absolute;
+            opacity: 0.15;
+            height: 100%;
+        }
+
+        .project-card-linear-full span img {
+            height: 100%;
+            width: 200px;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
         }
 
         .project-image-container-linear {
@@ -411,7 +430,7 @@
 
         .project-description-linear {
             font-size: 1rem;
-            color: #666;
+            color: #000000;
             margin-top: 6px;
         }
 
@@ -471,6 +490,10 @@
             margin-bottom: 20px;
             position: relative;
         }
+        .contact-mail-me:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+        }
 
         @media (max-width: 690px) {
             .contact-body {
@@ -491,6 +514,10 @@
                 margin-left: 0px;
                 margin-bottom: 10px;
                 border-radius: 8px;
+            }
+            .contact-mail-me:hover {
+                box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+                transform: translateY(-3px);
             }
         }
 
@@ -892,28 +919,31 @@
                                 ))
                             ) : (
                                 dataProjects.map((item, index) => (
-                                    <div className="project-card-linear" key={index}>
-                                        <div className="project-image-container-linear">
-                                            <img src={item[1]} alt={ item[0] }></img>
-                                            <div className="project-image-overlay-blur-linear" key={index}>
-                                                <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
-                                                <div className="space-top"></div>
-                                                <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                    <div className="project-card-linear-full" key={index}>
+                                        <span><img src={item[1]} alt={ item[0] }></img></span>
+                                        <div className="project-card-linear">
+                                            <div className="project-image-container-linear">
+                                                <img src={item[1]} alt={ item[0] }></img>
+                                                <div className="project-image-overlay-blur-linear" key={index}>
+                                                    <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
+                                                    <div className="space-top"></div>
+                                                    <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <h2 className="project-title-linear">{item[0]}</h2>
-                                            <p className="project-description-linear">{item[2]}</p>
-                                            <ul className="header-tag-group-small">
-                                                {
-                                                    (() => {
-                                                        const tagNotEmpty = item[4] ? item[4].split(";") : [];
-                                                            return tagNotEmpty.map((tag, index) => (
-                                                                <li className="tag-small" key={index}>{tag}</li>
-                                                            ));
-                                                     })()
-                                                }
-                                            </ul>
+                                            <div>
+                                                <h2 className="project-title-linear">{item[0]}</h2>
+                                                <p className="project-description-linear">{item[2]}</p>
+                                                <ul className="header-tag-group-small">
+                                                    {
+                                                        (() => {
+                                                            const tagNotEmpty = item[4] ? item[4].split(";") : [];
+                                                                return tagNotEmpty.map((tag, index) => (
+                                                                    <li className="tag-small" key={index}>{tag}</li>
+                                                                ));
+                                                        })()
+                                                    }
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 ))
@@ -954,16 +984,19 @@
                             ))
                         ) : (
                             dataVoluntary.map((item, index) => (
-                                <div className="project-card-linear" key={index}>
-                                    <div className="project-image-container-linear">
-                                        <img src={item[1]} alt={ item[0] }></img>
-                                        <div className="project-image-overlay-blur-linear" key={index}>
-                                            <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                <div className="project-card-linear-full" key={index}>
+                                    <span><img src={item[1]} alt={ item[0] }></img></span>
+                                    <div className="project-card-linear" key={index}>
+                                        <div className="project-image-container-linear">
+                                            <img src={item[1]} alt={ item[0] }></img>
+                                            <div className="project-image-overlay-blur-linear" key={index}>
+                                                <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <h2 className="project-title-linear">{item[0]}</h2>
-                                        <p className="project-description-linear">{item[2]}</p>
+                                        <div>
+                                            <h2 className="project-title-linear">{item[0]}</h2>
+                                            <p className="project-description-linear">{item[2]}</p>
+                                        </div>
                                     </div>
                                 </div>
                             ))
