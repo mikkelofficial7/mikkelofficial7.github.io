@@ -261,12 +261,12 @@
             z-index: 1; /* Place this div in front */
             border-radius: 8px;
         }
-        .translate-vertical-90 {
-            transform: translate(-50%, -90%);
-        }
-
         .translate-vertical-150 {
             transform: translate(-50%, -150%);
+        }
+
+        .translate-vertical-250 {
+            transform: translate(-50%, -250%);
         }
 
         .project-list-grid {
@@ -288,13 +288,15 @@
             font-weight: 600;
             color: #cbcccd;
             margin-bottom: 10px;
-            border-bottom: 1px solid #eee; /* Subtle divider */
-            padding-bottom: 1rem;
+            border-bottom: 1px solid transparent; /* Subtle divider */
+            background-color: #081c2f;
+            padding: 10px;
+            border-radius: 10px;
         }
         .project-card-grid p {
             line-height: 1.7;
             color: #cbcccd;
-            margin-bottom: 2rem;
+            margin-bottom: 10px;
         }
         .project-image-container-grid img {
             top: 20px;
@@ -324,7 +326,7 @@
             text-align: center;
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
             opacity: 0; /* Initially hidden */
-            background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
+            background: linear-gradient(105deg, #1860a8, #062e57);
             color: #cbcccd;
             padding: 10px;
             z-index: 1; /* Place this div in front */
@@ -393,7 +395,7 @@
         .project-title-grid {
             text-align: center;
             align-items: center;
-            min-height: 60px;
+            min-height: 40px;
             margin-bottom: 10px;
             display: -webkit-box;
             -webkit-line-clamp: 2; 
@@ -662,7 +664,7 @@
                 [
                     "Sentiment text checker - Android app mini project", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true", 
-                    "Create a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meanings (test from Microsoft Student Partner Ambassador).",
+                    "Created a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meanings (selection test from Microsoft Student Partner Ambassador).",
                     "https://github.com/mikkelofficial7/Xamarin.android-Sentiment-Recognition-Text",
                     ".NET MAUI;Xamarin (Android);C#;Azure;SQL Server;Microsoft Vision AI"
                 ],
@@ -674,16 +676,16 @@
                     "Javascript;HTML 5 + CSS 3;JQuery;AJAX"
                 ],
                 [
-                    "Android-Based QR scanner (For campus purpose)", 
+                    "Android-Based QR scanner", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true", 
-                    "Create an Android application to scan event attendance with a QR code scanner.",
+                    "Created an Android application to scan event attendance with a QR code scanner. This was for Internal campus event purpose at Kwik Kian Gie",
                     "",
                     "Java (Android);Geolocation;Firebase"
                 ],
                 [
                     "Web-Based Social Media (.NET)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true", 
-                    "Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI",
+                    "Built Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI. This project was for My Bachelor Thesis.",
                     "",
                     "ASP.NET;C#;SQL Server;Microsoft Vision AI"
                 ]
@@ -856,7 +858,7 @@
                                         <h2 className="project-title-grid">{ item[0] }</h2>
                                         <div className="project-image-container-grid">
                                             <img src={item[1]} alt={ item[0] }></img>
-                                            <div className="project-image-overlay-blur-grid translate-vertical-90" key={index}>
+                                            <div className="project-image-overlay-blur-grid translate-vertical-150" key={index}>
                                                 <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
                                                 <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
                                             </div>
@@ -929,7 +931,7 @@
                                     <h2 className="project-title-grid">{item[0]}</h2>
                                     <div className="project-image-container-grid">
                                         <img src={item[1]} alt={ item[0] }></img>
-                                        <div className="project-image-overlay-blur-grid translate-vertical-150" key={index}>
+                                        <div className="project-image-overlay-blur-grid translate-vertical-250" key={index}>
                                             <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
                                         </div>
                                     </div>
