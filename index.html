@@ -9,6 +9,9 @@
         body {
             background-color: #1860a8;
         }
+        .space-top {
+            margin-top: 10px;
+        }
         .sticky-background {
             position: fixed;
             top: 0;
@@ -325,15 +328,18 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            text-align: center;
             transform: translate(-50%, -50%);
             z-index: 1; /* Place this div in front */
+        }
+        .project-image-overlay-button {
+            text-align: center;
             background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
             opacity: 0; /* Initially hidden */
             background: linear-gradient(105deg, #4d4d4d, #b5b4b4e1);
             color: #cbcccd;
             padding: 10px;
-            font-size: 12px;
+            z-index: 1; /* Place this div in front */
+            font-size: 10px;
             border-radius: 8px;
             transition: opacity 0.3s ease; /* Smooth fade transition */
         }
@@ -383,7 +389,7 @@
         .project-image-container-linear:hover img {
             filter: blur(5px); /* Apply blur on hover */
         }
-        .project-image-container-linear:hover .project-image-overlay-blur-linear {
+        .project-image-container-linear:hover .project-image-overlay-button {
             cursor: pointer;
             opacity: 1; /* Show overlay on hover */
         }
@@ -890,7 +896,11 @@
                                     <div className="project-card-linear" key={index}>
                                         <div className="project-image-container-linear">
                                             <img src={item[1]} alt={ item[0] }></img>
-                                            <div className="project-image-overlay-blur-linear" key={index} onClick={() => openModal(item)}>See fullscreen</div>
+                                            <div className="project-image-overlay-blur-linear" key={index}>
+                                                <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
+                                                <div className="space-top"></div>
+                                                <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                            </div>
                                         </div>
                                         <div>
                                             <h2 className="project-title-linear">{item[0]}</h2>
@@ -949,7 +959,8 @@
                                     <div className="project-image-container-linear">
                                         <img src={item[1]} alt={ item[0] }></img>
                                         <div className="project-image-overlay-blur-linear" key={index}>
-                                            <a href={item[3]} target="_blank" rel="noopener noreferrer">Find More</a>
+                                            <div className="space-top"></div>
+                                            <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
                                         </div>
                                     </div>
                                     <div>
