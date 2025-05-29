@@ -9,6 +9,43 @@
         body {
             background-color: #1860a8;
         }
+        #branch-tree-section {
+            position: absolute;
+            margin-right: 15px;
+            right: 0;
+        }
+        .branch-tree-content {
+            position: fixed;
+        }
+        .round-icon {
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+            margin-top: auto;
+            margin-bottom: auto;
+            background-color: #cbcccd;  /* Green background */
+            color: white;               /* Icon/text color */
+            border-radius: 50%;         /* Makes it a circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Optional shadow */
+        }
+        .item-tree {
+            display: inline-flex;
+            color: #cbcccd;
+            background-color: #001225;
+            border-radius: 8px;
+            padding: 8px;
+        }
+        .vertical-line-tree {
+            width: 2px;          
+            height: 20px;         
+            background-color: #cbcccd;
+            margin-left: 12px;
+        }
         .space-top {
             margin-top: 10px;
         }
@@ -37,6 +74,7 @@
             margin: 0 auto;
         }
         #child {
+            position: relative;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -234,6 +272,23 @@
             }
         }
 
+        @media (max-width: 1400px) and (min-width: 711px) {
+            #child {
+                position: relative;
+                margin: 0 110px;
+            }
+        }
+
+        @media (max-width: 710px) {
+            #child {
+                position: relative;
+                margin: 0 auto;
+            }
+            #branch-tree-section {
+                display: none;
+            }
+        }
+
         /* Button Header Area */
 
         .button-list {
@@ -243,7 +298,7 @@
 
         #button-up {
             display: inline-block;
-            padding: 12px 24px;
+            padding: 12px 10px;
             font-size: 13px;
             margin: 5px;
             font-weight: bold;
@@ -675,6 +730,7 @@
     <div class="sticky-background"></div>
     <div id="parent">
         <div id="child">
+            <div id="branch-tree-section"></div>
             <div id="header"></div>
             <div id="body-content"></div>
             <div id="footer"></div>
@@ -869,6 +925,43 @@
         const listFormatShowAs = "Show as"
         const dataListFormat = ["Grid", "Linear"]
 
+        function ButtonSectionTree() {
+            const scrollToHeader = () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                });
+            };
+            const scrollToExperience = () => {
+                document.getElementById("section-experience").scrollIntoView({
+                    behavior: "smooth"
+                });
+            };
+            const scrollToProject = () => {
+                document.getElementById("section-project").scrollIntoView({
+                    behavior: "smooth"
+                });
+            };
+            const scrollToVoluntary = () => {
+                document.getElementById("section-voluntary").scrollIntoView({
+                    behavior: "smooth"
+                });
+            };
+
+            return (
+                <div className="branch-tree-content">
+                    <div className="space-top"/>
+                    <div className="item-tree" onClick={scrollToHeader}><div class="round-icon"/> Headline</div>
+                    <div className="vertical-line-tree"></div>
+                    <button className="item-tree" onClick={scrollToExperience}><div class="round-icon"/> Experiences</button>
+                    <div className="vertical-line-tree"></div>
+                    <div className="item-tree" onClick={scrollToProject}><div class="round-icon"/> Projects</div>
+                    <div className="vertical-line-tree"></div>
+                    <div className="item-tree" onClick={scrollToVoluntary}><div class="round-icon"/> Voluntaries</div>
+                </div>
+            );
+        }
+
         function Header() {
             return (
                 <div className="header-content">
@@ -935,7 +1028,7 @@
 
         function LastOrCurrentCompany() {
             return (
-                <div className="parent-list-last-company">
+                <section id="section-experience" className="parent-list-last-company">
                 {
                     lastCompanyData.map((item, index) => (
                         <div className="last-company-content">
@@ -949,7 +1042,7 @@
                         </div>
                     ))
                 }
-                </div>
+                </section>
             );
         }
 
@@ -1001,7 +1094,7 @@
 
             return(
                 <div>
-                    <div className={listType === dataListFormat[1] ? "project-list-linear" : "project-list-grid"}>
+                    <section id="section-project" className={listType === dataListFormat[1] ? "project-list-linear" : "project-list-grid"}>
                         {
                             listType === dataListFormat[0] ? (
                                 dataProjects.map((item, index) => (
@@ -1059,7 +1152,7 @@
                                 ))
                             )
                         }
-                    </div>
+                    </section>
                     {
                         selectedItem && showDialog && (
                             <div className="modal-full" onClick={() => closeModal()}>
@@ -1077,7 +1170,7 @@
                                 
         function BodyContentVoluntary({ listType }) {
             return(
-                <div className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
+                <section id="section-voluntary" className={listType === dataListFormat[0] ? "project-list-grid" : "project-list-linear"}>
                     {
                         listType === dataListFormat[0] ? (
                             dataVoluntary.map((item, index) => (
@@ -1112,7 +1205,7 @@
                             ))
                         )
                     }
-                </div>
+                </section>
             );
         }
 
@@ -1217,6 +1310,13 @@
                 </footer>
             );
         }
+
+        ReactDOM.createRoot(document.getElementById('branch-tree-section')).render(
+            <div>
+                <ButtonSectionTree />
+            </div>
+        );
+
 
         ReactDOM.createRoot(document.getElementById('header')).render(
             <div>
