@@ -747,7 +747,7 @@
     <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
     <script type="text/babel">
         const nameSection = "Hi folks! My name is Mikkel Septiano";
-        const shortDetail = "Coffee Junkie ☕ | Fullstack Mobile Engineer with 6 years experiences 📱";
+        const shortDetail = "Coffee Junkie ☕ | Fullstack Mobile Engineer with more than 6 years experiences 📱";
         const photoUrl = "https://avatars.githubusercontent.com/u/25360843?v=4"
         const githubUrl = "https://github.com/mikkelofficial7/"
         const instagramUrl = "https://www.instagram.com/futuristech.id/"
@@ -987,10 +987,12 @@
                         <div>{nameSection}</div>
                         <div>{shortDetail}</div>
                         <div className="header-tag-group">
-                            <span class="tag">Java</span>
-                            <span class="tag">Kotlin</span>
+                            <span class="tag">Java (Android)</span>
+                            <span class="tag">Kotlin (Android)</span>
+                            <span class="tag">Java (Springboot)</span>
                             <span class="tag">Flutter</span>
                             <span class="tag">React Native</span>
+                            <span class="tag">React Js</span>
                             <span class="tag">PHP</span>
                         </div>
                     </div>
@@ -1328,13 +1330,6 @@
             );
         }
 
-        ReactDOM.createRoot(document.getElementById('branch-tree-section')).render(
-            <div>
-                <ButtonSectionTree />
-            </div>
-        );
-
-
         ReactDOM.createRoot(document.getElementById('header')).render(
             <div>
                 <Header />
@@ -1354,6 +1349,12 @@
 
         ReactDOM.createRoot(document.getElementById('footer')).render(
             <Footer />
+        );
+
+        ReactDOM.createRoot(document.getElementById('branch-tree-section')).render(
+            <div>
+                <ButtonSectionTree />
+            </div>
         );
     </script>
 </html>
