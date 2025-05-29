@@ -65,38 +65,71 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
         }
 
+        .parent-list-last-company {
+            margin-bottom: 20px;
+        }
+
+        .last-company-content {
+            border-radius: 10px;
+            display: flex;
+            align-items: flex-start;
+            background-color: #0e365d; /* Light background */
+            padding: 2rem;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #000000;
+            color: #cbcccd;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+        }
+
         .header-content .header-profile-picture {
             width: 130px;
-            height: 110px;
+            aspect-ratio: 1 / 1;
             border-radius: 50%; /* Circular profile picture */
             overflow: hidden;
             margin-right: 2rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
+        
+        .last-company-content .last-company-picture {
+            width: 300px;
+            height: 100px;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%; /* Circular profile picture */
+            margin-right: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
 
-        .header-content .header-profile-picture img {
+        .header-content .header-profile-picture img, .last-company-content .last-company-picture img {
             width: 100%;
             height: 100%;
             object-fit: cover; /* Maintain aspect ratio */
         }
 
-        .header-content .header-user-info {
+        .header-content .header-user-info, .last-company-content .last-company-info {
             flex-grow: 1;
         }
 
-        .header-content .header-user-info h1 {
+        .last-company-info {
+            position: relative;
+        }
+
+        .header-content .header-user-info h1, .last-company-content .last-company-info h1 {
             font-size: 2rem;
             font-weight: 600;
             color: #333;
             margin-bottom: 0.5rem;
         }
 
-        .header-content .header-user-info p {
+        .last-company-info div {
+            margin-bottom: 20px;
+        }
+
+        .header-content .header-user-info p, .last-company-content .last-company-info p {
             font-size: 1rem;
             color: #666;
             line-height: 1.6;
         }
-        .header-content .header-profile-picture:hover {
+        .header-content .header-profile-picture:hover, .last-company-content .last-company-picture:hover {
             transform: scale(1.13);
             transition: transform 0.3s ease;
         }
@@ -125,6 +158,19 @@
             color: #e0e0e0;
         }
 
+        .last-company-tag {
+            position: absolute;
+            right: 0;
+            font-size: 12px;
+            background-color: #081c2f;
+        }
+
+        .last-company-tag:hover {
+            background-color: #0f4679;
+            transform: scale(1.13);
+            color: #e0e0e0;
+        }
+
         .header-tag-group-small {
             margin-top: 30px;
             display: flex;
@@ -149,7 +195,7 @@
         }
 
         @media(max-width: 520px) {
-            .header-content .header-profile-picture {
+            .header-content .header-profile-picture, .last-company-content .last-company-picture {
                 width: 110px;
                 height: 110px;
                 border-radius: 50%; /* Circular profile picture */
@@ -157,7 +203,7 @@
                 margin: 1.2rem;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             }
-            .header-content {
+            .header-content, .last-company-content {
                 display: flex;
                 flex-direction: column; 
                 align-items: center;
@@ -170,6 +216,21 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
+            }
+
+            .last-company-tag {
+                position: relative;
+                width: fit-content;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 920px) and (min-width: 521px) {
+            .last-company-tag {
+                position: relative;
+                width: fit-content;
+                font-size: 12px;
+                background-color: #081c2f;
             }
         }
 
@@ -634,6 +695,32 @@
         const mediumUrl = "https://mikkelofficial7.medium.com/"
         const resumeUrl = "https://www.cake.me/mikkel-septiano"
 
+        const lastCompanyData = [
+                [
+                    "eWIDEPLUS Corp",
+                    "Sep 2023 - now",
+                    "https://cdn.slidesharecdn.com/ss_thumbnails/en1revised5-140702035507-phpapp01-thumbnail.jpg",
+                    "Sr Software Engineer - Android",
+                    "Founded in 1996 as a pioneer in digital web agencies from South Korea.",
+                    "I was positioned in Hana Bank Indonesia (Leading South Korea Bank) for LINE Bank project. My responsibilities are enhancing and maintaining the LINE Bank features, contributing to a significant improvement in stability with a 96% crash-free rate. Successfully integrated various third-party SDKs, including VoIP, keypad protection, and device security tamper detection to enhance security and penetration purposed. Provided technical best practices and performed code reviews to guide junior and mid-level engineers."
+                ],
+                [
+                    "Altea Care (Part of Mitra Keluarga)",
+                    "Sep 2022 - Sep 2023",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQEPKaybvsh4LZxDTW8mVBzIamVZLp5s1naA&s",
+                    "Engineering Lead - Android",
+                    "A leading healthcare company in Indonesia, enhancing patient-doctor interactions through an innovative solution platform.",
+                    "Led 4 Android engineers and responsibled their high productivity and quality for coding skillset, ensure achieving a 96% or higher crash-free app rate. Managed CI/CD processes using Github Action (for apk and aab generating automatically), Refined core functions and UI elements with code quality standards, and collaborated with product managers and business teams on defining product requirements. Also contributed to the development core of 'Medivet', a pet-vet app using React Native."
+                ],
+                [
+                    "Rupiah Cepat (PT. Kredit Utama Fintech Indonesia )",
+                    "Nov 2021 - Aug 2022",
+                    "https://play-lh.googleusercontent.com/-6SEegrDHtjLE3LoCt_w7pgTkDcI1P9xsrHxBnHVzi8lXPRjLQyjROe43H3KKos_z48",
+                    "Android SDE 3",
+                    "A financial technology company focused on facilitating access to loans through a Peer-to-Peer (P2P) platform with 10+ million active users",
+                    "Developed and fixed bugs in an Android fintech loan and investment app (ensure 95% more crash-free app). Estabilished various custom view components (e.g loan selector using custom roulette wheel, animation add-to-cart, etc). Discussing with Chinese engineer and product manager on defining technology and product requirements. Tutored new developers on code quality standard, architecture, and upcoming tech stack while building new requirement."
+                ]
+        ]
         const dataProjects = [
                 [
                     "Rupiah Cepat (Working Company Project)", 
@@ -846,6 +933,26 @@
             );
         }
 
+        function LastOrCurrentCompany() {
+            return (
+                <div className="parent-list-last-company">
+                {
+                    lastCompanyData.map((item, index) => (
+                        <div className="last-company-content">
+                            <img src={item[2]} alt="Company Logo" className="last-company-picture" />
+                            <div className="last-company-info">
+                                <div className="last-company-tag tag">{item[1]}</div>
+                                <div>{item[3]} - {item[0]}</div>
+                                <div><i>{item[4]}</i></div>
+                                <div>{item[5]}</div>
+                            </div>
+                        </div>
+                    ))
+                }
+                </div>
+            );
+        }
+
         function ButtonChangeListFormat({ listType, setListType }) {
             return (
                 <div className="parent-list-format">
@@ -1048,6 +1155,7 @@
             return (
                 <div className="body-content-detail">
                     { }
+                    <LastOrCurrentCompany />
                     <ButtonChangeListFormat listType={selectedListType} setListType={changeListType} />
                     <h1 className="title-list">Portfolio Projects</h1>
                     { }
