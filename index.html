@@ -129,6 +129,23 @@
             margin-top: 30px;
         }
 
+        .last-company-other a {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 12px;
+            background-color: #0b2948;
+            border-radius: 10px;
+            border-bottom: 1px solid #000000;
+        }
+
+        .last-company-other a:hover {
+            cursor: pointer;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.5);
+            transform: scale(1.13);
+            transform: translateY(-3px);
+        }
+
         .last-company-content, .education-content {
             border-radius: 10px;
             display: flex;
@@ -815,6 +832,9 @@
                     "Android SDE 3",
                     "A financial technology company focused on facilitating access to loans through a Peer-to-Peer (P2P) platform with 10+ million active users",
                     "Developed and fixed bugs in an Android fintech loan and investment app (ensure 95% more crash-free app). Estabilished various custom view components (e.g loan selector using custom roulette wheel, animation add-to-cart, etc). Discussing with Chinese engineer and product manager on defining technology and product requirements. Tutored new developers on code quality standard, architecture, and upcoming tech stack while building new requirement."
+                ],
+                [
+                    "", "", "", "", "", "", 
                 ]
         ]
         const dataProjects = [
@@ -1112,15 +1132,21 @@
                 <section id="section-experience" className="parent-list-last-company">
                 {
                     lastCompanyData.map((item, index) => (
-                        <div className="last-company-content">
-                            <img src={item[2]} alt="Company Logo" className="last-company-picture" />
-                            <div className="last-company-info">
-                                <div className="last-company-tag tag">{item[1]}</div>
-                                <div>{item[3]} - {item[0]}</div>
-                                <div><i>{item[4]}</i></div>
-                                <div>{item[5]}</div>
+                        item[0] != "" ? (
+                            <div className="last-company-content">
+                                <img src={item[2]} alt="Company Logo" className="last-company-picture" />
+                                <div className="last-company-info">
+                                    <div className="last-company-tag tag">{item[1]}</div>
+                                    <div>{item[3]} - {item[0]}</div>
+                                    <div><i>{item[4]}</i></div>
+                                    <div>{item[5]}</div>
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="last-company-other">
+                                <a href={resumeUrl} target="_blank" rel="noopener noreferrer">and others here</a>
+                            </div>
+                        )
                     ))
                 }
                 </section>
