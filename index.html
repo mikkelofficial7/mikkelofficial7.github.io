@@ -854,28 +854,28 @@
                     "LINE Bank (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.png?raw=true", 
                     "Building an Android Apps for LINE Bank, a Leading South Korea Digital Banking by KEB Hana",
-                    "",
+                    "https://play.google.com/store/apps/details?id=id.co.linebank&hl=ln&gl=ID",
                     "Kotlin (Android);Retrofit;MVVM;Coroutine;Firebase;CustomUI"
                 ],
                 [
                     "AlteaCare (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true", 
                     "Building an Android Apps for Health care and telemedicine App YesDok Indonesia (now acquired by Singapore)",
-                    "",
+                    "https://play.google.com/store/apps/details?id=com.dre.loyalty&hl=id",
                     "Kotlin (Android);Retrofit;MVVM;RxJava;Coroutine;Firebase;Dagger2;Koin;CustomUI"
                 ],
                 [
                     "Rupiah Cepat (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true", 
                     "Building an Android Apps for Financial Institution (Peer-to-peer lending) App with Loan and Investment side features",
-                    "",
+                    "https://play.google.com/store/apps/details?id=com.loan.cash.credit.easy.kilat.cepat.pinjam.uang.dana.rupiah&hl=id",
                     "Java (Android);Retrofit;MVVM;RxJava;Dagger2;Firebase;CustomUI"
                 ],
                 [
                     "Yesdok (Working Company Project)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true", 
                     "Building an Android Apps for Health care and telemedicine App of Altea Care (part of Mitra Keluarga)",
-                    "",
+                    "https://play.google.com/store/apps/details?id=com.yesdok.mobile.app&hl=id",
                     "Java (Android);Kotlin (Android);Retrofit;MVP;RxJava;Dagger2;OneSignal;Appsflyer;CustomUI"
                 ],
                 [
@@ -886,10 +886,10 @@
                     "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Exoplayer;JetpackCompose;GeminiAI"
                 ],
                 [
-                    "E-Branch BCA", 
+                    "E-Branch BCA (Bank Central Asia)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/15.png?raw=true", 
                     "An BCA mobile application by Bank Central Asia (BCA) that allows users to fill out transaction forms and make reservations for services at physical bank branches from their smartphones.",
-                    "",
+                    "https://play.google.com/store/apps/details?id=com.bca.smartbranch&hl=id",
                     "Java (Android);Butterknife;Anko;Retrofit;MVP;Rx Java;Firebase"
                 ],
                 [
@@ -902,29 +902,29 @@
                 [
                     "Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App (Android)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true", 
-                    "Building mobile android for Tokoku sembako commerce, where user can buy their daily needs on their smartphone in Bekasi, Bogor, and Jakarta area.",
-                    "",
+                    "Building mobile android for Tokoku sembako commerce, where user can buy their daily needs on their smartphone in Bekasi, Bogor, and Jakarta area (had released in Google Play Store previously).",
+                    "https://play.google.com/store/apps/details?id=my.ptp.parettengahpati.tokokugrosirapp",
                     "Android (Java);MVP;Dagger2;Retrofit;RxBus"
                 ],
                 [
                     "Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App (Web Admin)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/16.png?raw=true", 
                     "This is a web dashboard for handling all process related to e-commerce (transaction, product warehouse, user management, etc)",
-                    "",
+                    "https://www.tokokugrosir.com",
                     "PHP 7.4;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
                 ],
                 [
                     "Obalihara - Supporting environmentally friendly local products (Web based e-commerce)", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/18.png?raw=true", 
                     "Obalihara is a brand or identity for agricultural, livestock, and fishery products created by local communities across various regions of the Indonesian archipelago. Its goal is to establish direct partnerships between producers (farmers, livestock breeders, and fishers) and urban consumers in order to promote fairness and sustainability.",
-                    "",
+                    "https://www.obalihara.com",
                     "PHP 7;Codeigniter 3; Javascript;HTML 5 + CSS 3; JQuery;MYSQL"
                 ],
                 [
                     "Guruloka - E-learning system", 
                     "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true", 
                     "Online-to-offline web based e-learning system which bridge between student and teacher with various subject and learn by online.",
-                    "",
+                    "https://www.guruloka.com",
                     "PHP 5; Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
                 ],
                 [
@@ -1242,9 +1242,15 @@
                                         <h2 className="project-title-grid">{ item[0] }</h2>
                                         <div className="project-image-container-grid">
                                             <img src={item[1]} alt={ item[0] }></img>
-                                            <div className="project-image-overlay-blur-grid translate-vertical-150" key={index}>
+                                            <div className={ item[3] !== "" ? "project-image-overlay-blur-grid translate-vertical-150" : "project-image-overlay-blur-grid translate-vertical-250" } key={index}>
                                                 <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
-                                                <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                                {item[3] !== "" && (
+                                                    <p className="project-image-overlay-button">
+                                                        <a href={item[3]} target="_blank" rel="noopener noreferrer">
+                                                        Visit Page
+                                                        </a>
+                                                    </p>
+                                                 )}                                            
                                             </div>
                                         </div>
                                         <p className="project-description-grid">{item[2]}</p>
@@ -1270,7 +1276,13 @@
                                                 <div className="project-image-overlay-blur-linear" key={index}>
                                                     <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
                                                     <div className="space-top"></div>
-                                                    <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
+                                                    {item[3] !== "" && (
+                                                    <p className="project-image-overlay-button">
+                                                        <a href={item[3]} target="_blank" rel="noopener noreferrer">
+                                                        Visit Page
+                                                        </a>
+                                                    </p>
+                                                 )}
                                                 </div>
                                             </div>
                                             <div>
