@@ -789,12 +789,19 @@
             cursor: default;
         }
         .fade-in {
+            filter: blur(0);
             opacity: 1;
-            transition: opacity 1s ease-in-out;
+            transition: 
+                filter 1s ease-in-out,         /* blur runs immediately */
+                opacity 2s ease-in-out 1s;     /* opacity starts after 1s delay */
         }
+
         .fade-out {
+            filter: blur(8px);
             opacity: 0;
-            transition: opacity 1s ease-in-out;
+            transition: 
+                filter 1s ease-in-out,         /* blur runs immediately */
+                opacity 2s ease-in-out 1s;     /* opacity starts after blur ends */
         }
         @media (max-width: 587px) {
             .parent-list-format {
