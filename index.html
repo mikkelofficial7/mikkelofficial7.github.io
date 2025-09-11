@@ -1213,7 +1213,7 @@
                     <p>{listFormatShowAs}</p>
                     {
                         dataListFormat.map((item, index) => (
-                            <div className={listType === item ? "list-format-item-selected" : "list-format-item"} key={index} onClick={() => setListType(item)}>
+                            <div title={listType === item ? "" : "Showing list as "+item } className={listType === item ? "list-format-item-selected" : "list-format-item"} key={index} onClick={() => setListType(item)}>
                                 <h2 className="list-format-title">{item}</h2>
                             </div>
                         ))
