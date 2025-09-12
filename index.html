@@ -624,6 +624,76 @@
 
         /* Modal Area */
 
+        @keyframes zoomIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateZ(0);
+            }
+            20% {
+                opacity: 0.5;
+                transform: scale(0.9) translateZ(0);
+            }
+            40% {
+                opacity: 0.7;
+                transform: scale(0.95) translateZ(0);
+            }
+            60% {
+                opacity: 0.9;
+                transform: scale(1.02) translateZ(0); /* small overshoot */
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1.05) translateZ(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateZ(0);
+            }
+        }
+
+        @keyframes zoomOut {
+        0% {
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+        }
+        20% {
+            opacity: 0.9;
+            transform: scale(0.95) translateZ(0);
+        }
+        40% {
+            opacity: 0.7;
+            transform: scale(0.85) translateZ(0);
+        }
+        60% {
+            opacity: 0.5;
+            transform: scale(0.7) translateZ(0);
+        }
+        80% {
+            opacity: 0.3;
+            transform: scale(0.5) translateZ(0);
+        }
+        100% {
+            opacity: 0;
+            transform: scale(0.3) translateZ(0);
+        }
+        }
+
+        .hidden { display: none; }
+
+        .zoom-in {
+            animation-duration: 1000ms;
+            animation: zoomIn 400ms cubic-bezier(.2,.9,.2,1) forwards;
+            transform-origin: center center;
+            will-change: transform, opacity;
+        }
+
+        .zoom-out {
+            animation-duration: 1000ms;
+            animation: zoomOut 400ms cubic-bezier(.2,.9,.2,1) forwards;
+            transform-origin: center center;
+            will-change: transform, opacity;
+        }
+
         .modal-full {
             position: fixed;
             top: 0;
@@ -634,9 +704,9 @@
             flex-direction: column; /* Align items vertically by default */
             align-items: center;
             justify-content: center;
-            background-color: #19191988; /* Semi-transparent background */
-            backdrop-filter: blur(5px); /* Apply blur effect */
-            z-index: 1000; /* Ensure the modal is on top */
+            background-color: #19191988;
+            backdrop-filter: blur(5px); /* Apply blur effect on overlay backdrop */
+            z-index: 1000; /* Ensure the modal is on top */            
         }
         .modal-content {
             display: flex;
@@ -1269,17 +1339,38 @@
             
             // Close and open modal
             const [selectedItem, setSelectedItem] = React.useState(null);
+            const [showDialog, setShowDialog] = React.useState(false);
+            const [dialogClassStatus, setDialogClassStatus] = React.useState(null);
+
+            function setDialogAnimTransition({ isOpen }) {
+                if (isOpen) {
+                    setDialogClassStatus("zoom-in")
+                } else {
+                    setDialogClassStatus("zoom-out")
+                }
+            }
+
             const openModal = (item) => {
                 setShowDialog(true)
                 setSelectedItem(item);
+                setDialogAnimTransition({ isOpen: true });
             };
+
             const closeModal = () => {
-                setShowDialog(false);
-                setSelectedItem(null);
+                setDialogAnimTransition({ isOpen: false });
+
+                const timer = setTimeout(
+                    () => {
+                        setShowDialog(false);
+                        setSelectedItem(null);
+                        setDialogClassStatus("hidden");
+                    }, 500
+                );
+                return () => clearTimeout(timer);
+                
             };
 
             // Detect page scrolling
-            const [showDialog, setShowDialog] = React.useState(false);
             React.useEffect(() => {
                 const handleScroll = () => {
                     setShowDialog(false);
@@ -1366,7 +1457,7 @@
                     {
                         selectedItem && showDialog && (
                             <div className="modal-full" onClick={() => closeModal()}>
-                                <div className="modal-content">
+                                <div className={"modal-content "+dialogClassStatus}>
                                     <h2>{selectedItem[0]}</h2>
                                     <img src={selectedItem[1]}></img>
                                     <p>Tap anywhere to close (X)</p>
