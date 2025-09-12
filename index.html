@@ -1175,15 +1175,15 @@
             return (
                 <div className="branch-tree-content">
                     <div className="space-top"/>
-                    <button className="item-tree tree-selected" id="btn-headline" onClick={scrollToHeader}><div class="round-icon round-icon-selected" id="icon-headline"/> Headline</button>
+                    <button className="item-tree tree-selected" id="btn-headline" onClick={scrollToHeader}><div className="round-icon round-icon-selected" id="icon-headline"/> Headline</button>
                     <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-experience" onClick={scrollToExperience}><div class="round-icon" id="icon-experience"/> Experiences</button>
+                    <button className="item-tree" id="btn-experience" onClick={scrollToExperience}><div className="round-icon" id="icon-experience"/> Experiences</button>
                     <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-education" onClick={scrollToEducation}><div class="round-icon" id="icon-education"/> Education</button>
+                    <button className="item-tree" id="btn-education" onClick={scrollToEducation}><div className="round-icon" id="icon-education"/> Education</button>
                     <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-project" onClick={scrollToProject}><div class="round-icon" id="icon-project"/> Projects</button>
+                    <button className="item-tree" id="btn-project" onClick={scrollToProject}><div className="round-icon" id="icon-project"/> Projects</button>
                     <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-voluntary" onClick={scrollToVoluntary}><div class="round-icon" id="icon-voluntary"/> Voluntaries</button>
+                    <button className="item-tree" id="btn-voluntary" onClick={scrollToVoluntary}><div className="round-icon" id="icon-voluntary"/> Voluntaries</button>
                 </div>
             );
         }
@@ -1196,13 +1196,13 @@
                         <div>{nameSection}</div>
                         <div>{shortDetail}</div>
                         <div className="header-tag-group">
-                            <span class="tag">Java (Android)</span>
-                            <span class="tag">Kotlin (Android)</span>
-                            <span class="tag">Java (Springboot)</span>
-                            <span class="tag">Flutter</span>
-                            <span class="tag">React Native</span>
-                            <span class="tag">React Js</span>
-                            <span class="tag">PHP</span>
+                            <span className="tag">Java (Android)</span>
+                            <span className="tag">Kotlin (Android)</span>
+                            <span className="tag">Java (Springboot)</span>
+                            <span className="tag">Flutter</span>
+                            <span className="tag">React Native</span>
+                            <span className="tag">React Js</span>
+                            <span className="tag">PHP</span>
                         </div>
                     </div>
                 </div>
@@ -1259,7 +1259,7 @@
                 <section id="section-education" className="parent-list-education">
                 {
                     educationData.map((item, index) => (
-                        <div className="education-content">
+                        <div className="education-content" key={index}>
                             <img src={item[2]} alt="University Logo" className="education-picture" />
                             <div className="education-info">
                                 <div className="education-tag tag">{item[1]}</div>
@@ -1279,7 +1279,7 @@
                 {
                     lastCompanyData.map((item, index) => (
                         item[0] != "" ? (
-                            <div className="last-company-content">
+                            <div className="last-company-content" key={index}>
                                 <a href={item[1]} className="last-company-picture">
                                     <img src={item[3]} alt="Company Logo"></img>
                                 </a>
@@ -1291,7 +1291,7 @@
                                 </div>
                             </div>
                         ) : (
-                            <div className="last-company-other">
+                            <div className="last-company-other" key={index}>
                                 <a href={resumeUrl} target="_blank" rel="noopener noreferrer">see more</a>
                             </div>
                         )
@@ -1657,32 +1657,70 @@
             );
         }
 
-        ReactDOM.createRoot(document.getElementById('header')).render(
-            <div>
-                <Header />
-                <div className="button-list">
-                    <GoToGithub />
-                    <GoToMorePortfolio />
-                    <GoToLinkedIn />
-                    <GoToDevTo />
-                    <GoToResume />
+        // render whole UI section
+        
+        function RenderHeader() {
+            React.useEffect(() => {
+            const el = document.querySelector('#header');
+            if (el) {
+                console.log("React finished rendering:", el);
+            }
+            }, []);
+
+            return (
+                <div>
+                    <Header />
+                    <div className="button-list">
+                        <GoToGithub />
+                        <GoToMorePortfolio />
+                        <GoToLinkedIn />
+                        <GoToDevTo />
+                        <GoToResume />
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
 
-        ReactDOM.createRoot(document.getElementById('body-content')).render(
-            <BodyContentProjectAndVolunteerWithListType/>
-        );
+        function RenderBody() {
+            React.useEffect(() => {
+                const el = document.querySelector('#body-content');
+                if (el) {
+                    console.log("React finished rendering:", el);
+                }
+            }, []);
 
-        ReactDOM.createRoot(document.getElementById('footer')).render(
-            <Footer />
-        );
+            return (
+                <BodyContentProjectAndVolunteerWithListType/>
+            );
+        }
 
-        ReactDOM.createRoot(document.getElementById('branch-tree-section')).render(
-            <div>
-                <ButtonSectionTree />
-            </div>
-        );
+        function RenderFooter() {
+            React.useEffect(() => {
+                const el = document.querySelector('#footer');
+                if (el) {
+                    console.log("React finished rendering:", el);
+                }
+            }, []);
+
+            return (
+                <Footer />
+            );
+        }
+
+        function RenderBranchTree() {
+            React.useEffect(() => {
+                const el = document.querySelector('#branch-tree-section');
+                if (el) {
+                    console.log("React finished rendering:", el);
+                }
+            }, []);
+
+            return (
+                <div>
+                    <ButtonSectionTree />
+                </div>
+            );
+        }
 
         // Wait for sections to appear (e.g. after React renders)
         function waitForSections(callback) {
@@ -1783,5 +1821,12 @@
             window.dispatchEvent(new Event("scroll"));
         });
 
+        ReactDOM.createRoot(document.getElementById("header")).render(<RenderHeader />);
+
+        ReactDOM.createRoot(document.getElementById("body-content")).render(<RenderBody/>);
+
+        ReactDOM.createRoot(document.getElementById("footer")).render(<RenderFooter />);
+
+        ReactDOM.createRoot(document.getElementById("branch-tree-section")).render(<RenderBranchTree />);
     </script>
 </html>
