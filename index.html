@@ -1658,13 +1658,14 @@
         }
 
         // render whole UI section
-        
-        function RenderHeader() {
+
+        function RenderHeader({ onReady }) {
             React.useEffect(() => {
-            const el = document.querySelector('#header');
-            if (el) {
-                console.log("React finished rendering:", el);
-            }
+                const el = document.querySelector('#header');
+                if (el) {
+                    console.log("Header tree finished rendering");
+                    onReady("header");
+                }
             }, []);
 
             return (
@@ -1681,11 +1682,12 @@
             );
         }
 
-        function RenderBody() {
+        function RenderBody({ onReady }) {
             React.useEffect(() => {
                 const el = document.querySelector('#body-content');
                 if (el) {
-                    console.log("React finished rendering:", el);
+                    console.log("Body finished rendering");
+                    onReady("body");
                 }
             }, []);
 
@@ -1694,11 +1696,12 @@
             );
         }
 
-        function RenderFooter() {
+        function RenderFooter({ onReady }) {
             React.useEffect(() => {
                 const el = document.querySelector('#footer');
                 if (el) {
-                    console.log("React finished rendering:", el);
+                    console.log("Footer finished rendering");
+                    onReady("footer");
                 }
             }, []);
 
@@ -1707,11 +1710,12 @@
             );
         }
 
-        function RenderBranchTree() {
+        function RenderBranchTree({ onReady }) {
             React.useEffect(() => {
                 const el = document.querySelector('#branch-tree-section');
                 if (el) {
-                    console.log("React finished rendering:", el);
+                    console.log("Branch tree finished rendering");
+                    onReady("branch tree");
                 }
             }, []);
 
@@ -1736,97 +1740,109 @@
             check();
         }
 
-        waitForSections((sections) => {
-            // Sections found — add scroll listener
-            window.addEventListener("scroll", () => {
-                const threshold = window.innerHeight / 2;
-                let currentSectionId = null;
-                let currentPosition = window.scrollY || document.documentElement.scrollTop;
+        function runScrollingListener() {
+            waitForSections((sections) => {
+                // Sections found — add scroll listener
+                window.addEventListener("scroll", () => {
+                    const threshold = window.innerHeight / 2;
+                    let currentSectionId = null;
+                    let currentPosition = window.scrollY || document.documentElement.scrollTop;
 
-                sections.forEach(section => {
-                    const rect = section.getBoundingClientRect();
-                    if (rect.top <= threshold && rect.bottom >= threshold) {
-                        currentSectionId = section.id;
+                    sections.forEach(section => {
+                        const rect = section.getBoundingClientRect();
+                        if (rect.top <= threshold && rect.bottom >= threshold) {
+                            currentSectionId = section.id;
+                        }
+                    });
+
+                    if (currentPosition == 0) {
+                        document.getElementById("btn-headline").classList.add("tree-selected");
+                        document.getElementById("btn-experience").classList.remove("tree-selected");
+                        document.getElementById("btn-education").classList.remove("tree-selected");
+                        document.getElementById("btn-project").classList.remove("tree-selected");
+                        document.getElementById("btn-voluntary").classList.remove("tree-selected");
+                        
+                        document.getElementById("icon-headline").classList.add("round-icon-selected");
+                        document.getElementById("icon-experience").classList.remove("round-icon-selected");
+                        document.getElementById("icon-education").classList.remove("round-icon-selected");
+                        document.getElementById("icon-project").classList.remove("round-icon-selected");
+                        document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
+                    } else {
+                        if (currentSectionId == "section-experience") {
+                            document.getElementById("btn-headline").classList.remove("tree-selected");
+                            document.getElementById("btn-experience").classList.add("tree-selected");
+                            document.getElementById("btn-education").classList.remove("tree-selected");
+                            document.getElementById("btn-project").classList.remove("tree-selected");
+                            document.getElementById("btn-voluntary").classList.remove("tree-selected");
+
+                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
+                            document.getElementById("icon-experience").classList.add("round-icon-selected");
+                            document.getElementById("icon-education").classList.remove("round-icon-selected");
+                            document.getElementById("icon-project").classList.remove("round-icon-selected");
+                            document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
+
+                        } else if (currentSectionId == "section-education") {
+                            document.getElementById("btn-headline").classList.remove("tree-selected");
+                            document.getElementById("btn-experience").classList.remove("tree-selected");
+                            document.getElementById("btn-education").classList.add("tree-selected");
+                            document.getElementById("btn-project").classList.remove("tree-selected");
+                            document.getElementById("btn-voluntary").classList.remove("tree-selected");
+
+                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
+                            document.getElementById("icon-experience").classList.remove("round-icon-selected");
+                            document.getElementById("icon-education").classList.add("round-icon-selected");
+                            document.getElementById("icon-project").classList.remove("round-icon-selected");
+                            document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
+
+                        } else if (currentSectionId == "section-project") {
+                            document.getElementById("btn-headline").classList.remove("tree-selected");
+                            document.getElementById("btn-experience").classList.remove("tree-selected");
+                            document.getElementById("btn-education").classList.remove("tree-selected");
+                            document.getElementById("btn-project").classList.add("tree-selected");
+                            document.getElementById("btn-voluntary").classList.remove("tree-selected");
+
+                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
+                            document.getElementById("icon-experience").classList.remove("round-icon-selected");
+                            document.getElementById("icon-education").classList.remove("round-icon-selected");
+                            document.getElementById("icon-project").classList.add("round-icon-selected");
+                            document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
+                        } else if (currentSectionId == "section-voluntary") {
+                            document.getElementById("btn-headline").classList.remove("tree-selected");
+                            document.getElementById("btn-experience").classList.remove("tree-selected");
+                            document.getElementById("btn-education").classList.remove("tree-selected");
+                            document.getElementById("btn-project").classList.remove("tree-selected");
+                            document.getElementById("btn-voluntary").classList.add("tree-selected");
+
+                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
+                            document.getElementById("icon-experience").classList.remove("round-icon-selected");
+                            document.getElementById("icon-education").classList.remove("round-icon-selected");
+                            document.getElementById("icon-project").classList.remove("round-icon-selected");
+                            document.getElementById("icon-voluntary").classList.add("round-icon-selected");
+                        }
                     }
                 });
 
-                if (currentPosition == 0) {
-                    document.getElementById("btn-headline").classList.add("tree-selected");
-                    document.getElementById("btn-experience").classList.remove("tree-selected");
-                    document.getElementById("btn-education").classList.remove("tree-selected");
-                    document.getElementById("btn-project").classList.remove("tree-selected");
-                    document.getElementById("btn-voluntary").classList.remove("tree-selected");
-                    
-                    document.getElementById("icon-headline").classList.add("round-icon-selected");
-                    document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                    document.getElementById("icon-education").classList.remove("round-icon-selected");
-                    document.getElementById("icon-project").classList.remove("round-icon-selected");
-                    document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-                } else {
-                    if (currentSectionId == "section-experience") {
-                        document.getElementById("btn-headline").classList.remove("tree-selected");
-                        document.getElementById("btn-experience").classList.add("tree-selected");
-                        document.getElementById("btn-education").classList.remove("tree-selected");
-                        document.getElementById("btn-project").classList.remove("tree-selected");
-                        document.getElementById("btn-voluntary").classList.remove("tree-selected");
-
-                        document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                        document.getElementById("icon-experience").classList.add("round-icon-selected");
-                        document.getElementById("icon-education").classList.remove("round-icon-selected");
-                        document.getElementById("icon-project").classList.remove("round-icon-selected");
-                        document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-
-                    } else if (currentSectionId == "section-education") {
-                        document.getElementById("btn-headline").classList.remove("tree-selected");
-                        document.getElementById("btn-experience").classList.remove("tree-selected");
-                        document.getElementById("btn-education").classList.add("tree-selected");
-                        document.getElementById("btn-project").classList.remove("tree-selected");
-                        document.getElementById("btn-voluntary").classList.remove("tree-selected");
-
-                        document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                        document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                        document.getElementById("icon-education").classList.add("round-icon-selected");
-                        document.getElementById("icon-project").classList.remove("round-icon-selected");
-                        document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-
-                    } else if (currentSectionId == "section-project") {
-                        document.getElementById("btn-headline").classList.remove("tree-selected");
-                        document.getElementById("btn-experience").classList.remove("tree-selected");
-                        document.getElementById("btn-education").classList.remove("tree-selected");
-                        document.getElementById("btn-project").classList.add("tree-selected");
-                        document.getElementById("btn-voluntary").classList.remove("tree-selected");
-
-                        document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                        document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                        document.getElementById("icon-education").classList.remove("round-icon-selected");
-                        document.getElementById("icon-project").classList.add("round-icon-selected");
-                        document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-                    } else if (currentSectionId == "section-voluntary") {
-                        document.getElementById("btn-headline").classList.remove("tree-selected");
-                        document.getElementById("btn-experience").classList.remove("tree-selected");
-                        document.getElementById("btn-education").classList.remove("tree-selected");
-                        document.getElementById("btn-project").classList.remove("tree-selected");
-                        document.getElementById("btn-voluntary").classList.add("tree-selected");
-
-                        document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                        document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                        document.getElementById("icon-education").classList.remove("round-icon-selected");
-                        document.getElementById("icon-project").classList.remove("round-icon-selected");
-                        document.getElementById("icon-voluntary").classList.add("round-icon-selected");
-                    }
-                }
+                // Trigger once on load
+                window.dispatchEvent(new Event("scroll"));
             });
+        }
 
-            // Trigger once on load
-            window.dispatchEvent(new Event("scroll"));
-        });
+        // ---- Outside, keep track ----
+        const rendered = new Set();
 
-        ReactDOM.createRoot(document.getElementById("header")).render(<RenderHeader />);
+        function handleReady(section) {
+            rendered.add(section);
+            if (rendered.size === 4) {
+                runScrollingListener()
+            }
+        }
 
-        ReactDOM.createRoot(document.getElementById("body-content")).render(<RenderBody/>);
+        ReactDOM.createRoot(document.getElementById("header")).render(<RenderHeader onReady={handleReady} />);
 
-        ReactDOM.createRoot(document.getElementById("footer")).render(<RenderFooter />);
+        ReactDOM.createRoot(document.getElementById("body-content")).render(<RenderBody onReady={handleReady} />);
 
-        ReactDOM.createRoot(document.getElementById("branch-tree-section")).render(<RenderBranchTree />);
+        ReactDOM.createRoot(document.getElementById("footer")).render(<RenderFooter onReady={handleReady} />);
+
+        ReactDOM.createRoot(document.getElementById("branch-tree-section")).render(<RenderBranchTree onReady={handleReady} />);
     </script>
 </html>
