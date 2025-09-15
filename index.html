@@ -1899,6 +1899,17 @@
 
             document.getElementById("footer").classList.remove("hidden");
             document.getElementById("footer").classList.add("zoom-in");
+            
+            // Remove zoom in after finish
+            const timer = setTimeout(
+                () => {
+                    document.getElementById("branch-tree-section").classList.remove("zoom-in");
+                    document.getElementById("header").classList.remove("zoom-in");
+                    document.getElementById("body-content").classList.remove("zoom-in");
+                    document.getElementById("footer").classList.remove("zoom-in");
+                }, 400
+            );
+            return () => clearTimeout(timer);
         }
 
         // ---- Outside, keep track ----
