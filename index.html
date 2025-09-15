@@ -122,7 +122,6 @@
             border-radius: 10px;
             background-color: #13497f;
             padding: 15px 20px;
-            display: flex;
             align-items: center;
             justify-content: space-between;
         }
@@ -892,10 +891,10 @@
     <div class="sticky-background"></div>
     <div id="parent">
         <div id="child">
-            <div id="branch-tree-section hidden"></div>
-            <div id="header hidden"></div>
-            <div id="body-content hidden"></div>
-            <div id="footer hidden"></div>
+            <div id="branch-tree-section" class="hidden"></div>
+            <div id="header" class="hidden"></div>
+            <div id="body-content" class="hidden"></div>
+            <div id="footer" class="hidden"></div>
         </div>
     </div>
 </body>
@@ -1827,12 +1826,20 @@
             });
         }
 
+        function showComponent() {
+            document.getElementById("branch-tree-section").classList.remove("hidden");
+            document.getElementById("header").classList.remove("hidden");
+            document.getElementById("body-content").classList.remove("hidden");
+            document.getElementById("footer").classList.remove("hidden");
+        }
+
         // ---- Outside, keep track ----
         const rendered = new Set();
 
         function handleReady(section) {
             rendered.add(section);
             if (rendered.size === 4) {
+                showComponent()
                 runScrollingListener()
             }
         }
