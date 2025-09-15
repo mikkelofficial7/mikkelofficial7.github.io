@@ -1887,10 +1887,18 @@
 
         function showComponent() {
             document.querySelector(".component-pre-render").classList.add("hidden");
+
             document.getElementById("branch-tree-section").classList.remove("hidden");
+            document.getElementById("branch-tree-section").classList.add("zoom-in");
+
             document.getElementById("header").classList.remove("hidden");
+            document.getElementById("header").classList.add("zoom-in");
+
             document.getElementById("body-content").classList.remove("hidden");
+            document.getElementById("body-content").classList.add("zoom-in");
+
             document.getElementById("footer").classList.remove("hidden");
+            document.getElementById("footer").classList.add("zoom-in");
         }
 
         // ---- Outside, keep track ----
