@@ -280,12 +280,22 @@
             color: #e0e0e0;
         }
 
-        .header-tag-group-small {
+        .header-tag-group-small-grid {
+            margin-top: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            justify-content: center; /* centers items horizontally */
+            align-items: center;     /* centers items vertically (optional) */
+        }
+
+        .header-tag-group-small-linear {
             margin-top: 30px;
             display: flex;
             flex-wrap: wrap;
             gap: 0.3rem;
         }
+
         .tag-small {
             padding: 0.2rem 0.4rem;
             background-color: #398ee4;
@@ -1473,7 +1483,7 @@
                                             </div>
                                         </div>
                                         <p className="project-description-grid">{item[2]}</p>
-                                        <ul className="header-tag-group-small">
+                                        <ul className={listType === dataListFormat[1] ? "header-tag-group-small-linear" : "header-tag-group-small-grid"}>
                                                 {
                                                     (() => {
                                                         const tagNotEmpty = item[4] ? item[4].split(";") : [];
@@ -1507,7 +1517,7 @@
                                             <div>
                                                 <h2 className="project-title-linear">{item[0]}</h2>
                                                 <p className="project-description-linear">{item[2]}</p>
-                                                <ul className="header-tag-group-small">
+                                                <ul className={listType === dataListFormat[1] ? "header-tag-group-small-linear" : "header-tag-group-small-grid"}>
                                                     {
                                                         (() => {
                                                             const tagNotEmpty = item[4] ? item[4].split(";") : [];
