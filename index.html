@@ -467,6 +467,9 @@
         }
         .project-card-grid {
             width: 100%;
+            background-color: #072c4f;
+            border-radius: 8px;
+            padding: 10px;
             position: relative;
             display: inline-block; /* Allows container to wrap image */
             overflow: hidden; /* Prevents overlay from overflowing */
@@ -477,7 +480,7 @@
             color: #cbcccd;
             margin-bottom: 10px;
             border-bottom: 1px solid transparent; /* Subtle divider */
-            background-color: #081c2f;
+            background-color: #2f4c6a;
             padding: 10px;
             border-radius: 10px;
         }
@@ -1537,6 +1540,13 @@
         }
                                 
         function BodyContentVoluntary({ listType, fadeStatus }) {
+            React.useEffect(() => {
+                const titles = document.querySelectorAll('.project-title-grid');
+
+                // Apply trimText to each element
+                titles.forEach(el => trimTextAndSetEllipsize(el, 3));
+            }, [listType]);
+
             return(
                 <section id="section-voluntary" className={listType === dataListFormat[0] ? "project-list-grid "+fadeStatus : "project-list-linear "+fadeStatus}>
                     {
