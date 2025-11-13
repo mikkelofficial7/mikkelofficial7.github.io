@@ -841,6 +841,50 @@
             transform: translateY(-3px);
         }
 
+        #floating-project ul {
+            display: block;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            position: fixed;
+            bottom: 20px;
+            left: 30px;
+        }
+
+        #floating-project ul li {
+            margin-top: 30px;
+        }
+
+        #floating-project ul li a {
+            background-color: #052751;
+            color: #cbcccd;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 100px;
+            cursor: default;
+            font-size: 12px;
+            box-shadow: 0 4px 8px #191919;
+        }
+
+        #floating-project ul li a:hover {
+            cursor: default;
+            box-shadow: 0px 6px 15px #f3f357;
+            transform: translateY(-3px);
+        }
+
+        #floating-project-close {
+            margin-left: 10px;
+            padding: 5px;
+            background-color: #000000;
+            border-radius: 100%;
+        }
+        #floating-project-close i {
+            width: 20px;
+            height: auto;
+            display: inline-grid;
+            justify-content: center; /* horizontal center */
+            align-items: center;
+        }
+
         /* List Format Area */
 
         .parent-list-format {
@@ -984,6 +1028,21 @@
         const linkedinUrl = "https://www.linkedin.com/in/mikkel-septiano/"
         const mediumUrl = "https://mikkelofficial7.medium.com/"
         const resumeUrl = "https://www.cake.me/mikkel-septiano"
+
+        const highlightProject = [
+            [
+                "Findyourmovi - Try the demo",
+                "https://findyourmovi.vercel.app/"
+            ],
+            [
+                "Generecipe App (Android) - Try the demo",
+                "https://github.com/mikkelofficial7/flutter-recipe-generator/blob/main/demo-testing.apk"
+            ],
+            [
+                "Spoticlone App (Android) - Try the demo",
+                "https://github.com/mikkelofficial7/android-spotify-clone/blob/main/demo-testing.apk"
+            ]
+        ]
 
         const educationData = [
                 [
@@ -1729,9 +1788,33 @@
                     behavior: 'smooth', // Optional: smooth scrolling
                 });
             };
+
+            const closeItem = (position) => {
+               document.querySelectorAll('#floating-project-ul li').forEach((li, i) => {
+                    if (i === position + 1) li.style.display = 'none';
+                });
+            };
+
             return (
                 <footer>
                     <button id="floatingButton" onClick={scrollToTop}>Back to top</button>
+                    <div id="floating-project">
+                        <ul id="floating-project-ul">
+                            <li><p>Highlighted Projects</p></li>
+                           {
+                                highlightProject.map((item, index) => (
+                                    item[0] != "" ? (
+                                        <li>
+                                            <a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a>
+                                            <span id="floating-project-close" onClick={() => closeItem(index)}><i className="fa fa-close"> </i></span>
+                                        </li>
+                                    ) : (
+                                        <li>- no data -</li>
+                                    )
+                            ))
+                }
+                        </ul>
+                    </div>
                     <div className="footer-content">
                         {/* Using dangerouslySetInnerHTML to render HTML inside the string */}
                         <p dangerouslySetInnerHTML={{ __html: footerQuote }}></p>
