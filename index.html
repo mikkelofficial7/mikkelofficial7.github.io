@@ -423,8 +423,13 @@
             background: linear-gradient(105deg, #3eda94, #13ab67);
             box-shadow: 0px 4px 10px #191919;
         }
+        .button-jetbrains {
+            color: #dddcdc;
+            background: linear-gradient(105deg, #d012ca, #9d0303);
+            box-shadow: 0px 4px 10px #191919;
+        }
 
-        @media (max-width: 680px) {
+        @media (max-width: 780px) {
             .button-list {
                display: flow-root;
             }
@@ -1047,6 +1052,7 @@
         const linkedinUrl = "https://www.linkedin.com/in/mikkel-septiano/"
         const mediumUrl = "https://mikkelofficial7.medium.com/"
         const resumeUrl = "https://docs.google.com/document/d/1hlu1syiFumiHBlaDZ2VBQ-jzKkJtHizFd-nHlZF2rxo/edit?usp=sharing"
+        const jetbrainsUrl = "https://plugins.jetbrains.com/vendor/mikkel-septiano"
 
         const highlightProject = [
             [
@@ -1416,6 +1422,15 @@
                 <div className="button-resume" id="button-up">
                     <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
                         <i className="fa fa-file"></i> Resume
+                    </a>
+                </div>
+            );
+        }
+        function GoToJetbrains() {
+            return (
+                <div className="button-jetbrains" id="button-up">
+                    <a href={jetbrainsUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fas fa-code"></i> Jetbrains
                     </a>
                 </div>
             );
@@ -1878,6 +1893,7 @@
                         <GoToLinkedIn />
                         <GoToDevTo />
                         <GoToResume />
+                        <GoToJetbrains />
                     </div>
                 </div>
             );
