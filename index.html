@@ -1385,16 +1385,7 @@
             return (
                 <div className="button-go-to-github" id="button-up">
                     <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fa-brands fa-github"></i> Visit My GitHub
-                    </a>
-                </div>
-            );
-        }
-        function GoToMorePortfolio() {
-            return (
-                <div className="button-more" id="button-up">
-                    <a href={linktreeUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fa-solid fa-clover"></i> Linktree
+                        <i className="fa-brands fa-github"></i> Find me on GitHub
                     </a>
                 </div>
             );
@@ -1408,11 +1399,20 @@
                 </div>
             );
         }
-        function GoToDevTo() {
+        function GoToMedium() {
             return (
                 <div className="button-devto" id="button-up">
                     <a href={mediumUrl} target="_blank" rel="noopener noreferrer">
                         <i className="fab fa-medium"></i> Find me on Medium
+                    </a>
+                </div>
+            );
+        }
+        function GoToLinktree() {
+            return (
+                <div className="button-more" id="button-up">
+                    <a href={linktreeUrl} target="_blank" rel="noopener noreferrer">
+                        <i className="fa-solid fa-clover"></i> Linktree
                     </a>
                 </div>
             );
@@ -1889,9 +1889,9 @@
                     <Header />
                     <div className="button-list">
                         <GoToGithub />
-                        <GoToMorePortfolio />
                         <GoToLinkedIn />
-                        <GoToDevTo />
+                        <GoToMedium />
+                        <GoToLinktree />
                         <GoToResume />
                         <GoToJetbrains />
                     </div>
