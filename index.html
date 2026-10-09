@@ -184,19 +184,13 @@
 
         .last-company-picture {
             display: inline-block;
-            width: 300px;
+            flex-shrink: 0;
+            width: 100px;
             height: 100px;
-            aspect-ratio: 1 / 1;
             border-radius: 100%;
+            overflow: hidden;
             margin-right: 2em;
             box-shadow: 0 4px 8px #191919; /* Subtle shadow */
-        }
-        
-        .last-company-picture img {
-            width: 60px;
-            height: 60px;
-            border-radius: 100%;
-            object-fit: contain; /* keeps aspect ratio */
         }
 
         .education-content .education-picture {
@@ -208,10 +202,22 @@
             box-shadow: 0 4px 8px #191919; /* Subtle shadow */
         }
 
-        .header-content .header-profile-picture img, .last-company-content .last-company-picture img, .education-content .education-picture img {
+        .header-content .header-profile-picture img, .education-content .education-picture img {
             width: 100%;
             height: 100%;
             object-fit: cover; /* Maintain aspect ratio */
+        }
+
+        .last-company-content .last-company-picture img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            object-fit: cover; /* center-crop to fill the circle */
+            object-position: center;
+            background-color: #ffffff;
+            color: transparent; /* hide alt text if the image fails to load */
+            font-size: 0;
         }
 
         .header-content .header-user-info, .last-company-content .last-company-info, .education-content .education-info {
@@ -1082,6 +1088,15 @@
                 ],
         ]
         const lastCompanyData = [
+                [
+                    "eWIDEPLUS Corp (이와이드플러스)",
+                    "https://www.ewideplus.com/index.jsp",
+                    "July 2026 - now",
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s",
+                    "Senior FullStack Engineer",
+                    "Established in 1996 as a pioneering digital web agency from South Korea, eWIDEPlus strives for excellence in global convergence across finance, environment, and future industries.",
+                    "A Pragmatic Engineer guy behind Ganes AI - Working around various industries (Security, Beauty, etc). Working with Python, Next.js, Panda CSS, Docker, and other technologies to build reliable and scalable software solutions."
+                ],
                 [
                     "eWIDEPLUS Corp (이와이드플러스)",
                     "https://www.ewideplus.com/index.jsp",
