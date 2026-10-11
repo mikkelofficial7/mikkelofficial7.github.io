@@ -41,6 +41,7 @@
             color: var(--ink);
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
         }
         a { color: inherit; text-decoration: none; }
         img { max-width: 100%; }
@@ -48,6 +49,9 @@
             max-width: 1180px;
             margin: 0 auto;
             padding: 0 24px;
+        }
+        @media (max-width: 480px) {
+            .wrap { padding: 0 18px; }
         }
 
         /* Nav */
@@ -75,14 +79,11 @@
         .nav-logo {
             width: 34px;
             height: 34px;
-            border-radius: 9px;
-            background: var(--ink);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 700;
+            margin-left: 10px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--line);
+            flex-shrink: 0;
         }
         .nav-links {
             display: flex;
@@ -96,6 +97,7 @@
         .btn-resume-nav {
             border: 1px solid var(--line);
             padding: 9px 18px;
+            margin-right: 10px;
             border-radius: 9px;
             font-size: 14px;
             font-weight: 600;
@@ -108,10 +110,18 @@
         @media (max-width: 860px) {
             .nav-links { display: none; }
         }
+        @media (max-width: 420px) {
+            .nav-brand { font-size: 14px; gap: 8px; }
+            .nav-logo { width: 28px; height: 28px; }
+            .btn-resume-nav { padding: 8px 12px; font-size: 12.5px; }
+        }
 
         /* Hero */
         .hero {
             padding: 64px 0 56px;
+        }
+        @media (max-width: 640px) {
+            .hero { padding: 40px 0 36px; }
         }
         .hero-grid {
             display: grid;
@@ -133,6 +143,12 @@
             font-weight: 800;
             margin: 0 0 18px;
             letter-spacing: -0.01em;
+        }
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2rem; }
+        }
+        @media (max-width: 400px) {
+            .hero h1 { font-size: 1.7rem; }
         }
         .hero p.lead {
             color: var(--ink-soft);
@@ -205,6 +221,15 @@
         }
         .mock-code .kw { color: #ff8fd0; }
         .mock-code .fn { color: #9db3ff; }
+        .mock-code .code-cursor {
+            display: inline-block;
+            color: #9db3ff;
+            animation: cursor-blink 2s step-end infinite;
+        }
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
         .mock-phone {
             display: flex;
             height: 100%;
@@ -242,7 +267,15 @@
             align-items: center;
             gap: 10px;
             padding: 9px 0;
-            border-bottom: 1px solid var(--line);
+            border-bottom: 1px solid transparent;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .4s ease, transform .4s ease, border-color .4s ease;
+        }
+        .mock-phone-row.row-visible {
+            opacity: 1;
+            transform: translateY(0);
+            border-bottom-color: var(--line);
         }
         .mock-phone-row i {
             width: 28px;
@@ -268,7 +301,11 @@
         }
         .mock-stat .label { font-size: 11.5px; color: var(--ink-faint); margin-bottom: 6px; }
         .mock-stat .value { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        .mock-stat .value small { font-size: 11px; font-weight: 700; color: #16a34a; }
+        .mock-stat .value small { font-size: 11px; font-weight: 700; color: #16a34a; display: inline-flex; align-items: center; animation: stat-bounce 1s ease-in-out infinite; }
+        @keyframes stat-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
         .mock-tech ul { list-style: none; padding: 0; margin: 0; }
         .mock-tech li {
             display: flex;
@@ -277,6 +314,13 @@
             padding: 7px 0;
             font-size: 12.5px;
             font-weight: 600;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity .4s ease, transform .4s ease;
+        }
+        .mock-tech li.row-visible {
+            opacity: 1;
+            transform: translateY(0);
         }
         .mock-tech li i { width: 16px; color: var(--accent); }
         .mock-tech li i.icon-green { color: #22c55e; }
@@ -290,7 +334,11 @@
 
         @media (max-width: 920px) {
             .hero-grid { grid-template-columns: 1fr; }
-            .hero-visual { display: none; }
+            .hero-visual { margin-top: 40px; max-width: 480px; }
+        }
+        @media (max-width: 640px) {
+            .hero-visual { grid-template-columns: 1fr; }
+            .mock-phone { height: auto; max-width: 280px; margin: 0 auto; }
         }
 
         /* Stats bar */
@@ -320,23 +368,45 @@
             font-size: 17px;
             box-shadow: 0 2px 6px rgba(15,23,42,0.08);
         }
-        .stat-item .num { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+        .stat-item .num {
+            font-size: 1.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            display: inline-block;
+            animation: num-bounce 1.6s ease-in-out infinite;
+        }
+        .stat-item:nth-child(2) .num { animation-delay: .2s; }
+        .stat-item:nth-child(3) .num { animation-delay: .4s; }
+        @keyframes num-bounce {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-5px); }
+            50% { transform: translateY(0); }
+            75% { transform: translateY(2px); }
+        }
         .stat-item .label { font-size: 13px; color: var(--ink-soft); }
         @media (max-width: 760px) {
             .stats-bar { grid-template-columns: 1fr; gap: 20px; }
         }
 
         section { padding: 64px 0; }
+        @media (max-width: 640px) {
+            section { padding: 44px 0; }
+        }
         .section-head {
             display: flex;
             align-items: baseline;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px 16px;
             margin-bottom: 28px;
         }
         .section-head h2 { font-size: 1.7rem; margin: 0; font-weight: 800; }
         .section-head .view-all { font-size: 14px; font-weight: 600; color: var(--accent); white-space: nowrap; }
         .section-head .view-all:hover { text-decoration: underline; }
         .section-sub { color: var(--ink-soft); margin-top: -18px; margin-bottom: 28px; font-size: 14.5px; }
+        @media (max-width: 480px) {
+            .section-head h2 { font-size: 1.4rem; }
+        }
 
         /* Selected work */
         .work-grid {
@@ -382,6 +452,9 @@
         .work-link { font-size: 13.5px; font-weight: 700; color: var(--accent); }
         .work-link:hover { text-decoration: underline; }
         @media (max-width: 920px) {
+            .work-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 620px) {
             .work-grid { grid-template-columns: 1fr; }
         }
 
@@ -412,8 +485,18 @@
             background: var(--line);
         }
         .timeline-item:last-child .timeline-dot-col::before { display: none; }
+        .timeline-company { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .timeline-logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--line);
+            background: #fff;
+            flex-shrink: 0;
+        }
         .timeline-main h3 { margin: 0 0 2px; font-size: 15.5px; }
-        .timeline-main .role { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 10px; }
+        .timeline-main .role { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 0; }
         .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; }
         .timeline-tags span {
             background: var(--surface-soft);
@@ -425,10 +508,25 @@
         }
         .timeline-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; padding-top: 2px; }
         @media (max-width: 860px) {
-            .timeline-item { grid-template-columns: 16px 1fr; }
-            .timeline-date { grid-column: 1 / 3; }
+            .timeline-item {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                padding: 18px;
+                margin-bottom: 14px;
+                border: 1px solid var(--line);
+                border-left: 3px solid var(--accent);
+                border-radius: var(--radius);
+            }
+            .timeline-item:last-child { margin-bottom: 0; }
             .timeline-dot-col { display: none; }
-            .timeline-desc { grid-column: 1 / 3; }
+            .timeline-date {
+                font-weight: 700;
+                color: var(--accent);
+                font-size: 12.5px;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+            }
+            .timeline-main .role { margin-bottom: 4px; }
         }
 
         /* Footer */
@@ -466,7 +564,6 @@
             justify-content: center;
             gap: 10px;
             padding: 16px 24px;
-            border-bottom: 1px solid var(--line);
         }
         .social-bar a {
             display: flex;
@@ -538,6 +635,15 @@
         }
         .show-more-btn:hover { border-color: var(--accent); color: var(--accent); }
         .hidden-item { display: none; }
+        .card-reveal {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .45s ease, transform .45s ease;
+        }
+        .card-reveal.card-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -545,10 +651,11 @@
     <nav class="nav">
         <div class="wrap nav-inner">
             <div class="nav-brand">
-                <div class="nav-logo">MS</div>
+                <img class="nav-logo" src="https://avatars.githubusercontent.com/u/25360843?v=4" alt="Mikkel Septiano"/>
                 <span>Mikkel Septiano</span>
             </div>
             <div class="nav-links">
+                <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a>
                 <a href="#work">Work</a>
                 <a href="#experience">Experience</a>
                 <a href="#education">Education</a>
@@ -618,7 +725,7 @@
                             <div class="value">96.7% <small><i class="fa fa-arrow-up"></i> 3.2%</small></div>
                         </div>
 
-                        <div class="mock-code">
+                        <div class="mock-code" id="mock-code">
                             <div><span class="kw">class</span> <span class="fn">MainActivity</span> :</div>
                             <div>&nbsp;&nbsp;AppCompatActivity() {</div>
                             <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">override fun</span> onCreate(</div>
@@ -698,8 +805,13 @@
                     <div class="timeline-date">Jul 2026 &mdash; Present</div>
                     <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
                     <div class="timeline-main">
-                        <h3>eWIDEPLUS Corp (South Korea Software Agency)</h3>
-                        <div class="role">Senior FullStack Engineer</div>
+                        <div class="timeline-company">
+                            <img class="timeline-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s" alt="eWIDEPLUS Corp"/>
+                            <div>
+                                <h3>eWIDEPLUS Corp (South Korea Software Agency)</h3>
+                                <div class="role">Senior FullStack Engineer</div>
+                            </div>
+                        </div>
                         <div class="timeline-tags"><span>Python</span><span>Next.js</span><span>Panda CSS</span><span>Docker</span></div>
                     </div>
                     <div class="timeline-desc">A pragmatic engineer behind Ganes AI, working across industries (security, beauty, etc.) to build reliable and scalable software solutions.</div>
@@ -708,8 +820,13 @@
                     <div class="timeline-date">Sep 2023 &mdash; Present</div>
                     <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
                     <div class="timeline-main">
-                        <h3>eWIDEPLUS Corp (South Korea Software Agency)</h3>
-                        <div class="role">Senior Software Engineer (Android)</div>
+                        <div class="timeline-company">
+                            <img class="timeline-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s" alt="eWIDEPLUS Corp"/>
+                            <div>
+                                <h3>eWIDEPLUS Corp (South Korea Software Agency)</h3>
+                                <div class="role">Senior Software Engineer (Android)</div>
+                            </div>
+                        </div>
                         <div class="timeline-tags"><span>Kotlin</span><span>Android</span><span>VoIP</span><span>Security</span></div>
                     </div>
                     <div class="timeline-desc">LINE Bank project. Built core features, improved stability and mentored junior engineers.</div>
@@ -718,8 +835,13 @@
                     <div class="timeline-date">Sep 2022 &mdash; Sep 2023</div>
                     <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
                     <div class="timeline-main">
-                        <h3>Altea Care (PT. Sehat Digital Nusantara)</h3>
-                        <div class="role">Lead Software Engineer (Android)</div>
+                        <div class="timeline-company">
+                            <img class="timeline-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnI1E7KkKkGE-MPYfQnYtMOMKfqsVf-N6ZxA&s" alt="Altea Care"/>
+                            <div>
+                                <h3>Altea Care (PT. Sehat Digital Nusantara)</h3>
+                                <div class="role">Lead Software Engineer (Android)</div>
+                            </div>
+                        </div>
                         <div class="timeline-tags"><span>Android</span><span>React Native</span><span>CI/CD</span></div>
                     </div>
                     <div class="timeline-desc">Led a team of four Android engineers, built a doctor-side telemedicine app from scratch, and cut build time by 20%.</div>
@@ -728,8 +850,13 @@
                     <div class="timeline-date">Nov 2021 &mdash; Aug 2022</div>
                     <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
                     <div class="timeline-main">
-                        <h3>Rupiah Cepat (PT. Kredit Utama Fintech Indonesia)</h3>
-                        <div class="role">Senior Android Engineer</div>
+                        <div class="timeline-company">
+                            <img class="timeline-logo" src="https://cdn.aptoide.com/imgs/d/2/b/d2bb88dd28a752aefc1149c0043aad41_icon.png" alt="Rupiah Cepat"/>
+                            <div>
+                                <h3>Rupiah Cepat (PT. Kredit Utama Fintech Indonesia)</h3>
+                                <div class="role">Senior Android Engineer</div>
+                            </div>
+                        </div>
                         <div class="timeline-tags"><span>Android</span><span>Fintech</span><span>Custom UI</span></div>
                     </div>
                     <div class="timeline-desc">Developed and debugged a fintech loan and investment app, achieving a 95% increase in crash-free usage.</div>
@@ -793,6 +920,79 @@
         else if (hour >= 18 && hour < 22) greeting = 'Good evening';
         else greeting = 'Good night';
         document.getElementById('phone-greeting').textContent = `${greeting}, Mikkel`;
+
+        function cycleRows(selector) {
+            const rows = document.querySelectorAll(selector);
+            let step = 0;
+            setInterval(() => {
+                if (step < rows.length) {
+                    rows[step].classList.add('row-visible');
+                    step++;
+                } else {
+                    rows.forEach(row => row.classList.remove('row-visible'));
+                    step = 0;
+                }
+            }, 1000);
+        }
+        cycleRows('.mock-phone-row');
+        cycleRows('.mock-tech li');
+
+        function typeCodeBlock(selector, { lineTypeDuration = 1500, lineDelay = 120, loopDelay = 2000 } = {}) {
+            const container = document.querySelector(selector);
+            const originalLines = Array.from(container.children).map(line => line.cloneNode(true));
+            container.style.height = `${container.getBoundingClientRect().height}px`;
+            const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+            function buildTokens(lineEl) {
+                const tokens = [];
+                lineEl.childNodes.forEach(node => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        for (const ch of node.textContent) tokens.push({ ch, cls: null });
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        const cls = node.className;
+                        for (const ch of node.textContent) tokens.push({ ch, cls });
+                    }
+                });
+                return tokens;
+            }
+
+            async function typeOnce() {
+                container.innerHTML = '';
+                const cursor = document.createElement('span');
+                cursor.className = 'code-cursor';
+                cursor.textContent = '▋';
+
+                for (const originalLine of originalLines) {
+                    const lineDiv = document.createElement('div');
+                    container.appendChild(lineDiv);
+                    lineDiv.appendChild(cursor);
+
+                    const tokens = buildTokens(originalLine);
+                    const charDelay = Math.max(15, lineTypeDuration / Math.max(tokens.length, 1));
+                    let currentNode = null;
+                    let currentCls;
+                    for (const { ch, cls } of tokens) {
+                        if (cls !== currentCls || !currentNode) {
+                            currentNode = cls ? document.createElement('span') : document.createTextNode('');
+                            if (cls) currentNode.className = cls;
+                            lineDiv.insertBefore(currentNode, cursor);
+                            currentCls = cls;
+                        }
+                        currentNode.textContent += ch;
+                        await sleep(charDelay);
+                    }
+                    await sleep(lineDelay);
+                }
+                await sleep(loopDelay);
+            }
+
+            (async function loop() {
+                while (true) {
+                    await typeOnce();
+                }
+            })();
+        }
+        typeCodeBlock('#mock-code');
 
         const dataProjects = [
             ["LINE Bank (Working Company Project)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.png?raw=true", "Building an Android Apps for LINE Bank, a Leading South Korea Digital Banking by KEB Hana", "https://play.google.com/store/apps/details?id=id.co.linebank&hl=ln&gl=ID", "Kotlin (Android);Retrofit;MVVM;Coroutine;Firebase;CustomUI"],
@@ -858,7 +1058,12 @@
         renderCardGrid('activities-grid', dataVoluntary, { withTags: false });
 
         document.getElementById('projects-show-more').addEventListener('click', (e) => {
-            document.querySelectorAll('#projects-grid .hidden-item').forEach(el => el.classList.remove('hidden-item'));
+            const hiddenItems = Array.from(document.querySelectorAll('#projects-grid .hidden-item'));
+            hiddenItems.forEach((el, i) => {
+                el.classList.remove('hidden-item');
+                el.classList.add('card-reveal');
+                setTimeout(() => el.classList.add('card-visible'), i * 300);
+            });
             e.target.remove();
         });
     </script>
