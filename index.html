@@ -703,7 +703,7 @@
                 <div class="hero-visual">
                     <div class="mock-phone">
                         <div class="mock-phone-screen">
-                            <div class="mock-phone-status"><span>9:41</span><span><i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></span></div>
+                            <div class="mock-phone-status"><span id="phone-clock">9:41</span><span><i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></span></div>
                             <h4 id="phone-greeting">Good morning, Mikkel</h4>
                             <p>Build better apps.</p>
                             <div class="mock-phone-row"><i class="fa fa-credit-card"></i><div><b>Banking</b><span>Secure &amp; Simple</span></div></div>
@@ -920,6 +920,15 @@
         else if (hour >= 18 && hour < 22) greeting = 'Good evening';
         else greeting = 'Good night';
         document.getElementById('phone-greeting').textContent = `${greeting}, Mikkel`;
+
+        function updatePhoneClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('phone-clock').textContent = `${h}:${m}`;
+        }
+        updatePhoneClock();
+        setInterval(updatePhoneClock, 1000);
 
         function cycleRows(selector) {
             const rows = document.querySelectorAll(selector);
