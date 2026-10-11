@@ -1,2114 +1,866 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mikkel Septiano - Fullstack Mobile and Web">
+    <meta name="description" content="Mikkel Septiano - Senior Android / Mobile Engineer">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://mikkelofficial7.github.io">
-    <meta property="og:title" content="Mikkel - Portfolio">
-    <meta property="og:description" content="Welcome to my portfolio page, a fullstack mobile and web">
+    <meta property="og:title" content="Mikkel Septiano - Portfolio">
+    <meta property="og:description" content="Building reliable mobile experiences, from architecture to production.">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/25360843?v=4">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://mikkelofficial7.github.io">
-    <meta name="twitter:title" content="Mikkel - Portfolio">
-    <meta name="twitter:description" content="Welcome to my portfolio page">
+    <meta name="twitter:title" content="Mikkel Septiano - Portfolio">
+    <meta name="twitter:description" content="Building reliable mobile experiences, from architecture to production.">
     <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/25360843?v=4">
 
-    <title>Mikkel - Portfolio</title>
+    <title>Mikkel Septiano - Portfolio</title>
     <link rel="icon" href="https://avatars.githubusercontent.com/u/25360843?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --accent: #2457f5;
+            --accent-dark: #1a3fc4;
+            --ink: #0f172a;
+            --ink-soft: #475569;
+            --ink-faint: #94a3b8;
+            --line: #e6e9f0;
+            --surface: #ffffff;
+            --surface-soft: #f6f8fc;
+            --radius: 14px;
+        }
+        * { box-sizing: border-box; }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
         body {
-            background-color: #1860a8;
+            margin: 0;
+            background-color: var(--surface);
+            color: var(--ink);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-        #branch-tree-section {
-            position: absolute;
-            margin-right: 15px;
-            right: 0;
-        }
-        .branch-tree-content {
-            position: fixed;
-        }
-        .round-icon {
-            width: 10px;
-            height: 10px;
-            margin-right: 5px;
-            margin-top: auto;
-            margin-bottom: auto;
-            background-color: #cbcccd;  /* Green background */
-            color: white;               /* Icon/text color */
-            border-radius: 50%;         /* Makes it a circle */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 4px #191919; /* Optional shadow */
-        }
-        .item-tree {
-            display: inline-flex;
-            color: #cbcccd;
-            background-color: #001225;
-            border-radius: 8px;
-            padding: 8px;
-        }
-        .item-tree:hover {
-            box-shadow: 0px 6px 15px #f3f357;
-        }
-        .round-icon-selected {
-            width: 12px;
-            height: 12px;
-            margin-right: 5px;
-            margin-top: auto;
-            margin-bottom: auto;
-            background-color: rgb(243, 243, 87);;  /* Green background */
-            color: rgb(243, 243, 87);;               /* Icon/text color */
-            border-radius: 50%;         /* Makes it a circle */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 2px 4px #191919; /* Optional shadow */
-        }
-        .tree-selected {
-            transform: scale(1.13);
-            transition: transform 0.3s ease;
-            box-shadow: 0px 6px 15px #f3f357;
-            color: #f3f357;
-        }
-        .vertical-line-tree {
-            width: 2px;          
-            height: 20px;         
-            background-color: #cbcccd;
-            margin-left: 12px;
-        }
-        .space-top {
-            margin-top: 10px;
-        }
-        .sticky-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bg_big.png?raw=true");
-            background-attachment: scroll;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            opacity: 0.4; /* Adjust to desired transparency */
-            z-index: -1; /* Push behind content */
-        }
-        img {
-            background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        #parent {
-            width: 100%;
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; }
+        .wrap {
+            max-width: 1180px;
             margin: 0 auto;
+            padding: 0 24px;
         }
-        #child {
-            position: relative;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        /* Header Area */
 
-        #header {
-            margin: 20px;
-            border-radius: 10px;
-            background-color: #13497f;
-            padding: 15px 20px;
+        /* Nav */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
+        }
+        .nav-inner {
+            display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 18px 0;
         }
-        #header div {
-            width: 100%;
-        }
-        .header-content {
-            border-radius: 10px;
+        .nav-brand {
             display: flex;
             align-items: center;
-            background-color: #0e365d; /* Light background */
-            padding: 2rem;
-            border-bottom: 1px solid #000000;
-            color: #cbcccd;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+            gap: 10px;
+            font-weight: 700;
+            font-size: 17px;
         }
-
-        .parent-list-last-company, .parent-list-education {
-            margin-bottom: 20px;
-            margin-top: 30px;
-        }
-
-        .last-company-other a {
-            width: 100%;
+        .nav-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            background: var(--ink);
+            color: #fff;
             display: flex;
+            align-items: center;
             justify-content: center;
-            padding: 12px;
-            background-color: #0b2948;
-            border-radius: 10px;
-            border-bottom: 1px solid #000000;
-        }
-
-        .last-company-other a:hover {
-            cursor: pointer;
-            box-shadow: 0px 6px 15px #191919;
-            transform: scale(1.13);
-            transform: translateY(-3px);
-        }
-
-        .last-company-content, .education-content {
-            border-radius: 10px;
-            display: flex;
-            align-items: flex-start;
-            background-color: #0e365d; /* Light background */
-            padding: 2rem;
-            margin-bottom: 10px;
-            border-bottom: 1px solid #000000;
-            color: #cbcccd;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
-        }
-
-        .header-content .header-profile-picture {
-            width: 130px;
-            aspect-ratio: 1 / 1;
-            border-radius: 50%; /* Circular profile picture */
-            overflow: hidden;
-            margin-right: 2rem;
-            box-shadow: 0 4px 8px #191919; /* Subtle shadow */
-        }
-
-        .last-company-picture {
-            display: inline-block;
-            flex-shrink: 0;
-            width: 100px;
-            height: 100px;
-            border-radius: 100%;
-            overflow: hidden;
-            margin-right: 2em;
-            box-shadow: 0 4px 8px #191919; /* Subtle shadow */
-        }
-
-        .education-content .education-picture {
-            width: 100px;
-            height: 95px;
-            aspect-ratio: 1 / 1;
-            border-radius: 50%; /* Circular profile picture */
-            margin-right: 2rem;
-            box-shadow: 0 4px 8px #191919; /* Subtle shadow */
-        }
-
-        .header-content .header-profile-picture img, .education-content .education-picture img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Maintain aspect ratio */
-        }
-
-        .last-company-content .last-company-picture img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            object-fit: cover; /* center-crop to fill the circle */
-            object-position: center;
-            background-color: #ffffff;
-            color: transparent; /* hide alt text if the image fails to load */
-            font-size: 0;
-        }
-
-        .header-content .header-user-info, .last-company-content .last-company-info, .education-content .education-info {
-            flex-grow: 1;
-        }
-
-        .last-company-info, .education-info {
-            position: relative;
-        }
-
-        .header-content .header-user-info h1, .last-company-content .last-company-info h1, .education-content .education-info h1 {
-            font-size: 2rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-
-        .last-company-info div, .education-info div {
-            margin-bottom: 20px;
-        }
-
-        .header-content .header-user-info p, .last-company-content .last-company-info p, .education-content .education-info p {
-            font-size: 1rem;
-            color: #666;
-            line-height: 1.6;
-        }
-        .header-content .header-profile-picture:hover, .last-company-content .last-company-picture:hover, .education-content .education-picture:hover {
-            transform: scale(1.13);
-            transition: transform 0.3s ease;
-        }
-        .header-tag-group {
-            margin-top: 10px;
-            display: flex;
-            flex-wrap: wrap;
-            opacity: 1;
-            gap: 0.5rem;
-        }
-        .tag {
-            padding: 0.4rem 0.8rem;
-            background-color: #398ee4;
-            color: #e0e0e0;
-            border-radius: 999px;
-            margin-right: 5px;
-            font-size: 14px;
-            opacity: 1;
-            white-space: nowrap;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        .tag:hover {
-            background-color: #2e78c1;
-            transform: scale(1.13);
-            color: #e0e0e0;
-        }
-
-        .last-company-tag, .education-tag {
-            position: absolute;
-            right: 0;
-            font-size: 12px;
-            background-color: #081c2f;
-        }
-
-        .last-company-tag:hover, .education-tag:hover {
-            background-color: #0f4679;
-            transform: scale(1.13);
-            color: #e0e0e0;
-        }
-
-        .header-tag-group-small-grid {
-            margin-top: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            justify-content: center; /* centers items horizontally */
-            align-items: center;     /* centers items vertically (optional) */
-        }
-
-        .header-tag-group-small-linear {
-            margin-top: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-        }
-
-        .tag-small {
-            padding: 0.2rem 0.4rem;
-            background-color: #398ee4;
-            color: #e0e0e0;
-            border-radius: 999px;
-            margin-right: 5px;
-            font-size: 11px;
-            white-space: nowrap;
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        .tag-small:hover {
-            background-color: #2e78c1;
-            transform: scale(1.13);
-            color: #e0e0e0;
-        }
-
-        @media(max-width: 520px) {
-            .header-content .header-profile-picture, .last-company-content .last-company-picture, .education-content .education-picture {
-                width: 110px;
-                height: 110px;
-                border-radius: 50%; /* Circular profile picture */
-                overflow: hidden;
-                margin: 1.2rem;
-                box-shadow: 0 4px 8px #191919; /* Subtle shadow */
-            }
-            .header-content, .last-company-content, .education-content {
-                display: flex;
-                flex-direction: column; 
-                align-items: center;
-                justify-content: center;
-                border-radius: 10px;
-                text-align: center;
-                gap: 1rem;        
-            }
-            .header-tag-group {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .last-company-tag, .education-tag {
-                position: relative;
-                width: fit-content;
-                margin: 0 auto;
-            }
-        }
-
-        @media (max-width: 1150px) and (min-width: 521px) {
-            .last-company-tag, .education-tag {
-                position: relative;
-                width: fit-content;
-                font-size: 12px;
-                background-color: #081c2f;
-            }
-        }
-
-        @media (max-width: 1400px) and (min-width: 711px) {
-            #child {
-                position: relative;
-                margin: 0 110px;
-            }
-        }
-
-        @media (max-width: 710px) {
-            #child {
-                position: relative;
-                margin: 0 auto;
-            }
-            #branch-tree-section {
-                display: none;
-            }
-        }
-
-        /* Button Header Area */
-
-        .button-list {
-            margin-top: 20px;
-            display: flex;
-        }
-
-        #button-up {
-            display: inline-block;
-            padding: 12px 10px;
             font-size: 13px;
-            margin: 5px;
-            font-weight: bold;
-            text-decoration: none;
-            text-align: center;
-            border: none;
-            border-radius: 10px;
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
+            font-weight: 700;
         }
-        #button-up:active {
-            transform: translateY(1px);
-            box-shadow: 0px 2px 5px #191919;
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--ink-soft);
+            white-space: nowrap;
         }
-        #button-up:hover {
-            box-shadow: 0px 6px 15px #191919;
-            transform: translateY(-3px);
-        }
-        .button-go-to-github {
-            color: #cbcccd;
-            background: linear-gradient(105deg, #000000, #454545e1);
-            box-shadow: 0px 4px 10px #191919;
-        }
-        .button-more {
-            color: #cbcccd;
-            background: linear-gradient(105deg, #660303, #a11414);
-            box-shadow: 0px 4px 10px #191919;
-        }
-        .button-linkedin {
-            color: #cbcccd;
-            background: linear-gradient(135deg, #004182, #8FCEEB);
-            box-shadow: 0px 4px 10px #191919;
-        }
-        .button-devto {
-            color: #cbcccd;
-            background: linear-gradient(105deg, #000000, #454545e1);
-            box-shadow: 0px 4px 10px #191919;
-        }
-        .button-resume {
-            color: #242323;
-            background: linear-gradient(105deg, #3eda94, #13ab67);
-            box-shadow: 0px 4px 10px #191919;
-        }
-        .button-jetbrains {
-            color: #dddcdc;
-            background: linear-gradient(105deg, #d012ca, #9d0303);
-            box-shadow: 0px 4px 10px #191919;
-        }
-
-        @media (max-width: 780px) {
-            .button-list {
-               display: flow-root;
-            }
-        }
-
-        /* Body Project Area */
-
-        #body-content {
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-        #body-content .body-content-detail {
-            color: #cbcccd;
-            background-color: #13497f; /* Soft background */
-            border-radius: 10px;
-            padding: 10px;
-        }
-        .title-list {
-            font-size: 1.8rem;
+        .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+        .btn-resume-nav {
+            border: 1px solid var(--line);
+            padding: 9px 18px;
+            border-radius: 9px;
+            font-size: 14px;
             font-weight: 600;
-            color: #cbcccd;
-            margin-left: 10px;
-            margin-right: 10px;
-            border-bottom: 1px solid transparent; /* Subtle divider */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all .2s ease;
+        }
+        .btn-resume-nav:hover { border-color: var(--accent); color: var(--accent); }
+        @media (max-width: 860px) {
+            .nav-links { display: none; }
         }
 
-        .project-image-overlay-blur-grid {
-            position: absolute;
-            left: 50%;
-            justify-content: center; /* Center horizontally */
-            align-items: center; 
-            z-index: 1; /* Place this div in front */
-            border-radius: 8px;
+        /* Hero */
+        .hero {
+            padding: 64px 0 56px;
         }
-        .translate-vertical-150 {
-            transform: translate(-50%, -150%);
-        }
-
-        .translate-vertical-250 {
-            transform: translate(-50%, -250%);
-        }
-
-        .project-list-grid {
+        .hero-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
-            grid-gap: 2rem; /* Spacing between grid items */
-            padding: 3rem;
-            color: #cbcccd; /* Dark text for contrast */
-            font-family: 'Georgia', serif; /* Elegant serif font */
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 48px;
+            align-items: center;
         }
-        .project-card-grid {
-            width: 100%;
-            background-color: #072c4f;
-            border-radius: 8px;
-            padding: 10px;
-            position: relative;
-            display: inline-block; /* Allows container to wrap image */
-            overflow: hidden; /* Prevents overlay from overflowing */
+        .eyebrow {
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 12.5px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
         }
-        .project-card-grid h2 {
-            font-size: 16px;
-            font-weight: 600;
-            color: #cbcccd;
-            margin-bottom: 10px;
-            border-bottom: 1px solid transparent; /* Subtle divider */
-            background-color: #2f4c6a;
-            padding: 10px;
-            border-radius: 10px;
+        .hero h1 {
+            font-size: 2.6rem;
+            line-height: 1.15;
+            font-weight: 800;
+            margin: 0 0 18px;
+            letter-spacing: -0.01em;
         }
-        .project-card-grid p {
+        .hero p.lead {
+            color: var(--ink-soft);
+            font-size: 1.02rem;
             line-height: 1.7;
-            color: #cbcccd;
-            margin-bottom: 10px;
+            max-width: 540px;
+            margin: 0 0 26px;
         }
-        .project-image-container-grid img {
-            top: 20px;
-            left: 20px;
-            display: block; /* Removes extra space below image */
-            transition: transform 0.3s ease; /* Smooth zoom transition */
-            width: 100%;
-            height: 200px;
+        .hero-ctas {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 22px;
             border-radius: 10px;
-            object-fit: cover;
-        }
-        .project-image-container-grid:hover img {
-            filter: blur(5px); /* Apply blur on hover */
-        }
-        .project-image-container-grid:hover .project-image-overlay-button {
-            cursor: pointer;
-            opacity: 1; /* Show overlay on hover */
-        }
-        .project-image-overlay-blur-linear {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1; /* Place this div in front */
-        }
-        .project-image-overlay-button {
-            text-align: center;
-            background-color: #191919; /* Semi-transparent black overlay */
-            opacity: 0; /* Initially hidden */
-            background: linear-gradient(105deg, #1860a8, #062e57);
-            color: #cbcccd;
-            padding: 10px;
-            z-index: 1; /* Place this div in front */
-            font-size: 11px;
-            border-radius: 8px;
-            transition: opacity 0.3s ease; /* Smooth fade transition */
-        }
-        .project-list-linear {
-            display: block;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
-            grid-gap: 2rem; /* Spacing between grid items */
-            padding-top: 20px;
-            padding-bottom: 20px;
-            color: #333; /* Dark text for contrast */
-            font-family: 'Georgia', serif; /* Elegant serif font */
-        }
-
-        .project-card-linear {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            padding: 16px;
-            margin-bottom: 10px;
-            border-radius: 12px;
-            background: #cbcccd;
-            box-shadow: 0px 4px 10px #191919;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .project-card-linear-full:hover  {
-            transform: translateY(-4px);
-            box-shadow: 0px 6px 16px #191919;
-        }
-
-        .project-card-linear-full {
-            position: relative;
-        }
-
-        .project-card-linear-full span {
-            position: absolute;
-            opacity: 0.15;
-            height: 100%;
-        }
-
-        .project-card-linear-full span img {
-            height: 100%;
-            width: 200px;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
-        }
-
-        .project-image-container-linear {
-            position: relative;
-            flex-shrink: 0;
-            width: 120px;
-            height: 120px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .project-image-container-linear img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .project-image-container-linear:hover img {
-            filter: blur(5px); /* Apply blur on hover */
-        }
-        .project-image-container-linear:hover .project-image-overlay-button {
-            cursor: pointer;
-            opacity: 1; /* Show overlay on hover */
-        }
-
-        .project-title-linear {
-            font-size: 16px;
-            font-weight: bold;
-            color: #333;
-            margin: 0;
-        }
-
-        .project-title-grid {
-            text-align: center;
-            align-items: center;
-            min-height: 40px;
-            margin-bottom: 10px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2; 
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .project-description-grid {
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .project-description-linear {
-            font-size: 1rem;
-            color: #000000;
-            margin-top: 6px;
-        }
-
-        /* Modal Area */
-
-        @keyframes zoomIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.8) translateZ(0);
-            }
-            20% {
-                opacity: 0.5;
-                transform: scale(0.9) translateZ(0);
-            }
-            40% {
-                opacity: 0.7;
-                transform: scale(0.95) translateZ(0);
-            }
-            60% {
-                opacity: 0.9;
-                transform: scale(1.02) translateZ(0); /* small overshoot */
-            }
-            80% {
-                opacity: 1;
-                transform: scale(1.05) translateZ(0);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateZ(0);
-            }
-        }
-
-        @keyframes zoomOut {
-        0% {
-            opacity: 1;
-            transform: scale(1) translateZ(0);
-        }
-        20% {
-            opacity: 0.9;
-            transform: scale(0.95) translateZ(0);
-        }
-        40% {
-            opacity: 0.7;
-            transform: scale(0.85) translateZ(0);
-        }
-        60% {
-            opacity: 0.5;
-            transform: scale(0.7) translateZ(0);
-        }
-        80% {
-            opacity: 0.3;
-            transform: scale(0.5) translateZ(0);
-        }
-        100% {
-            opacity: 0;
-            transform: scale(0.3) translateZ(0);
-        }
-        }
-
-        .zoom-in {
-            animation-duration: 1000ms;
-            animation: zoomIn 400ms cubic-bezier(.2,.9,.2,1) forwards;
-            transform-origin: center center;
-            will-change: transform, opacity;
-        }
-
-        .zoom-out {
-            animation-duration: 1000ms;
-            animation: zoomOut 400ms cubic-bezier(.2,.9,.2,1) forwards;
-            transform-origin: center center;
-            will-change: transform, opacity;
-        }
-
-        .modal-full {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column; /* Align items vertically by default */
-            align-items: center;
-            justify-content: center;
-            background-color: #19191988;
-            backdrop-filter: blur(5px); /* Apply blur effect on overlay backdrop */
-            z-index: 1000; /* Ensure the modal is on top */            
-        }
-        .modal-content {
-            display: flex;
-            flex-direction: column; /* Align items vertically by default */
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content h2 {
             font-weight: 600;
+            font-size: 14.5px;
+            transition: transform .2s ease, box-shadow .2s ease;
         }
-        .modal-content p, .modal-content h2 {
-            text-align: center;
-            margin-top: 10px;
-            margin-left: 15px;
-            margin-right: 15px;
-            margin-bottom: 10px;
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 10px 20px -8px rgba(36,87,245,0.55);
         }
-        .modal-content img {
-            background-image: none;
-            width: auto;
-            height: 450px;
-            border-radius: 10px;
-            object-fit: contain; 
-            object-position: center;
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 24px -8px rgba(36,87,245,0.65); }
+        .btn-outline {
+            border: 1px solid var(--line);
+            color: var(--ink);
         }
-
-        /* Contact me Area */
-
-        .contact-body {
-            position: relative;
-            width: 100%;
-            margin: 0 auto;
-            align-items: center; 
-            display: flex; 
-            justify-content: center; 
-        }
-        .contact-bottom {
-            display: inline-block;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .contact-mail-me {
-            display: inline-block;
-            margin-left: 10px;
-            margin-bottom: 20px;
-            padding: 5px;
-            border-radius: 5px;
-            position: relative;
-        }
-        .contact-mail-me:hover {
-            box-shadow: 0px 6px 15px #191919;
-            transform: translateY(-3px);
-        }
-
-        @media (max-width: 830px) {
-            .contact-body {
-                position: relative;
-                width: 100%;
-                margin: 0 auto;
-                align-items: center; 
-                display: grid; 
-                justify-content: center; 
-            }
-            .contact-mail-me {
-                display: flex;
-                justify-content: center;
-                position: relative;
-                background-color: #0e365d;
-                padding: 10px;
-                font-size: 20px;
-                margin-left: 0px;
-                margin-bottom: 10px;
-                border-radius: 8px;
-            }
-            .contact-mail-me:hover {
-                box-shadow: 0px 6px 15px #191919;
-                transform: translateY(-3px);
-            }
-        }
-
-         /* Footer Area */
-
-        #footer {
-            padding: 20px;
-            width: 100%;
-            margin: 0 auto;
-            color: #cbcccd;
-        }
-        .footer-content p {
-            background-color: #13497f;
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-        }
-        .footer-bottom {
-            background-color: #13497f;
-            border-radius: 10px;
-            padding: 10px;
-            margin-top: 30px;
-        }
-
-        #floatingButton {
-            display: block;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            position: fixed;
-            bottom: 20px;
-            right: 30px;
-            background-color: #052751;
-            color: #cbcccd;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 100px;
-            cursor: default;
-            font-size: 12px;
-            box-shadow: 0 4px 8px #191919;
-        }
-
-        #floatingButton:hover {
-            cursor: default;
-            box-shadow: 0px 6px 15px #f3f357;
-            transform: translateY(-3px);
-        }
-
-        #floating-project ul {
-            display: block;
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
-            position: fixed;
-            bottom: 20px;
-            left: 30px;
-        }
-
-        #floating-project ul li {
-            margin-top: 30px;
-        }
-
-        #floating-project ul li a {
-            background-color: rgb(97, 97, 97);
-            color: #cbcccd;
-            padding: 15px 20px;
-            border: none;
-            border-radius: 100px;
-            cursor: default;
-            font-size: 12px;
-            box-shadow: 0 4px 8px #191919;
-        }
-
-        #title-hightlight-project {
-            color: #f3f357;
-        }
-
-
-        #floating-project ul li a:hover {
-            cursor: pointer;
-            background-color: #f3f357;
-            color: #191919;
-            box-shadow: 0px 6px 15px #191919;
-            transform: translateY(-3px);
-        }
-
-        #floating-project ul li:hover {
-            transform: scale(1.05);
-        }
-
-        #floating-project-close {
-            margin-left: 10px;
-            padding: 5px;
-            background-color: #000000;
-            box-shadow: 0px 6px 15px #cbcccd;
-            border-radius: 100%;
-        }
-        #floating-project-close i {
-            width: 20px;
-            height: auto;
-            display: inline-grid;
-            justify-content: center; /* horizontal center */
-            align-items: center;
-        }
-
-        #floating-project-close:hover {
-            cursor: pointer;
-            color: #b70e0e;
-            box-shadow: 0px 6px 15px #b70e0e;
-            transform: translateY(-3px);
-        }
-
-        /* List Format Area */
-
-        .parent-list-format {
-            width: auto;
+        .btn-outline:hover { border-color: var(--ink); transform: translateY(-2px); }
+        .hero-note {
+            color: var(--ink-faint);
+            font-size: 13.5px;
             display: flex;
-            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Hero visual mock */
+        .hero-visual {
             position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: stretch;
         }
-        .parent-list-format p {
-            margin-right: 10px;
-            margin-top: 12px;
-        }
-        .list-format-item {
-            background-color: #081c2f;
-            color: #cbcccd;
-            padding: 8px 12px;
-            border-radius: 5px;
-            margin: 5px;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .list-format-item:hover {
-            cursor: pointer;
-            box-shadow: 0px 6px 15px #191919;
-            transform: scale(1.13);
-            transform: translateY(-3px);
-        }
-        .list-format-item-selected {
-            background-color: #081c2f;
-            color: #f3f357;
-            padding: 8px 12px;
-            border-radius: 5px;
-            margin: 5px;
-            cursor: default;
-        }
-        @media (max-width: 587px) {
-            .parent-list-format {
-                display: none;
-            }
-        }
-
-        .fade-in {
-            filter: blur(0);
-            opacity: 1;
-            transition: 
-                filter 1s ease-in-out,         /* blur runs immediately */
-                opacity 2s ease-in-out 1s;     /* opacity starts after 1s delay */
-        }
-
-        .fade-out {
-            filter: blur(10px);
-            opacity: 0;
-            transition: 
-                filter 1s ease-in-out,         /* blur runs immediately */
-                opacity 2s ease-in-out 1s;     /* opacity starts after blur ends */
-        }
-
-        /* Page Shimmer */
-
-        .component-pre-render {
-            width: 100%;
-            height: 100%;
+        .visual-stack {
             display: flex;
             flex-direction: column;
+            gap: 16px;
         }
-        .item-pre-render {
-            width: 100% auto;
-            height: 200px;
-            background-color: #757474b8;
-            border-radius: 8px;
-            margin-left: 35px;
-            margin-right: 35px;
+        .mock-card {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+        .mock-code {
+            background: #0b1430;
+            color: #9db3ff;
+            font-family: "SFMono-Regular", Consolas, Menlo, monospace;
+            font-size: 11.5px;
+            line-height: 1.7;
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+        .mock-code .kw { color: #ff8fd0; }
+        .mock-code .fn { color: #9db3ff; }
+        .mock-phone {
+            display: flex;
+            height: 100%;
+            background: var(--ink);
+            border-radius: 28px;
+            padding: 10px;
+            box-shadow: 0 24px 40px -18px rgba(15,23,42,0.45);
+        }
+        .mock-phone-screen {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: #fff;
+            border-radius: 20px;
+            padding: 16px 14px;
+        }
+        .mock-phone-status {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: var(--ink-faint);
             margin-bottom: 10px;
-            margin-top: 10px;
-            position: relative;
-            overflow: hidden;
         }
-        .item-pre-render::before {
+        .mock-phone-screen h4 {
+            margin: 0 0 2px;
+            font-size: 13.5px;
+        }
+        .mock-phone-screen p {
+            margin: 0 0 14px;
+            font-size: 11px;
+            color: var(--ink-faint);
+        }
+        .mock-phone-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .mock-phone-row i {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--surface-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--accent);
+        }
+        .mock-phone-row b { display: block; font-size: 12px; }
+        .mock-phone-row span { font-size: 10.5px; color: var(--ink-faint); }
+        .mock-phone-tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+            color: var(--ink-faint);
+            font-size: 9px;
+        }
+        .mock-stat .label { font-size: 11.5px; color: var(--ink-faint); margin-bottom: 6px; }
+        .mock-stat .value { font-size: 1.5rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+        .mock-stat .value small { font-size: 11px; font-weight: 700; color: #16a34a; }
+        .mock-tech ul { list-style: none; padding: 0; margin: 0; }
+        .mock-tech li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 0;
+            font-size: 12.5px;
+            font-weight: 600;
+        }
+        .mock-tech li i { width: 16px; color: var(--accent); }
+        .mock-tech li i.icon-green { color: #22c55e; }
+        .mock-tech li i.icon-red { color: #ef4444; }
+        .mock-tech li img.tech-logo {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            filter: none;
+        }
+
+        @media (max-width: 920px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-visual { display: none; }
+        }
+
+        /* Stats bar */
+        .stats-bar {
+            background: var(--surface-soft);
+            border-radius: 16px;
+            padding: 30px 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .stat-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            text-align: left;
+        }
+        .stat-item i {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 17px;
+            box-shadow: 0 2px 6px rgba(15,23,42,0.08);
+        }
+        .stat-item .num { font-size: 1.5rem; font-weight: 800; line-height: 1.1; }
+        .stat-item .label { font-size: 13px; color: var(--ink-soft); }
+        @media (max-width: 760px) {
+            .stats-bar { grid-template-columns: 1fr; gap: 20px; }
+        }
+
+        section { padding: 64px 0; }
+        .section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+        .section-head h2 { font-size: 1.7rem; margin: 0; font-weight: 800; }
+        .section-head .view-all { font-size: 14px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+        .section-head .view-all:hover { text-decoration: underline; }
+        .section-sub { color: var(--ink-soft); margin-top: -18px; margin-bottom: 28px; font-size: 14.5px; }
+
+        /* Selected work */
+        .work-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .work-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--surface);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .work-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -16px rgba(15,23,42,0.25); }
+        .work-thumb {
+            background: var(--surface-soft);
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .work-thumb img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .work-body { padding: 20px; }
+        .work-body h3 { margin: 0 0 2px; font-size: 1.05rem; }
+        .work-body .role { color: var(--ink-faint); font-size: 12.5px; margin-bottom: 12px; }
+        .work-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .work-tags span {
+            background: var(--surface-soft);
+            color: var(--ink-soft);
+            font-size: 11.5px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+        .work-body p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin: 0 0 14px; }
+        .work-link { font-size: 13.5px; font-weight: 700; color: var(--accent); }
+        .work-link:hover { text-decoration: underline; }
+        @media (max-width: 920px) {
+            .work-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Experience */
+        .timeline { position: relative; margin-top: 4px; }
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 170px 24px 1fr 1fr;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .timeline-item:last-child { border-bottom: none; }
+        .timeline-date { color: var(--ink-faint); font-size: 13px; padding-top: 2px; }
+        .timeline-dot-col { display: flex; justify-content: center; position: relative; }
+        .timeline-dot {
+            width: 9px; height: 9px; border-radius: 50%;
+            background: var(--accent);
+            margin-top: 6px;
+            z-index: 1;
+        }
+        .timeline-dot-col::before {
             content: "";
             position: absolute;
             top: 0;
-            left: -150%;        
-            width: 150%;
-            height: 100%;
-            background: linear-gradient(
-                110deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.45) 40%,
-                rgba(255, 255, 255, 0.15) 55%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: skewX(-20deg);
-            animation: shimmer 1.6s infinite;
+            bottom: -22px;
+            width: 1px;
+            background: var(--line);
+        }
+        .timeline-item:last-child .timeline-dot-col::before { display: none; }
+        .timeline-main h3 { margin: 0 0 2px; font-size: 15.5px; }
+        .timeline-main .role { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 10px; }
+        .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .timeline-tags span {
+            background: var(--surface-soft);
+            color: var(--ink-soft);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 999px;
+        }
+        .timeline-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; padding-top: 2px; }
+        @media (max-width: 860px) {
+            .timeline-item { grid-template-columns: 16px 1fr; }
+            .timeline-date { grid-column: 1 / 3; }
+            .timeline-dot-col { display: none; }
+            .timeline-desc { grid-column: 1 / 3; }
         }
 
-        @keyframes shimmer {
-            0%   { left: -100%; }
-            50%  { left: 50%; }
-            100% { left: 100%; }
+        /* Footer */
+        footer { padding: 30px 0 50px; }
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--line);
+            padding-top: 24px;
+            font-size: 13px;
+            color: var(--ink-faint);
+        }
+        .footer-social { display: flex; gap: 18px; }
+        .footer-social a:hover { color: var(--ink); }
+        @media (max-width: 600px) {
+            .footer-inner { flex-direction: column; gap: 14px; text-align: center; }
         }
 
-        /* General CSS */
+        /* Hero tags + social */
+        .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0; }
+        .hero-tags span {
+            background: var(--surface-soft);
+            border: 1px solid var(--line);
+            color: var(--ink-soft);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+        /* Social bar (below header) */
+        .social-bar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--line);
+        }
+        .social-bar a {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            border: 1px solid var(--line);
+            padding: 7px 13px;
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--ink-soft);
+            transition: all .2s ease;
+        }
+        .social-bar a:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-        .hidden { 
-            display: none; 
+        /* Education */
+        .edu-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 22px;
+        }
+        .edu-card img {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .edu-card h3 { margin: 0 0 4px; font-size: 15.5px; }
+        .edu-card .role { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 4px; }
+        .edu-card .date { font-size: 12.5px; color: var(--ink-faint); }
+        @media (max-width: 560px) {
+            .edu-card { flex-direction: column; text-align: center; }
         }
 
-        .flex-grow-2 {
-            flex-grow: 2;  
-            flex-basis: 1;
+        /* Full projects + activities grids */
+        .full-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
+        @media (max-width: 920px) {
+            .full-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 620px) {
+            .full-grid { grid-template-columns: 1fr; }
+        }
+        .project-tags span {
+            background: var(--surface-soft);
+            color: var(--ink-soft);
+            font-size: 10.5px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 999px;
+        }
+        .show-more-wrap { text-align: center; margin-top: 28px; }
+        .show-more-btn {
+            border: 1px solid var(--line);
+            padding: 11px 24px;
+            border-radius: 9px;
+            font-size: 13.5px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #fff;
+            color: var(--ink);
+        }
+        .show-more-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .hidden-item { display: none; }
     </style>
 </head>
 <body>
-    <div class="sticky-background"></div>
-    <div id="parent">
-        <div class="component-pre-render">
-            <div class="item-pre-render flex-grow-2"></div>
-            <div class="item-pre-render flex-grow-2"></div>
-            <div class="item-pre-render flex-grow-2"></div>
+
+    <nav class="nav">
+        <div class="wrap nav-inner">
+            <div class="nav-brand">
+                <div class="nav-logo">MS</div>
+                <span>Mikkel Septiano</span>
+            </div>
+            <div class="nav-links">
+                <a href="#work">Work</a>
+                <a href="#experience">Experience</a>
+                <a href="#education">Education</a>
+                <a href="#projects">Projects</a>
+                <a href="#activities">Activities</a>
+            </div>
+            <a class="btn-resume-nav" href="https://www.linkedin.com/in/mikkel-septiano/" target="_blank" rel="noopener noreferrer">
+                <i class="fa-brands fa-linkedin"></i> LinkedIn
+            </a>
         </div>
-        <div id="child">
-            <div id="branch-tree-section" class="hidden"></div>
-            <div id="header" class="hidden"></div>
-            <div id="body-content" class="hidden"></div>
-            <div id="footer" class="hidden"></div>
-        </div>
+    </nav>
+
+    <div class="social-bar wrap">
+        <a href="https://github.com/mikkelofficial7/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://www.linkedin.com/in/mikkel-septiano/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="https://mikkelofficial7.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-medium"></i> Medium</a>
+        <a href="https://linktr.ee/mikkelofficial7" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-clover"></i> Linktree</a>
+        <a href="https://plugins.jetbrains.com/vendor/mikkel-septiano" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-code"></i> JetBrains</a>
     </div>
-</body>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
-    <script type="text/babel">
-        const defaultTimerAnimation = 1000 // Default Blur and Fade animation timer
-        const nameSection = "Mikkel Septiano is here";
-        const shortDetail = "Fullstack Mobile Engineer with more than 7 years experiences 🖥️📱 and absolute coffee junkie ☕";
-        const photoUrl = "https://avatars.githubusercontent.com/u/25360843?v=4"
-        const githubUrl = "https://github.com/mikkelofficial7/"
-        const linktreeUrl = "https://linktr.ee/mikkelofficial7"
-        const linkedinUrl = "https://www.linkedin.com/in/mikkel-septiano/"
-        const mediumUrl = "https://mikkelofficial7.medium.com/"
-        const resumeUrl = "https://rxresu.me/mikkelseptiano86/mikkel-septiano"
-        const jetbrainsUrl = "https://plugins.jetbrains.com/vendor/mikkel-septiano"
 
-        const highlightProject = [
-            [
-                "Jetbrains - Android Clean Architecture Plugin Helper",
-                "https://plugins.jetbrains.com/plugin/30455-kotlin-android-s-o-l-i-d-arch"
-            ],
-            [
-                "Findyourmovi - Try the demo",
-                "https://findyourmovi.vercel.app/"
-            ],
-            [
-                "Generecipe App (Android) - Try the demo",
-                "https://github.com/mikkelofficial7/flutter-recipe-generator/blob/main/demo-testing.apk"
-            ],
-            [
-                "Spoticlone App (Android) - Try the demo",
-                "https://github.com/mikkelofficial7/android-spotify-clone/blob/main/demo-testing.apk"
-            ]
-        ]
+    <main class="wrap">
 
-        const educationData = [
-                [
-                    "Institut Bisnis Informatika Indonesia Kwik Kian Gie",
-                    "2014 - 2018",
-                    "https://media.licdn.com/dms/image/v2/C560BAQEgbd5OzMWZvQ/company-logo_200_200/company-logo_200_200/0/1659583922081?e=2147483647&v=beta&t=VW9RgWH3_ekmzJWfLe5yY3rZM2QNTD2JYpnVnfAicy4",
-                    "Bachelor of Engineering (B.Eng) - Information Technology"
-                ],
-        ]
-        const lastCompanyData = [
-                [
-                    "eWIDEPLUS Corp (이와이드플러스)",
-                    "https://www.ewideplus.com/index.jsp",
-                    "July 2026 - now",
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s",
-                    "Senior FullStack Engineer",
-                    "Established in 1996 as a pioneering digital web agency from South Korea, eWIDEPlus strives for excellence in global convergence across finance, environment, and future industries.",
-                    "A Pragmatic Engineer guy behind Ganes AI - Working around various industries (Security, Beauty, etc). Working with Python, Next.js, Panda CSS, Docker, and other technologies to build reliable and scalable software solutions."
-                ],
-                [
-                    "eWIDEPLUS Corp (이와이드플러스)",
-                    "https://www.ewideplus.com/index.jsp",
-                    "Sep 2023 - now",
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s",
-                    "Senior Software Engineer - Android",
-                    "Established in 1996 as a pioneering digital web agency from South Korea, eWIDEPlus strives for excellence in global convergence across finance, environment, and future industries.",
-                    "Served as a key contributor on the LINE Bank project, focusing on application stability, security, and engineering excellence. Enhanced and maintained core features, achieving a 96% crash-free rate and significantly improving overall app reliability. Integrated built-in and internal third-party SDKs, including VoIP, biometric authentication, and QR systems. Strengthened application security through advanced protections such as secure keypad input, device tampering detection, and emulator detection to support penetration testing. Actively supported pentest sessions to ensure compliance with security standards, while establishing best development practices, conducting code reviews, and mentoring junior and mid-level engineers."
-                ],
-                [
-                    "Altea Care (PT. Sehat Digital Nusantara)",
-                    "https://alteacare.com/",
-                    "Sep 2022 - Sep 2023",
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnI1E7KkKkGE-MPYfQnYtMOMKfqsVf-N6ZxA&s",
-                    "Lead Software Engineer - Android",
-                    "A leading healthcare company in Indonesia (Part of Mitra Keluarga, Largest Indonesia Hospital) with most sophiscated healthcare ecosystems.",
-                    "Led a team of four Android engineers, achieving a 96% crash-free rate through high productivity and code quality. Architected and built a doctor-side telemedicine app from scratch, integrating Google Maps, Jitsi, Qiscus, and MoEngage for real-time communication. Managed CI/CD with GitHub Actions, cutting build time by 20% and improving deployment efficiency. Architected the Medivet pet-veterinary app using React Native, developed reusable Material Design UI components, authored technical documentation, collaborated cross-functionally, and mentored engineers on coding standards and architecture."
-                ],
-                [
-                    "Rupiah Cepat (PT. Kredit Utama Fintech Indonesia)",
-                    "https://www.rupiahcepat.co.id/",
-                    "Nov 2021 - Aug 2022",
-                    "https://cdn.aptoide.com/imgs/d/2/b/d2bb88dd28a752aefc1149c0043aad41_icon.png",
-                    "Senior Android Engineer",
-                    "A financial technology company focused on facilitating access to loans through a Peer-to-Peer (P2P) platform with 10+ million active users",
-                    "Developed and debugged an Android fintech loan and investment application, achieving a 95% increase in crash-free usage. Built high-end custom UI components, including a roulette-style loan selector, animated add-to-cart features, and custom confetti animations from scratch. Collaborated closely with expatriate engineers and the product manager to define technical and product requirements. Mentored new developers on coding standards, application architecture, and integration of new technology stacks while delivering evolving business requirements."
-                ],
-                [
-                    "", "", "", "", "", "", ""
-                ]
-        ]
+        <section class="hero" id="about">
+            <div class="hero-grid">
+                <div>
+                    <div class="eyebrow">Senior Android / Mobile Engineer</div>
+                    <h1>Building reliable mobile experiences, from architecture to production.</h1>
+                    <p class="lead">I'm a Senior Android / Mobile Engineer with 7+ years of experience building high-quality mobile apps using Kotlin, Java, Android, Flutter and other cross-platform technologies.</p>
+                    <div class="hero-ctas">
+                        <a class="btn btn-primary" href="#work">Explore Projects <i class="fa fa-arrow-right"></i></a>
+                        <a class="btn btn-outline" href="https://rxresu.me/mikkelseptiano86/mikkel-septiano" target="_blank" rel="noopener noreferrer">View Resume <i class="fa fa-arrow-up-right-from-square"></i></a>
+                    </div>
+                    <div class="hero-note"><i class="fa-regular fa-calendar"></i> 7+ years building mobile products</div>
+                    <div class="hero-tags">
+                        <span>Java (Android)</span>
+                        <span>Kotlin (Android)</span>
+                        <span>Java (Springboot)</span>
+                        <span>Flutter</span>
+                        <span>React Native</span>
+                        <span>React Js</span>
+                        <span>PHP</span>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="mock-phone">
+                        <div class="mock-phone-screen">
+                            <div class="mock-phone-status"><span>9:41</span><span><i class="fa fa-wifi"></i> <i class="fa fa-battery-full"></i></span></div>
+                            <h4 id="phone-greeting">Good morning, Mikkel</h4>
+                            <p>Build better apps.</p>
+                            <div class="mock-phone-row"><i class="fa fa-credit-card"></i><div><b>Banking</b><span>Secure &amp; Simple</span></div></div>
+                            <div class="mock-phone-row"><i class="fa fa-cart-shopping"></i><div><b>Commerce</b><span>Shop Smarter</span></div></div>
+                            <div class="mock-phone-row"><i class="fa fa-hospital"></i><div><b>Healthcare</b><span>Care Made Simple</span></div></div>
+                            <div class="mock-phone-row"><i class="fa fa-laptop-code"></i><div><b>IT Consulting</b><span>Scale with Confidence</span></div></div>
+                            <div class="mock-phone-row"><i class="fa fa-landmark"></i><div><b>Financial Institution</b><span>Trusted &amp; Reliable</span></div></div>
+                            <div class="mock-phone-tabs">
+                                <span><i class="fa fa-house"></i><br/>Home</span>
+                                <span><i class="fa fa-compass"></i><br/>Discover</span>
+                                <span><i class="fa fa-user"></i><br/>Profile</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="visual-stack">
+                        <div class="mock-card mock-stat">
+                            <div class="label">Crash-free sessions</div>
+                            <div class="value">96.7% <small><i class="fa fa-arrow-up"></i> 3.2%</small></div>
+                        </div>
+
+                        <div class="mock-code">
+                            <div><span class="kw">class</span> <span class="fn">MainActivity</span> :</div>
+                            <div>&nbsp;&nbsp;AppCompatActivity() {</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">override fun</span> onCreate(</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;savedInstanceState: Bundle?</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;) {</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">super</span>.onCreate(...)</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setContentView(R.layout...)</div>
+                            <div>&nbsp;&nbsp;&nbsp;&nbsp;}</div>
+                            <div>&nbsp;&nbsp;}</div>
+                        </div>
+
+                        <div class="mock-card mock-tech">
+                            <ul>
+                                <li><i class="fa-brands fa-android icon-green"></i> Kotlin</li>
+                                <li><i class="fa-brands fa-java icon-red"></i> Java</li>
+                                <li><i class="fa-brands fa-android icon-green"></i> Android</li>
+                                <li><img class="tech-logo" src="https://upload.wikimedia.org/wikipedia/commons/7/79/Flutter_logo.svg" alt="Flutter"/> Flutter</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-bar">
+            <div class="stat-item"><i class="fa-solid fa-briefcase"></i><div><div class="num">7+</div><div class="label">Years Experience</div></div></div>
+            <div class="stat-item"><i class="fa fa-shield"></i><div><div class="num">96.7%</div><div class="label">Crash-free Sessions</div></div></div>
+            <div class="stat-item"><i class="fa-solid fa-chart-line"></i><div><div class="num">83%</div><div class="label">Technical Debt Reduced</div></div></div>
+        </section>
+
+        <section id="work">
+            <div class="section-head">
+                <h2>Selected Work</h2>
+                <a class="view-all" href="#projects">View all projects <i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="work-grid">
+                <div class="work-card">
+                    <div class="work-thumb"><img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.png?raw=true" alt="LINE Bank"/></div>
+                    <div class="work-body">
+                        <h3>LINE Bank</h3>
+                        <div class="role">Android Engineering</div>
+                        <div class="work-tags"><span>Kotlin</span><span>Security</span><span>VoIP</span></div>
+                        <p>Built and maintained core Android features including VoIP, biometric auth, QR SDK, and anti-tampering solutions.</p>
+                        <a class="work-link" href="https://play.google.com/store/apps/details?id=id.co.linebank&hl=ln&gl=ID" target="_blank" rel="noopener noreferrer">View case study <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-thumb"><img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/19.png?raw=true" alt="Setoko"/></div>
+                    <div class="work-body">
+                        <h3>Setoko</h3>
+                        <div class="role">Mobile Commerce</div>
+                        <div class="work-tags"><span>Android</span><span>Flutter</span><span>Performance</span></div>
+                        <p>Developed 5 native Android apps + 1 Flutter iOS app with focus on performance, scalability and operational efficiency.</p>
+                        <a class="work-link" href="https://setoko.id/" target="_blank" rel="noopener noreferrer">View case study <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-thumb"><img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true" alt="AlteaCare"/></div>
+                    <div class="work-body">
+                        <h3>AlteaCare</h3>
+                        <div class="role">Healthcare &amp; Telemedicine</div>
+                        <div class="work-tags"><span>Kotlin</span><span>MVVM</span><span>Firebase</span></div>
+                        <p>Building an Android app for health care and telemedicine, part of Mitra Keluarga, Indonesia's largest hospital group.</p>
+                        <a class="work-link" href="https://play.google.com/store/apps/details?id=com.dre.loyalty&hl=id" target="_blank" rel="noopener noreferrer">View case study <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="section-head">
+                <h2>Experience</h2>
+                <a class="view-all" href="https://rxresu.me/mikkelseptiano86/mikkel-septiano" target="_blank" rel="noopener noreferrer">View full resume <i class="fa fa-arrow-right"></i></a>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Jul 2026 &mdash; Present</div>
+                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
+                    <div class="timeline-main">
+                        <h3>eWIDEPLUS Corp (South Korea Software Agency)</h3>
+                        <div class="role">Senior FullStack Engineer</div>
+                        <div class="timeline-tags"><span>Python</span><span>Next.js</span><span>Panda CSS</span><span>Docker</span></div>
+                    </div>
+                    <div class="timeline-desc">A pragmatic engineer behind Ganes AI, working across industries (security, beauty, etc.) to build reliable and scalable software solutions.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Sep 2023 &mdash; Present</div>
+                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
+                    <div class="timeline-main">
+                        <h3>eWIDEPLUS Corp (South Korea Software Agency)</h3>
+                        <div class="role">Senior Software Engineer (Android)</div>
+                        <div class="timeline-tags"><span>Kotlin</span><span>Android</span><span>VoIP</span><span>Security</span></div>
+                    </div>
+                    <div class="timeline-desc">LINE Bank project. Built core features, improved stability and mentored junior engineers.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Sep 2022 &mdash; Sep 2023</div>
+                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
+                    <div class="timeline-main">
+                        <h3>Altea Care (PT. Sehat Digital Nusantara)</h3>
+                        <div class="role">Lead Software Engineer (Android)</div>
+                        <div class="timeline-tags"><span>Android</span><span>React Native</span><span>CI/CD</span></div>
+                    </div>
+                    <div class="timeline-desc">Led a team of four Android engineers, built a doctor-side telemedicine app from scratch, and cut build time by 20%.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Nov 2021 &mdash; Aug 2022</div>
+                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
+                    <div class="timeline-main">
+                        <h3>Rupiah Cepat (PT. Kredit Utama Fintech Indonesia)</h3>
+                        <div class="role">Senior Android Engineer</div>
+                        <div class="timeline-tags"><span>Android</span><span>Fintech</span><span>Custom UI</span></div>
+                    </div>
+                    <div class="timeline-desc">Developed and debugged a fintech loan and investment app, achieving a 95% increase in crash-free usage.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education">
+            <div class="section-head">
+                <h2>Education</h2>
+            </div>
+            <div class="edu-card">
+                <img src="https://media.licdn.com/dms/image/v2/C560BAQEgbd5OzMWZvQ/company-logo_200_200/company-logo_200_200/0/1659583922081?e=2147483647&v=beta&t=VW9RgWH3_ekmzJWfLe5yY3rZM2QNTD2JYpnVnfAicy4" alt="Kwik Kian Gie" />
+                <div>
+                    <h3>Institut Bisnis Informatika Indonesia Kwik Kian Gie</h3>
+                    <div class="role">Bachelor of Engineering (B.Eng) - Information Technology</div>
+                    <div class="date">2014 - 2018</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="section-head">
+                <h2>All Projects</h2>
+                <span class="view-all">21 projects</span>
+            </div>
+            <div class="full-grid" id="projects-grid"></div>
+            <div class="show-more-wrap">
+                <button class="show-more-btn" id="projects-show-more">Show more projects</button>
+            </div>
+        </section>
+
+        <section id="activities">
+            <div class="section-head">
+                <h2>Voluntary Activities</h2>
+                <span class="view-all">8 activities</span>
+            </div>
+            <div class="full-grid" id="activities-grid"></div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="wrap footer-inner">
+            <div>&copy; <span id="footer-year">2026</span> Mikkel Septiano. All rights reserved.</div>
+            <div class="footer-social">
+                <a href="https://github.com/mikkelofficial7/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub</a>
+                <a href="https://www.linkedin.com/in/mikkel-septiano/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="https://mikkelofficial7.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-medium"></i> Medium</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        const hour = new Date().getHours();
+        let greeting;
+        if (hour >= 5 && hour < 12) greeting = 'Good morning';
+        else if (hour >= 12 && hour < 18) greeting = 'Good afternoon';
+        else if (hour >= 18 && hour < 22) greeting = 'Good evening';
+        else greeting = 'Good night';
+        document.getElementById('phone-greeting').textContent = `${greeting}, Mikkel`;
+
         const dataProjects = [
-                [
-                    "LINE Bank (Working Company Project)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.png?raw=true", 
-                    "Building an Android Apps for LINE Bank, a Leading South Korea Digital Banking by KEB Hana",
-                    "https://play.google.com/store/apps/details?id=id.co.linebank&hl=ln&gl=ID",
-                    "Kotlin (Android);Retrofit;MVVM;Coroutine;Firebase;CustomUI"
-                ],
-                [
-                    "AlteaCare (Working Company Project)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true", 
-                    "Building an Android Apps for Health care and telemedicine App of Altea Care (part of Mitra Keluarga, Largest Indonesia Hospital)",
-                    "https://play.google.com/store/apps/details?id=com.dre.loyalty&hl=id",
-                    "Kotlin (Android);Retrofit;MVVM;RxJava;Coroutine;Firebase;Dagger2;Koin;CustomUI"
-                ],
-                [
-                    "Rupiah Cepat (Working Company Project)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true", 
-                    "Building an Android Apps for Financial Institution (Peer-to-peer lending) App with Loan and Investment side features",
-                    "https://play.google.com/store/apps/details?id=com.loan.cash.credit.easy.kilat.cepat.pinjam.uang.dana.rupiah&hl=id",
-                    "Java (Android);Retrofit;MVVM;RxJava;Dagger2;Firebase;CustomUI"
-                ],
-                [
-                    "Yesdok Pte.Ltd. (Working Company Project)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true", 
-                    "Building an Android Apps for Health care and telemedicine App YesDok Indonesia (now acquired by Singapore)",
-                    "https://play.google.com/store/apps/details?id=com.yesdok.mobile.app&hl=id",
-                    "Java (Android);Kotlin (Android);Retrofit;MVP;RxJava;Dagger2;OneSignal;Appsflyer;CustomUI"
-                ],
-                [
-                    "Kotlin Android Clean Architecture Plugin Helper - Uploaded to Jetbrains Marketplace", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/21.png?raw=true", 
-                    "Generate minimum setup of Android ViewModel, UseCase, and Repository automatically with additional support for Retrofit and Coroutine setup. Fits on Android Studio 2025.2.3.9 (Released Otter 3 Feature Drop | 2025.2.3)",
-                    "https://plugins.jetbrains.com/plugin/30455-kotlin-android-s-o-l-i-d-arch",
-                    "Android (Kotlin);Android Plugin, S.O.L.I.D Principle"
-                ],
-                [
-                    "Generecipe - A recipe generator from raw material food image", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/20.png?raw=true", 
-                    "A Flutter app for generating a recipe based on several leftover food images (capture or upload images and let Gemini formulas new recipe). Powered by `Gemini 2.0 flash` AI integration.",
-                    "https://github.com/mikkelofficial7/flutter-recipe-generator",
-                    "Flutter;Dart;GeminiAI"
-                ],
-                [
-                    "Setoko - An online store builder platform", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/19.png?raw=true", 
-                    "Handle bug fixing and feature improvement of several Android custom apps for SME-commerce (e-commerce enabler)",
-                    "https://setoko.id/",
-                    "Kotlin (Android);Retrofit;MVVM;Coroutine;DaggerHilt;Firebase"
-                ],
-                [
-                    "Spoticlone - A Music Player inspired by Spotify", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/14.png?raw=true", 
-                    "An Android Music Player with Spotify UI-Look (inspired by Spotify) with embedded gemini-2.0-flash AI-Model for daily-vibe tracks/playlists suggestion",
-                    "https://github.com/mikkelofficial7/android-spotify-clone",
-                    "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Exoplayer;JetpackCompose;GeminiAI"
-                ],
-                [
-                    "E-Branch BCA (Bank Central Asia)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/15.png?raw=true", 
-                    "An BCA mobile application by Bank Central Asia (BCA) that allows users to fill out transaction forms and make reservations for services at physical bank branches from their smartphones.",
-                    "https://play.google.com/store/apps/details?id=com.bca.smartbranch&hl=id",
-                    "Java (Android);Butterknife;Anko;Retrofit;MVP;Rx Java;Firebase"
-                ],
-                [
-                    "Sama Sama Apps - C2C e-commerce secondhand product", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true", 
-                    "​Building mobile android and web service for backend for B2C Thrift-based marketplace similar to OLX. We're using Springboot Java and Google Cloud Platform for Backend",
-                    "",
-                    "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Springboot (Java);Google Cloud Platform (GCP);PostgresQL"
-                ],
-                [
-                    "Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App (Android)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true", 
-                    "Building mobile android for Tokoku sembako commerce, where user can buy their daily needs on their smartphone in Bekasi, Bogor, and Jakarta area (had released in Google Play Store previously).",
-                    "https://play.google.com/store/apps/details?id=my.ptp.parettengahpati.tokokugrosirapp",
-                    "Android (Java);MVP;Dagger2;Retrofit;RxBus"
-                ],
-                [
-                    "Tokoku - B2B2C FMCG (Fast moving consumer good) E-Commerce App (Web Admin)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/16.png?raw=true", 
-                    "This is a web dashboard for handling all process related to e-commerce (transaction, product warehouse, user management, etc)",
-                    "https://www.tokokugrosir.com",
-                    "PHP 7.4;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
-                ],
-                [
-                    "Obalihara - Supporting environmentally friendly local products (Web based e-commerce)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/18.png?raw=true", 
-                    "Obalihara is a brand or identity for agricultural, livestock, and fishery products created by local communities across various regions of the Indonesian archipelago. Its goal is to establish direct partnerships between producers (farmers, livestock breeders, and fishers) and urban consumers in order to promote fairness and sustainability.",
-                    "https://www.obalihara.com",
-                    "PHP 7;Codeigniter 3; Javascript;HTML 5 + CSS 3; JQuery;MYSQL"
-                ],
-                [
-                    "Guruloka - E-learning system", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true", 
-                    "Online-to-offline web based e-learning system which bridge between student and teacher with various subject and learn by online.",
-                    "https://www.guruloka.com",
-                    "PHP 5; Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
-                ],
-                [
-                    "WebApp for car maintenance warehouse - Denso Kranji", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.png?raw=true", 
-                    "Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java.",
-                    "",
-                    "PHP 7;Codeigniter 3; Javascript;HTML 5 + CSS 3; JQuery;MYSQL"
-                ],
-                [
-                    "Course Center Galileo Gasing - Payroll and Absence system", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true", 
-                    "Creating web-based payroll and absence system for teachers in elementary to high school course center.",
-                    "",
-                    "PHP 5;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"
-                ],
-                [
-                    "Sentiment text checker - Android app mini project", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true", 
-                    "Created a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meanings (selection test from Microsoft Student Partner Ambassador).",
-                    "https://github.com/mikkelofficial7/Xamarin.android-Sentiment-Recognition-Text",
-                    ".NET MAUI;Xamarin (Android);C#;Azure;SQL Server;Microsoft Vision AI"
-                ],
-                [
-                    "Simple PHP and Javascript Web Chat", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/17.png?raw=true", 
-                    "Creating web-based chatting app using simple txt reader as a realtime database with javascript + php code",
-                    "",
-                    "PHP;Javascript;HTML 5 + CSS 3;JQuery;AJAX"
-                ],
-                [
-                    "Movi Snap - AI Based Search Movie", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true", 
-                    "Creating web-based movie search engine with mobile-first UI look and performance with gemini-2.0-flash AI integrated for movie search by user's description, movie poster, or even movie frame scene",
-                    "https://findyourmovi.vercel.app/",
-                    "Javascript;HTML 5 + CSS 3;JQuery;AJAX;Gemini-flash-2.0"
-                ],
-                [
-                    "Android-Based QR scanner", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true", 
-                    "Created an Android application to scan event attendance with a QR code scanner. This was for Internal campus event purpose at Kwik Kian Gie",
-                    "",
-                    "Java (Android);Geolocation;Firebase"
-                ],
-                [
-                    "Web-Based Social Media (.NET)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true", 
-                    "Built Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI. This project was for My Bachelor Thesis.",
-                    "",
-                    "ASP.NET;C#;SQL Server;Microsoft Vision AI"
-                ]
-            ];
+            ["LINE Bank (Working Company Project)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/13.png?raw=true", "Building an Android Apps for LINE Bank, a Leading South Korea Digital Banking by KEB Hana", "https://play.google.com/store/apps/details?id=id.co.linebank&hl=ln&gl=ID", "Kotlin (Android);Retrofit;MVVM;Coroutine;Firebase;CustomUI"],
+            ["AlteaCare (Working Company Project)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/12.jpg?raw=true", "Building an Android Apps for Health care and telemedicine App of Altea Care (part of Mitra Keluarga, Largest Indonesia Hospital)", "https://play.google.com/store/apps/details?id=com.dre.loyalty&hl=id", "Kotlin (Android);Retrofit;MVVM;RxJava;Coroutine;Firebase;Dagger2;Koin;CustomUI"],
+            ["Rupiah Cepat (Working Company Project)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/10.jpg?raw=true", "Building an Android Apps for Financial Institution (Peer-to-peer lending) App with Loan and Investment side features", "https://play.google.com/store/apps/details?id=com.loan.cash.credit.easy.kilat.cepat.pinjam.uang.dana.rupiah&hl=id", "Java (Android);Retrofit;MVVM;RxJava;Dagger2;Firebase;CustomUI"],
+            ["Yesdok Pte.Ltd. (Working Company Project)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/11.jpg?raw=true", "Building an Android Apps for Health care and telemedicine App YesDok Indonesia (now acquired by Singapore)", "https://play.google.com/store/apps/details?id=com.yesdok.mobile.app&hl=id", "Java (Android);Kotlin (Android);Retrofit;MVP;RxJava;Dagger2;OneSignal;Appsflyer;CustomUI"],
+            ["Kotlin Android Clean Architecture Plugin Helper - Uploaded to Jetbrains Marketplace", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/21.png?raw=true", "Generate minimum setup of Android ViewModel, UseCase, and Repository automatically with additional support for Retrofit and Coroutine setup.", "https://plugins.jetbrains.com/plugin/30455-kotlin-android-s-o-l-i-d-arch", "Android (Kotlin);Android Plugin;S.O.L.I.D Principle"],
+            ["Generecipe - A recipe generator from raw material food image", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/20.png?raw=true", "A Flutter app for generating a recipe based on several leftover food images, powered by Gemini 2.0 flash AI integration.", "https://github.com/mikkelofficial7/flutter-recipe-generator", "Flutter;Dart;GeminiAI"],
+            ["Setoko - An online store builder platform", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/19.png?raw=true", "Handle bug fixing and feature improvement of several Android custom apps for SME-commerce (e-commerce enabler)", "https://setoko.id/", "Kotlin (Android);Retrofit;MVVM;Coroutine;DaggerHilt;Firebase"],
+            ["Spoticlone - A Music Player inspired by Spotify", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/14.png?raw=true", "An Android Music Player with Spotify UI-Look with embedded gemini-2.0-flash AI-Model for daily-vibe tracks/playlists suggestion", "https://github.com/mikkelofficial7/android-spotify-clone", "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Exoplayer;JetpackCompose;GeminiAI"],
+            ["E-Branch BCA (Bank Central Asia)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/15.png?raw=true", "An BCA mobile application that allows users to fill out transaction forms and make reservations for services at physical bank branches.", "https://play.google.com/store/apps/details?id=com.bca.smartbranch&hl=id", "Java (Android);Butterknife;Anko;Retrofit;MVP;Rx Java;Firebase"],
+            ["Sama Sama Apps - C2C e-commerce secondhand product", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1.jpg?raw=true", "Building mobile android and web service for backend for B2C Thrift-based marketplace similar to OLX.", "", "Kotlin (Android);Retrofit;MVVM;Coroutine;KotlinFlow;Springboot (Java);GCP;PostgresQL"],
+            ["Tokoku - B2B2C FMCG E-Commerce App (Android)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/3.jpg?raw=true", "Building mobile android for Tokoku sembako commerce, where user can buy their daily needs on their smartphone.", "https://play.google.com/store/apps/details?id=my.ptp.parettengahpati.tokokugrosirapp", "Android (Java);MVP;Dagger2;Retrofit;RxBus"],
+            ["Tokoku - B2B2C FMCG E-Commerce App (Web Admin)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/16.png?raw=true", "A web dashboard for handling all process related to e-commerce (transaction, product warehouse, user management, etc)", "https://www.tokokugrosir.com", "PHP 7.4;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"],
+            ["Obalihara - Supporting environmentally friendly local products", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/18.png?raw=true", "A brand for agricultural, livestock, and fishery products, establishing direct partnerships between producers and urban consumers.", "https://www.obalihara.com", "PHP 7;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"],
+            ["Guruloka - E-learning system", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/4.jpg?raw=true", "Online-to-offline web based e-learning system which bridge between student and teacher with various subject and learn by online.", "https://www.guruloka.com", "PHP 5;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"],
+            ["WebApp for car maintenance warehouse - Denso Kranji", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/2.png?raw=true", "Creating a web application to handle car damage indications at a workshop specifically in Kranji, Bekasi, West Java.", "", "PHP 7;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"],
+            ["Course Center Galileo Gasing - Payroll and Absence system", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/5.jpg?raw=true", "Creating web-based payroll and absence system for teachers in elementary to high school course center.", "", "PHP 5;Codeigniter 3;Javascript;HTML 5 + CSS 3;JQuery;MYSQL"],
+            ["Sentiment text checker - Android app mini project", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/6.jpg?raw=true", "Created a sentiment text application with Microsoft Vision AI to find out whether the text contains positive or negative meanings.", "https://github.com/mikkelofficial7/Xamarin.android-Sentiment-Recognition-Text", ".NET MAUI;Xamarin (Android);C#;Azure;SQL Server;Microsoft Vision AI"],
+            ["Simple PHP and Javascript Web Chat", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/17.png?raw=true", "Creating web-based chatting app using simple txt reader as a realtime database with javascript + php code", "", "PHP;Javascript;HTML 5 + CSS 3;JQuery;AJAX"],
+            ["Movi Snap - AI Based Search Movie", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/7.jpg?raw=true", "Creating web-based movie search engine with mobile-first UI with gemini-2.0-flash AI integrated for movie search.", "https://findyourmovi.vercel.app/", "Javascript;HTML 5 + CSS 3;JQuery;AJAX;Gemini-flash-2.0"],
+            ["Android-Based QR scanner", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/8.jpg?raw=true", "Created an Android application to scan event attendance with a QR code scanner for an internal campus event at Kwik Kian Gie.", "", "Java (Android);Geolocation;Firebase"],
+            ["Web-Based Social Media (.NET)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/9.jpg?raw=true", "Built Simple .NET Web-Based Social Media using Microsoft Sentiment Text AI. This project was for my Bachelor Thesis.", "", "ASP.NET;C#;SQL Server;Microsoft Vision AI"]
+        ];
+
         const dataVoluntary = [
-                [
-                    "Seasonal Mentor @ADPList (2025 - Now)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true", 
-                    "ADPList, or Amazing Design People List, is a global community that connects people with mentors. The platform's mission is to democratize mentorship and help people advance their careers",
-                    "https://adplist.org/mentors/mikkel-septiano/"
-                ],
-                [
-                    "Seasonal Mentor @Dealls Jobs", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/dealls.png?raw=true", 
-                    "Dealls is revolutionizing job-seeking experience for Indonesian Professionals",
-                    "https://dealls.com/en/mentoring/mikkel-septiano-886"
-                ],
-                [
-                    "Co-Trainer @PIDI Digdaya x Hackaton - Jakarta: Subject Essential and Practitioner (2026)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/pidi.jpg?raw=true", 
-                    "Pusat Inovasi Digital Indonesia (PIDI) is a government agency under the Ministry of Communication and Informatics collaborate with Indonesia Bank (BI) and Financial Service Authority (OJK) that focuses on fostering digital innovation and entrepreneurship in Indonesia. PIDI Digdaya is a program initiated by PIDI to support and empower digital startups and entrepreneurs in Indonesia through various initiatives, including hackathons, training, and mentorship.",
-                    "https://www.pidi.id/"
-                ],
-                [
-                    "Seasonal Mentor @Bangkit Academy - Jakarta (2025)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true", 
-                    "Bangkit Academy is a career readiness program initiated by Google, GoTo, Tokopedia, and Traveloka, with the aim of developing high-quality technical talents in Indonesia.",
-                    "https://contributors.bangkit.academy/"
-                ],
-                [
-                    "Ex Member @Microsoft Student Partner (2017 - 2018)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/msp.png?raw=true", 
-                    "Become a Student Ambassador and join our global community of students who are passionate about building AI-driven solutions with Microsoft technology. Accelerate innovation and grow the skills you need to have greater impact in the projects and communities that matter to you.",
-                    "https://mvp.microsoft.com/studentambassadors/"
-                ],
-                [
-                    "Ex Participant @1000 Startup - Jakarta (2017)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1000startup.jpg?raw=true", 
-                    "1000 Startup Digital is a program in Indonesia that aims to create a new generation of entrepreneurs who use technology to drive the economy. The program was launched in 2016 by the Ministry of Communication and Informatics.",
-                    "https://1000startupdigital.id/"
-                ],
-                [
-                    "Ex Facilitator @Indonesia Android Kejar - Jakarta (2016)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true", 
-                    "Indonesia Android Kejar (IAK) is a free training program from Google Developers to help Android app developers in Indonesia. This program aims to improve the skills of mobile app developers in Indonesia.",
-                    "https://www.instagram.com/androidkejar/?hl=id"
-                ],
-                [
-                    "Ex Mentor @Hour of Code - Jakarta (2016)", 
-                    "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true", 
-                    "Hour of Code is a worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.",
-                    "https://hourofcode.com/id"
-                ]
-            ];
-        const contactDetail = "For further information, you can also contact me through"
-        const contactUrl = "mailto:mikkelseptiano86@gmail.com?subject=Contact%20Request&body=Hello,%20I%20would%20like%20to%20contact%20you."
+            ["Seasonal Mentor @ADPList (2025 - Now)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/adplist.jpg?raw=true", "ADPList, or Amazing Design People List, is a global community that connects people with mentors.", "https://adplist.org/mentors/mikkel-septiano/"],
+            ["Seasonal Mentor @Dealls Jobs", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/dealls.png?raw=true", "Dealls is revolutionizing job-seeking experience for Indonesian Professionals", "https://dealls.com/en/mentoring/mikkel-septiano-886"],
+            ["Co-Trainer @PIDI Digdaya x Hackaton - Jakarta (2026)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/pidi.jpg?raw=true", "Pusat Inovasi Digital Indonesia (PIDI) fosters digital innovation and entrepreneurship in Indonesia via hackathons, training and mentorship.", "https://www.pidi.id/"],
+            ["Seasonal Mentor @Bangkit Academy - Jakarta (2025)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/bangkit.jpg?raw=true", "Bangkit Academy is a career readiness program by Google, GoTo, Tokopedia, and Traveloka to develop high-quality technical talents in Indonesia.", "https://contributors.bangkit.academy/"],
+            ["Ex Member @Microsoft Student Partner (2017 - 2018)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/msp.png?raw=true", "Student Ambassador joining a global community passionate about building AI-driven solutions with Microsoft technology.", "https://mvp.microsoft.com/studentambassadors/"],
+            ["Ex Participant @1000 Startup - Jakarta (2017)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/1000startup.jpg?raw=true", "A program in Indonesia aiming to create a new generation of entrepreneurs who use technology to drive the economy.", "https://1000startupdigital.id/"],
+            ["Ex Facilitator @Indonesia Android Kejar - Jakarta (2016)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/iak.jpg?raw=true", "A free training program from Google Developers to help Android app developers in Indonesia improve their skills.", "https://www.instagram.com/androidkejar/?hl=id"],
+            ["Ex Mentor @Hour of Code - Jakarta (2016)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true", "A worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.", "https://hourofcode.com/id"]
+        ];
 
-        const currentYear = new Date().getFullYear();
-        const footerQuote = `"<i>fortis fortuna adiuvat</i> "<br/>This website is built using React JS. Thank you for visiting my page!`;
-        const otherFooter = "All rights reserved"
-
-        const listFormatShowAs = "Show as"
-        const dataListFormat = ["Grid", "Linear"]
-
-        function ButtonSectionTree() {
-            const scrollToHeader = () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            };
-            const scrollToEducation = () => {
-                document.getElementById("section-education").scrollIntoView({
-                    behavior: "smooth",
-                    block: "center"
-                });
-            };
-            const scrollToExperience = () => {
-                document.getElementById("section-experience").scrollIntoView({
-                    behavior: "smooth",
-                });
-            };
-            const scrollToProject = () => {
-                document.getElementById("section-project").scrollIntoView({
-                    behavior: "smooth"
-                });
-            };
-            const scrollToVoluntary = () => {
-                document.getElementById("section-voluntary").scrollIntoView({
-                    behavior: "smooth"
-                });
-            };
-
-            return (
-                <div className="branch-tree-content">
-                    <div className="space-top"/>
-                    <button className="item-tree tree-selected" id="btn-headline" onClick={scrollToHeader}><div className="round-icon round-icon-selected" id="icon-headline"/> Headline</button>
-                    <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-experience" onClick={scrollToExperience}><div className="round-icon" id="icon-experience"/> Experiences</button>
-                    <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-education" onClick={scrollToEducation}><div className="round-icon" id="icon-education"/> Education</button>
-                    <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-project" onClick={scrollToProject}><div className="round-icon" id="icon-project"/> Projects</button>
-                    <div className="vertical-line-tree"></div>
-                    <button className="item-tree" id="btn-voluntary" onClick={scrollToVoluntary}><div className="round-icon" id="icon-voluntary"/> Voluntaries</button>
-                </div>
-            );
-        }
-
-        function Header() {
-            return (
-                <div className="header-content">
-                    <img src={photoUrl} alt="Profile Picture" className="header-profile-picture" />
-                    <div className="header-user-info">
-                        <div>{nameSection}</div>
-                        <div>{shortDetail}</div>
-                        <div className="header-tag-group">
-                            <span className="tag">Java (Android)</span>
-                            <span className="tag">Kotlin (Android)</span>
-                            <span className="tag">Java (Springboot)</span>
-                            <span className="tag">Flutter</span>
-                            <span className="tag">React Native</span>
-                            <span className="tag">React Js</span>
-                            <span className="tag">PHP</span>
+        function renderCardGrid(containerId, items, { withTags, collapseAfter } = {}) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = items.map((item, index) => {
+                const [title, img, desc, link, tags] = item;
+                const tagsHtml = withTags && tags
+                    ? `<div class="work-tags project-tags">${tags.split(';').map(t => `<span>${t}</span>`).join('')}</div>`
+                    : '';
+                const linkHtml = link
+                    ? `<a class="work-link" href="${link}" target="_blank" rel="noopener noreferrer">Visit page <i class="fa fa-arrow-right"></i></a>`
+                    : '';
+                const extraClass = (collapseAfter && index >= collapseAfter) ? ' hidden-item' : '';
+                return `
+                    <div class="work-card${extraClass}" data-index="${index}">
+                        <div class="work-thumb"><img src="${img}" alt="${title}"/></div>
+                        <div class="work-body">
+                            <h3>${title}</h3>
+                            ${tagsHtml}
+                            <p>${desc}</p>
+                            ${linkHtml}
                         </div>
                     </div>
-                </div>
-            );
-        }
-        function GoToGithub() {
-            return (
-                <div className="button-go-to-github" id="button-up">
-                    <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fa-brands fa-github"></i> Find me on GitHub
-                    </a>
-                </div>
-            );
-        }
-        function GoToLinkedIn() {
-            return (
-                <div className="button-linkedin" id="button-up">
-                    <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-linkedin"></i> Find me on LinkedIn
-                    </a>
-                </div>
-            );
-        }
-        function GoToMedium() {
-            return (
-                <div className="button-devto" id="button-up">
-                    <a href={mediumUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-medium"></i> Find me on Medium
-                    </a>
-                </div>
-            );
-        }
-        function GoToLinktree() {
-            return (
-                <div className="button-more" id="button-up">
-                    <a href={linktreeUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fa-solid fa-clover"></i> Linktree
-                    </a>
-                </div>
-            );
-        }
-        function GoToResume() {
-            return (
-                <div className="button-resume" id="button-up">
-                    <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fa fa-file"></i> Resume
-                    </a>
-                </div>
-            );
-        }
-        function GoToJetbrains() {
-            return (
-                <div className="button-jetbrains" id="button-up">
-                    <a href={jetbrainsUrl} target="_blank" rel="noopener noreferrer">
-                        <i className="fas fa-code"></i> Jetbrains
-                    </a>
-                </div>
-            );
+                `;
+            }).join('');
         }
 
-        function Education() {
-            return (
-                <section id="section-education" className="parent-list-education">
-                {
-                    educationData.map((item, index) => (
-                        <div className="education-content" key={index}>
-                            <img src={item[2]} alt="University Logo" className="education-picture" />
-                            <div className="education-info">
-                                <div className="education-tag tag">{item[1]}</div>
-                                <div>{item[0]}</div>
-                                <div><i>{item[3]}</i></div>
-                            </div>
-                        </div>
-                    ))
-                }
-                </section>
-            );
-        }
-
-        function LastOrCurrentCompany() {
-            return (
-                <section id="section-experience" className="parent-list-last-company">
-                {
-                    lastCompanyData.map((item, index) => (
-                        item[0] != "" ? (
-                            <div className="last-company-content" key={index}>
-                                <a href={item[1]} className="last-company-picture">
-                                    <img src={item[3]} alt="Company Logo"></img>
-                                </a>
-                                <div className="last-company-info">
-                                    <div className="last-company-tag tag">{item[2]}</div>
-                                    <div>{item[4]} - {item[0]}</div>
-                                    <div><i>{item[5]}</i></div>
-                                    <div>{item[6]}</div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="last-company-other" key={index}>
-                                <a href={resumeUrl} target="_blank" rel="noopener noreferrer">see more</a>
-                            </div>
-                        )
-                    ))
-                }
-                </section>
-            );
-        }
-
-        function ButtonChangeListFormatProject({ listType, setListType }) {
-            return (
-                <div className="parent-list-format">
-                    <p>{listFormatShowAs}</p>
-                    {
-                        dataListFormat.map((item, index) => (
-                            <div title={listType === item ? "" : "Showing list as "+item } className={listType === item ? "list-format-item-selected" : "list-format-item"} key={index} onClick={() => setListType(item)}>
-                                <h2 className="list-format-title">{item}</h2>
-                            </div>
-                        ))
-                    }
-                </div>
-            );
-        }
-
-        function ButtonChangeListFormatVolunteer({ listType, setListType }) {
-            return (
-                <div className="parent-list-format">
-                    <p>{listFormatShowAs}</p>
-                    {
-                        dataListFormat.map((item, index) => (
-                            <div title={listType === item ? "" : "Showing list as "+item } className={listType === item ? "list-format-item-selected" : "list-format-item"} key={index} onClick={() => setListType(item)}>
-                                <h2 className="list-format-title">{item}</h2>
-                            </div>
-                        ))
-                    }
-                </div>
-            );
-        }
-
-        function BodyContentProject({ listType, fadeStatus }) {
-            React.useEffect(() => {
-                const titles = document.querySelectorAll('.project-title-grid');
-
-                // Apply trimText to each element
-                titles.forEach(el => trimTextAndSetEllipsize(el, 3));
-            }, [listType]);
-            
-            // Close and open modal
-            const [selectedItem, setSelectedItem] = React.useState(null);
-            const [showDialog, setShowDialog] = React.useState(false);
-            const [dialogClassStatus, setDialogClassStatus] = React.useState(null);
-
-            function setDialogAnimTransition({ isOpen }) {
-                if (isOpen) {
-                    setDialogClassStatus("zoom-in")
-                } else {
-                    setDialogClassStatus("zoom-out")
-                }
-            }
-
-            const openModal = (item) => {
-                setShowDialog(true)
-                setSelectedItem(item);
-                setDialogAnimTransition({ isOpen: true });
-            };
-
-            const closeModal = () => {
-                setDialogAnimTransition({ isOpen: false });
-
-                const timer = setTimeout(
-                    () => {
-                        setShowDialog(false);
-                        setSelectedItem(null);
-                        setDialogClassStatus("hidden");
-                    }, 500
-                );
-                return () => clearTimeout(timer);
-                
-            };
-
-            // Detect page scrolling
-            React.useEffect(() => {
-                const handleScroll = () => {
-                    setShowDialog(false);
-                };
-
-                window.addEventListener('scroll', handleScroll);
-
-                return () => window.removeEventListener('scroll', handleScroll);
-            },);
-
-            return(
-                <div>
-                    <section id="section-project" className={listType === dataListFormat[1] ? "project-list-linear "+fadeStatus : "project-list-grid "+fadeStatus}>
-                        {
-                            listType === dataListFormat[0] ? (
-                                dataProjects.map((item, index) => (
-                                    <div className="project-card-grid" key={index}>
-                                        <h2 className="project-title-grid">{ item[0] }</h2>
-                                        <div className="project-image-container-grid">
-                                            <img src={item[1]} alt={ item[0] }></img>
-                                            <div className={ item[3] !== "" ? "project-image-overlay-blur-grid translate-vertical-150" : "project-image-overlay-blur-grid translate-vertical-250" } key={index}>
-                                                <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
-                                                {item[3] !== "" && (
-                                                    <p className="project-image-overlay-button">
-                                                        <a href={item[3]} target="_blank" rel="noopener noreferrer">
-                                                        Visit Page
-                                                        </a>
-                                                    </p>
-                                                 )}                                            
-                                            </div>
-                                        </div>
-                                        <p className="project-description-grid">{item[2]}</p>
-                                        <ul className={listType === dataListFormat[1] ? "header-tag-group-small-linear" : "header-tag-group-small-grid"}>
-                                                {
-                                                    (() => {
-                                                        const tagNotEmpty = item[4] ? item[4].split(";") : [];
-                                                            return tagNotEmpty.map((tag, index) => (
-                                                                <li className="tag-small" key={index}>{tag}</li>
-                                                            ));
-                                                     })()
-                                                }
-                                            </ul>
-                                    </div>
-                                ))
-                            ) : (
-                                dataProjects.map((item, index) => (
-                                    <div className="project-card-linear-full" key={index}>
-                                        <span><img src={item[1]} alt={ item[0] }></img></span>
-                                        <div className="project-card-linear">
-                                            <div className="project-image-container-linear">
-                                                <img src={item[1]} alt={ item[0] }></img>
-                                                <div className="project-image-overlay-blur-linear" key={index}>
-                                                    <p className="project-image-overlay-button" onClick={() => openModal(item)}>See fullscreen</p>
-                                                    <div className="space-top"></div>
-                                                    {item[3] !== "" && (
-                                                    <p className="project-image-overlay-button">
-                                                        <a href={item[3]} target="_blank" rel="noopener noreferrer">
-                                                        Visit Page
-                                                        </a>
-                                                    </p>
-                                                 )}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <h2 className="project-title-linear">{item[0]}</h2>
-                                                <p className="project-description-linear">{item[2]}</p>
-                                                <ul className={listType === dataListFormat[1] ? "header-tag-group-small-linear" : "header-tag-group-small-grid"}>
-                                                    {
-                                                        (() => {
-                                                            const tagNotEmpty = item[4] ? item[4].split(";") : [];
-                                                                return tagNotEmpty.map((tag, index) => (
-                                                                    <li className="tag-small" key={index}>{tag}</li>
-                                                                ));
-                                                        })()
-                                                    }
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            )
-                        }
-                    </section>
-                    {
-                        selectedItem && showDialog && (
-                            <div className="modal-full" onClick={() => closeModal()}>
-                                <div className={"modal-content "+dialogClassStatus}>
-                                    <h2>{selectedItem[0]}</h2>
-                                    <img src={selectedItem[1]}></img>
-                                    <p>Tap anywhere to close (X)</p>
-                                </div>
-                            </div>
-                        )
-                    }
-                </div>
-            );
-        }
-                                
-        function BodyContentVoluntary({ listType, fadeStatus }) {
-            React.useEffect(() => {
-                const titles = document.querySelectorAll('.project-title-grid');
-
-                // Apply trimText to each element
-                titles.forEach(el => trimTextAndSetEllipsize(el, 3));
-            }, [listType]);
-
-            return(
-                <section id="section-voluntary" className={listType === dataListFormat[0] ? "project-list-grid "+fadeStatus : "project-list-linear "+fadeStatus}>
-                    {
-                        listType === dataListFormat[0] ? (
-                            dataVoluntary.map((item, index) => (
-                                <div className="project-card-grid" key={index}>
-                                    <h2 className="project-title-grid">{item[0]}</h2>
-                                    <div className="project-image-container-grid">
-                                        <img src={item[1]} alt={ item[0] }></img>
-                                        <div className="project-image-overlay-blur-grid translate-vertical-250" key={index}>
-                                            <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
-                                        </div>
-                                    </div>
-                                    <p className="project-description-grid">{item[2]}</p>
-                                </div>
-                            ))
-                        ) : (
-                            dataVoluntary.map((item, index) => (
-                                <div className="project-card-linear-full" key={index}>
-                                    <span><img src={item[1]} alt={ item[0] }></img></span>
-                                    <div className="project-card-linear" key={index}>
-                                        <div className="project-image-container-linear">
-                                            <img src={item[1]} alt={ item[0] }></img>
-                                            <div className="project-image-overlay-blur-linear" key={index}>
-                                                <p className="project-image-overlay-button"><a href={item[3]} target="_blank" rel="noopener noreferrer">Visit Page</a></p>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h2 className="project-title-linear">{item[0]}</h2>
-                                            <p className="project-description-linear">{item[2]}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        )
-                    }
-                </section>
-            );
-        }
-
-        function trimTextAndSetEllipsize(el, maxLines = 3) {
-            if (!el) {
-                console.error('Element not found');
-                return;
-            }
-
-            // Get the text content of the element and trim any extra spaces
-            let text = el.textContent.trim();
-
-            // Calculate the approximate maxHeight based on line height and maxLines
-            const lineHeight = parseFloat(window.getComputedStyle(el).lineHeight);
-            const maxHeight = lineHeight * maxLines;
-
-            el.textContent = text;  // Reset the original content
-
-            // If the text exceeds the container height, trim it
-            while (el.scrollHeight > maxHeight && text.length > 0) {
-                text = text.slice(0, -1);
-                el.textContent = text + '...';
-            }
-
-            return el.textContent;  // Return the updated text
-        }
-        
-        function BodyContentProjectAndVolunteerWithListType() {
-            const [selectedFadeClass, setFadeClass] = React.useState("fade-in");
-            const [selectedFadeClassVolunteer, setFadeClassVolunteer] = React.useState("fade-in");
-
-            const [selectedListType, setSelectedListType] = React.useState(dataListFormat[1]);
-            const [selectedListTypeVolunteer, setSelectedListTypeVolunteer] = React.useState(dataListFormat[1]);
-            
-            const changeListType = (type) => {
-                if (type == selectedListType) return;
-                startAnimationFade();
-
-                const timer = setTimeout(
-                    () => setSelectedListType(type), defaultTimerAnimation
-                );
-                return () => clearTimeout(timer);
-            };
-
-            const changeListTypeVolunteer = (type) => {
-                if (type == selectedListTypeVolunteer) return;
-                startAnimationFadeVolunteer();
-
-                const timer = setTimeout(
-                    () => setSelectedListTypeVolunteer(type), defaultTimerAnimation
-                );
-                return () => clearTimeout(timer);
-            };
-
-            const startAnimationFade = () => {
-                setFadeClass("fade-out");
-
-                const timer = setTimeout(
-                    () => setFadeClass("fade-in"), defaultTimerAnimation
-                );
-                return () => clearTimeout(timer);
-            };
-
-            const startAnimationFadeVolunteer = () => {
-                setFadeClassVolunteer("fade-out");
-
-                const timer = setTimeout(
-                    () => setFadeClassVolunteer("fade-in"), defaultTimerAnimation
-                );
-                return () => clearTimeout(timer);
-            };
-
-            React.useEffect(() => {
-                const browserWidth = window.innerWidth;
-                const defaultLayoutItemList = browserWidth > 587 ? selectedListType : dataListFormat[0];
-                setSelectedListType(defaultLayoutItemList)
-            },);
-
-            return (
-                <div className="body-content-detail">
-                    { }
-                    <h1 className="title-list">Work Experiences</h1>
-                    <LastOrCurrentCompany />
-                    <h1 className="title-list">Education</h1>
-                    <Education />
-                    <ButtonChangeListFormatProject listType={selectedListType} setListType={changeListType} />
-                    <h1 className="title-list">Portfolio Projects</h1>
-                    { }
-                    <BodyContentProject listType={selectedListType} fadeStatus={selectedFadeClass}/>
-                    <ButtonChangeListFormatVolunteer listType={selectedListTypeVolunteer} setListType={changeListTypeVolunteer} />
-                    <h1 className="title-list">Voluntary Activities</h1>
-                    { }
-                    <BodyContentVoluntary listType={selectedListTypeVolunteer} fadeStatus={selectedFadeClassVolunteer}/>
-                    <BodyContentContact />
-                </div>
-            );
-        }
-
-        function BodyContentContact() {
-            return(
-                <div className="contact-body">
-                    <span className="contact-bottom">{contactDetail}</span>
-                    <span className="contact-mail-me">
-                        <a href={contactUrl} className="mail-me">
-                            <i className="fa-regular fa-envelope"></i> Email
-                        </a>
-                    </span>
-                </div>
-            );
-        }
-
-        function Footer() {
-            React.useEffect(() => {
-                const handleScroll = () => {
-                    // Scroll to top mechanism
-                    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                        document.getElementById("floatingButton").style.opacity = 1;
-                        document.getElementById("floatingButton").style.cursor = "pointer";
-                    } else {
-                        document.getElementById("floatingButton").style.opacity = 0;
-                        document.getElementById("floatingButton").style.cursor = "default";
-                    }
-                };
-
-                window.addEventListener('scroll', handleScroll);
-
-                return () => window.removeEventListener('scroll', handleScroll);
-            },);
-
-            const scrollToTop = () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth', // Optional: smooth scrolling
-                });
-            };
-
-            let totalClosed = 0;
-            const closeItem = (position) => {
-               totalClosed += 1;
-               document.querySelectorAll('#floating-project-ul li').forEach((li, i) => {
-                    if (i === position + 1) li.style.display = 'none';
-                    if (highlightProject.length == totalClosed) document.querySelector("#title-hightlight-project").style.display = "none";
-                });
-            };
-
-            return (
-                <footer>
-                    <button id="floatingButton" onClick={scrollToTop}>Back to top</button>
-                    <div id="floating-project">
-                        <ul id="floating-project-ul">
-                            <li><p id="title-hightlight-project">Highlighted Projects</p></li>
-                           {
-                                highlightProject.map((item, index) => (
-                                    item[0] != "" ? (
-                                        <li key={index}>
-                                            <a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a>
-                                            <span id="floating-project-close" onClick={() => closeItem(index)}><i className="fa fa-close"> </i></span>
-                                        </li>
-                                    ) : (
-                                        <li>- no data -</li>
-                                    )
-                            ))
-                }
-                        </ul>
-                    </div>
-                    <div className="footer-content">
-                        {/* Using dangerouslySetInnerHTML to render HTML inside the string */}
-                        <p dangerouslySetInnerHTML={{ __html: footerQuote }}></p>
-                        {/* Using actual © character and template literals */}
-                        <p className="footer-bottom">© {currentYear} | {otherFooter}</p>
-                    </div>
-                </footer>
-            );
-        }
-
-        // render whole UI section
-
-        function RenderHeader({ onReady }) {
-            React.useEffect(() => {
-                const el = document.querySelector('#header');
-                if (el) {
-                    console.log("Header tree finished rendering");
-                    onReady("header");
-                }
-            }, []);
-
-            return (
-                <div>
-                    <Header />
-                    <div className="button-list">
-                        <GoToGithub />
-                        <GoToLinkedIn />
-                        <GoToMedium />
-                        <GoToLinktree />
-                        <GoToResume />
-                        <GoToJetbrains />
-                    </div>
-                </div>
-            );
-        }
-
-        function RenderBody({ onReady }) {
-            React.useEffect(() => {
-                const el = document.querySelector('#body-content');
-                if (el) {
-                    console.log("Body finished rendering");
-                    onReady("body");
-                }
-            }, []);
-
-            return (
-                <BodyContentProjectAndVolunteerWithListType/>
-            );
-        }
-
-        function RenderFooter({ onReady }) {
-            React.useEffect(() => {
-                const el = document.querySelector('#footer');
-                if (el) {
-                    console.log("Footer finished rendering");
-                    onReady("footer");
-                }
-            }, []);
-
-            return (
-                <Footer />
-            );
-        }
-
-        function RenderBranchTree({ onReady }) {
-            React.useEffect(() => {
-                const el = document.querySelector('#branch-tree-section');
-                if (el) {
-                    console.log("Branch tree finished rendering");
-                    onReady("branch tree");
-                }
-            }, []);
-
-            return (
-                <div>
-                    <ButtonSectionTree />
-                </div>
-            );
-        }
-
-        // Wait for sections to appear (e.g. after React renders)
-        function waitForSections(callback) {
-            const check = () => {
-            const sections = document.querySelectorAll("section");
-            if (sections.length > 0) {
-                callback(sections);
-            } else {
-                // Retry on next animation frame
-                requestAnimationFrame(check);
-            }
-            };
-            check();
-        }
-
-        function runScrollingListener() {
-            waitForSections((sections) => {
-                // Sections found — add scroll listener
-                window.addEventListener("scroll", () => {
-                    const threshold = window.innerHeight / 2;
-                    let currentSectionId = null;
-                    let currentPosition = window.scrollY || document.documentElement.scrollTop;
-
-                    sections.forEach(section => {
-                        const rect = section.getBoundingClientRect();
-                        if (rect.top <= threshold && rect.bottom >= threshold) {
-                            currentSectionId = section.id;
-                        }
-                    });
-
-                    if (currentPosition == 0) {
-                        document.getElementById("btn-headline").classList.add("tree-selected");
-                        document.getElementById("btn-experience").classList.remove("tree-selected");
-                        document.getElementById("btn-education").classList.remove("tree-selected");
-                        document.getElementById("btn-project").classList.remove("tree-selected");
-                        document.getElementById("btn-voluntary").classList.remove("tree-selected");
-                        
-                        document.getElementById("icon-headline").classList.add("round-icon-selected");
-                        document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                        document.getElementById("icon-education").classList.remove("round-icon-selected");
-                        document.getElementById("icon-project").classList.remove("round-icon-selected");
-                        document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-                    } else {
-                        if (currentSectionId == "section-experience") {
-                            document.getElementById("btn-headline").classList.remove("tree-selected");
-                            document.getElementById("btn-experience").classList.add("tree-selected");
-                            document.getElementById("btn-education").classList.remove("tree-selected");
-                            document.getElementById("btn-project").classList.remove("tree-selected");
-                            document.getElementById("btn-voluntary").classList.remove("tree-selected");
-
-                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                            document.getElementById("icon-experience").classList.add("round-icon-selected");
-                            document.getElementById("icon-education").classList.remove("round-icon-selected");
-                            document.getElementById("icon-project").classList.remove("round-icon-selected");
-                            document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-
-                        } else if (currentSectionId == "section-education") {
-                            document.getElementById("btn-headline").classList.remove("tree-selected");
-                            document.getElementById("btn-experience").classList.remove("tree-selected");
-                            document.getElementById("btn-education").classList.add("tree-selected");
-                            document.getElementById("btn-project").classList.remove("tree-selected");
-                            document.getElementById("btn-voluntary").classList.remove("tree-selected");
-
-                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                            document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                            document.getElementById("icon-education").classList.add("round-icon-selected");
-                            document.getElementById("icon-project").classList.remove("round-icon-selected");
-                            document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-
-                        } else if (currentSectionId == "section-project") {
-                            document.getElementById("btn-headline").classList.remove("tree-selected");
-                            document.getElementById("btn-experience").classList.remove("tree-selected");
-                            document.getElementById("btn-education").classList.remove("tree-selected");
-                            document.getElementById("btn-project").classList.add("tree-selected");
-                            document.getElementById("btn-voluntary").classList.remove("tree-selected");
-
-                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                            document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                            document.getElementById("icon-education").classList.remove("round-icon-selected");
-                            document.getElementById("icon-project").classList.add("round-icon-selected");
-                            document.getElementById("icon-voluntary").classList.remove("round-icon-selected");
-                        } else if (currentSectionId == "section-voluntary") {
-                            document.getElementById("btn-headline").classList.remove("tree-selected");
-                            document.getElementById("btn-experience").classList.remove("tree-selected");
-                            document.getElementById("btn-education").classList.remove("tree-selected");
-                            document.getElementById("btn-project").classList.remove("tree-selected");
-                            document.getElementById("btn-voluntary").classList.add("tree-selected");
-
-                            document.getElementById("icon-headline").classList.remove("round-icon-selected");
-                            document.getElementById("icon-experience").classList.remove("round-icon-selected");
-                            document.getElementById("icon-education").classList.remove("round-icon-selected");
-                            document.getElementById("icon-project").classList.remove("round-icon-selected");
-                            document.getElementById("icon-voluntary").classList.add("round-icon-selected");
-                        }
-                    }
-                });
-
-                // Trigger once on load
-                window.dispatchEvent(new Event("scroll"));
-            });
-        }
-
-        function showComponent() {
-            document.querySelector(".component-pre-render").classList.add("hidden");
-
-            document.getElementById("branch-tree-section").classList.remove("hidden");
-            document.getElementById("branch-tree-section").classList.add("zoom-in");
-
-            document.getElementById("header").classList.remove("hidden");
-            document.getElementById("header").classList.add("zoom-in");
-
-            document.getElementById("body-content").classList.remove("hidden");
-            document.getElementById("body-content").classList.add("zoom-in");
-
-            document.getElementById("footer").classList.remove("hidden");
-            document.getElementById("footer").classList.add("zoom-in");
-            
-            // Remove zoom in after finish
-            const timer = setTimeout(
-                () => {
-                    document.getElementById("branch-tree-section").classList.remove("zoom-in");
-                    document.getElementById("header").classList.remove("zoom-in");
-                    document.getElementById("body-content").classList.remove("zoom-in");
-                    document.getElementById("footer").classList.remove("zoom-in");
-                }, 400
-            );
-            return () => clearTimeout(timer);
-        }
-
-        // ---- Outside, keep track ----
-        const rendered = new Set();
-
-        function handleReady(section) {
-            rendered.add(section);
-            if (rendered.size === 4) {
-                showComponent()
-                runScrollingListener()
-            }
-        }
-
-        ReactDOM.createRoot(document.getElementById("header")).render(<RenderHeader onReady={handleReady} />);
-
-        ReactDOM.createRoot(document.getElementById("body-content")).render(<RenderBody onReady={handleReady} />);
-
-        ReactDOM.createRoot(document.getElementById("footer")).render(<RenderFooter onReady={handleReady} />);
-
-        ReactDOM.createRoot(document.getElementById("branch-tree-section")).render(<RenderBranchTree onReady={handleReady} />);
+        renderCardGrid('projects-grid', dataProjects, { withTags: true, collapseAfter: 6 });
+        renderCardGrid('activities-grid', dataVoluntary, { withTags: false });
+
+        document.getElementById('projects-show-more').addEventListener('click', (e) => {
+            document.querySelectorAll('#projects-grid .hidden-item').forEach(el => el.classList.remove('hidden-item'));
+            e.target.remove();
+        });
     </script>
+</body>
 </html>
