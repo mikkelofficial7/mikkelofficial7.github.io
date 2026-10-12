@@ -59,9 +59,10 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(255,255,255,0.92);
+            background: rgba(255,255,255,var(--nav-bg-opacity, 1));
             backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--line);
+            transition: background .2s ease;
         }
         .nav-inner {
             display: flex;
@@ -1070,6 +1071,16 @@
 
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        const navEl = document.querySelector('.nav');
+        const NAV_FADE_DISTANCE = 200;
+        function updateNavOpacity() {
+            const progress = Math.min(window.scrollY / NAV_FADE_DISTANCE, 1);
+            const opacity = 1 - progress * 0.5;
+            navEl.style.setProperty('--nav-bg-opacity', opacity);
+        }
+        window.addEventListener('scroll', updateNavOpacity, { passive: true });
+        updateNavOpacity();
 
         const heroTypingText = 'Building reliable mobile and web experiences, from architecture to production.';
         const typingTextEl = document.getElementById('typing-text');
