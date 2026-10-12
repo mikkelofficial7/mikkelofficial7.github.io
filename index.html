@@ -595,6 +595,22 @@
             #work .work-card:hover .work-link { opacity: 1; visibility: visible; }
         }
 
+        /* Library */
+        #library-grid .work-card { padding: 0; }
+        #library-grid .work-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--surface-soft);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+        #library-grid .work-body { padding: 20px; }
+
         /* Experience */
         .timeline { position: relative; margin-top: 4px; }
         .timeline-item {
@@ -853,9 +869,10 @@
             </div>
             <div class="nav-links">
                 <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Home</a>
-                <a href="#work">Work</a>
-                <a href="#experience">Experience</a>
+                <a href="#work">Works</a>
+                <a href="#experience">Experiences</a>
                 <a href="#education">Education</a>
+                <a href="#library">Libraries</a>
                 <a href="#projects">Projects</a>
                 <a href="#activities">Activities</a>
             </div>
@@ -961,7 +978,7 @@
 
         <section id="work">
             <div class="section-head">
-                <h2>Featured work</h2>
+                <h2>Featured works</h2>
                 <a class="view-all" href="#projects">View all projects <i class="fa fa-arrow-right"></i></a>
             </div>
             <div class="work-grid">
@@ -1000,7 +1017,7 @@
 
         <section id="experience">
             <div class="section-head">
-                <h2>Experience</h2>
+                <h2>Experiences</h2>
                 <a class="view-all" href="https://www.linkedin.com/in/mikkel-septiano/" target="_blank" rel="noopener noreferrer">View full experience <i class="fa fa-arrow-right"></i></a>
             </div>
             <div class="timeline">
@@ -1078,6 +1095,16 @@
                     <div class="role">Bachelor of Engineering (B.Eng) - Information Technology</div>
                     <div class="date">2014 - 2018</div>
                 </div>
+            </div>
+        </section>
+
+        <section id="library">
+            <div class="section-head">
+                <h2>Libraries</h2>
+            </div>
+            <div class="full-grid" id="library-grid"></div>
+            <div class="show-more-wrap">
+                <button class="show-more-btn" id="library-show-more">Load more libraries</button>
             </div>
         </section>
 
@@ -1300,6 +1327,33 @@
             ["Ex Mentor @Hour of Code - Jakarta (2016)", "https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/hourofcode.jpg?raw=true", "A worldwide movement that aims to introduce millions of students to computer science through one-hour coding activities.", "https://hourofcode.com/id"]
         ];
 
+        const dataLibrary = [
+            ["Jetpack Compose Native PDF", "A Jetpack Compose library for rendering PDF files natively on Android without a WebView, using Android's built-in PdfRenderer.", "https://github.com/mikkelofficial7/jetpack-compose-native-pdf", "Kotlin;Jetpack Compose;Android;PDF"],
+            ["Android PDF Flipping Page", "An Android library that renders PDF documents with a realistic page-flip (book-style) animation between pages.", "https://github.com/mikkelofficial7/android-pdf-flipping-page", "Kotlin;Android;PDF;Animation"],
+            ["Android Zoom ImageView", "A lightweight, drop-in ImageView replacement for Android with pinch-to-zoom and pan gesture support.", "https://github.com/mikkelofficial7/android-zoom-imageview", "Kotlin;Android;ImageView;Gestures"],
+            ["Android Endless Scroll", "A reusable RecyclerView scroll listener for Android that triggers pagination/load-more callbacks as the user reaches the end of a list.", "https://github.com/mikkelofficial7/android-endless-scroll", "Kotlin;Android;RecyclerView;Pagination"],
+            ["Android Compose EditText Keyboard", "A Jetpack Compose text field component with finer control over keyboard behavior, input actions, and focus handling on Android.", "https://github.com/mikkelofficial7/android-compose-edittext-keyboard", "Kotlin;Jetpack Compose;Android;Keyboard"]
+        ];
+
+        function renderLibraryGrid(containerId, items, { collapseAfter } = {}) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = items.map(([title, desc, link, tags], index) => {
+                const extraClass = (collapseAfter && index >= collapseAfter) ? ' hidden-item' : '';
+                return `
+                <div class="work-card${extraClass}" data-index="${index}">
+                    <div class="work-body">
+                        <div class="work-icon"><i class="fa fa-cube"></i></div>
+                        <h3>${title}</h3>
+                        <div class="work-tags project-tags">${tags.split(';').map(t => `<span>${t}</span>`).join('')}</div>
+                        <p>${desc}</p>
+                        <a class="work-link" href="${link}" target="_blank" rel="noopener noreferrer">View on GitHub <i class="fa fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+        renderLibraryGrid('library-grid', dataLibrary, { collapseAfter: 3 });
+
         function renderCardGrid(containerId, items, { withTags, collapseAfter } = {}) {
             const container = document.getElementById(containerId);
             container.innerHTML = items.map((item, index) => {
@@ -1342,6 +1396,7 @@
 
         wireShowMore('projects-show-more', 'projects-grid');
         wireShowMore('activities-show-more', 'activities-grid');
+        wireShowMore('library-show-more', 'library-grid');
 
         const imageModal = document.getElementById('image-modal');
         const imageModalImg = document.getElementById('image-modal-img');
