@@ -451,6 +451,35 @@
         .work-body p { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; margin: 0 0 14px; }
         .work-link { font-size: 13.5px; font-weight: 700; color: var(--accent); }
         .work-link:hover { text-decoration: underline; }
+
+        /* Selected work cards: image-only with overlayed corner labels */
+        #work .work-card { position: relative; height: 320px; background: var(--surface-soft); }
+        #work .work-thumb { position: absolute; inset: 0; height: 100%; padding: 0; border-radius: 0; }
+        #work .work-thumb img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+        #work .work-card::after {
+            content: '';
+            position: absolute; inset: 0;
+            background:
+                linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 30%),
+                linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 30%);
+            pointer-events: none;
+        }
+        #work .work-body {
+            position: absolute; inset: 0; z-index: 1;
+            padding: 16px 18px;
+            pointer-events: none;
+        }
+        #work .work-body .role,
+        #work .work-tags,
+        #work .work-body p { display: none; }
+        #work .work-body h3 {
+            position: absolute; top: 16px; left: 18px; right: 18px;
+            margin: 0; font-size: 1.05rem; color: #fff; text-align: left; line-height: 1.3;
+        }
+        #work .work-link {
+            position: absolute; bottom: 16px; right: 18px;
+            color: #fff; pointer-events: auto;
+        }
         @media (max-width: 920px) {
             .work-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -773,13 +802,13 @@
                     </div>
                 </div>
                 <div class="work-card">
-                    <div class="work-thumb"><img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/19.png?raw=true" alt="Setoko"/></div>
+                    <div class="work-thumb"><img src="https://raw.githubusercontent.com/mikkelofficial7/mikkelofficial7.github.io/refs/heads/main/14.png?raw=true" alt="Spoticlone"/></div>
                     <div class="work-body">
-                        <h3>Setoko</h3>
-                        <div class="role">Mobile Commerce</div>
-                        <div class="work-tags"><span>Android</span><span>Flutter</span><span>Performance</span></div>
-                        <p>Developed 5 native Android apps + 1 Flutter iOS app with focus on performance, scalability and operational efficiency.</p>
-                        <a class="work-link" href="https://setoko.id/" target="_blank" rel="noopener noreferrer">View case study <i class="fa fa-arrow-right"></i></a>
+                        <h3>Spoticlone</h3>
+                        <div class="role">Personal Project</div>
+                        <div class="work-tags"><span>Kotlin</span><span>JetpackCompose</span><span>GeminiAI</span></div>
+                        <p>An Android Music Player with Spotify UI-Look with embedded gemini-2.0-flash AI-Model for daily-vibe tracks/playlists suggestion.</p>
+                        <a class="work-link" href="https://github.com/mikkelofficial7/android-spotify-clone" target="_blank" rel="noopener noreferrer">View case study <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div>
                 <div class="work-card">
@@ -895,6 +924,9 @@
                 <span class="view-all">8 activities</span>
             </div>
             <div class="full-grid" id="activities-grid"></div>
+            <div class="show-more-wrap">
+                <button class="show-more-btn" id="activities-show-more">Show more activities</button>
+            </div>
         </section>
 
     </main>
@@ -1064,17 +1096,22 @@
         }
 
         renderCardGrid('projects-grid', dataProjects, { withTags: true, collapseAfter: 6 });
-        renderCardGrid('activities-grid', dataVoluntary, { withTags: false });
+        renderCardGrid('activities-grid', dataVoluntary, { withTags: false, collapseAfter: 3 });
 
-        document.getElementById('projects-show-more').addEventListener('click', (e) => {
-            const hiddenItems = Array.from(document.querySelectorAll('#projects-grid .hidden-item'));
-            hiddenItems.forEach((el, i) => {
-                el.classList.remove('hidden-item');
-                el.classList.add('card-reveal');
-                setTimeout(() => el.classList.add('card-visible'), i * 300);
+        function wireShowMore(buttonId, gridId) {
+            document.getElementById(buttonId).addEventListener('click', (e) => {
+                const hiddenItems = Array.from(document.querySelectorAll(`#${gridId} .hidden-item`));
+                hiddenItems.forEach((el, i) => {
+                    el.classList.remove('hidden-item');
+                    el.classList.add('card-reveal');
+                    setTimeout(() => el.classList.add('card-visible'), i * 300);
+                });
+                e.target.remove();
             });
-            e.target.remove();
-        });
+        }
+
+        wireShowMore('projects-show-more', 'projects-grid');
+        wireShowMore('activities-show-more', 'activities-grid');
     </script>
 </body>
 </html>
