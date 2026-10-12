@@ -537,6 +537,64 @@
             background: #fff;
             flex-shrink: 0;
         }
+        #projects-grid .work-thumb img,
+        #activities-grid .work-thumb img { cursor: zoom-in; }
+
+        /* Image popup modal */
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s ease;
+        }
+        .image-modal.active { opacity: 1; pointer-events: auto; }
+        .image-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(15,23,42,0.78);
+        }
+        .image-modal-content {
+            position: relative;
+            z-index: 1;
+            max-width: 90vw;
+            max-height: 85vh;
+        }
+        .image-modal-content img {
+            display: block;
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 14px;
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.5);
+            background: #fff;
+            transform: translateY(48px) scale(0.92);
+            opacity: 0;
+            transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .35s ease;
+        }
+        .image-modal.active .image-modal-content img {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        .image-modal-close {
+            position: absolute;
+            top: -16px;
+            right: -16px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #fff;
+            color: var(--ink);
+            border: 1px solid var(--line);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
         .timeline-main h3 { margin: 0 0 2px; font-size: 15.5px; }
         .timeline-main .role { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 0; }
         .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -955,6 +1013,14 @@
         </div>
     </footer>
 
+    <div class="image-modal" id="image-modal">
+        <div class="image-modal-backdrop"></div>
+        <div class="image-modal-content">
+            <button class="image-modal-close" id="image-modal-close" aria-label="Close">&times;</button>
+            <img id="image-modal-img" src="" alt="">
+        </div>
+    </div>
+
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
 
@@ -1125,6 +1191,32 @@
 
         wireShowMore('projects-show-more', 'projects-grid');
         wireShowMore('activities-show-more', 'activities-grid');
+
+        const imageModal = document.getElementById('image-modal');
+        const imageModalImg = document.getElementById('image-modal-img');
+
+        function openImageModal(src, alt) {
+            imageModalImg.src = src;
+            imageModalImg.alt = alt || '';
+            imageModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('click', (e) => {
+            const target = e.target.closest('#projects-grid .work-thumb img, #activities-grid .work-thumb img');
+            if (target) openImageModal(target.src, target.alt);
+        });
+
+        document.getElementById('image-modal-close').addEventListener('click', closeImageModal);
+        document.querySelector('.image-modal-backdrop').addEventListener('click', closeImageModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeImageModal();
+        });
     </script>
 </body>
 </html>
