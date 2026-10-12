@@ -150,6 +150,17 @@
         @media (max-width: 400px) {
             .hero h1 { font-size: 1.7rem; }
         }
+        .typing-cursor {
+            display: inline-block;
+            background: var(--accent);
+            width: 3px;
+            margin-left: 2px;
+            animation: typing-blink 0.8s steps(1) infinite;
+        }
+        @keyframes typing-blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
         .hero p.lead {
             color: var(--ink-soft);
             font-size: 1.02rem;
@@ -503,6 +514,10 @@
         #work .work-body h3 {
             position: absolute; top: 16px; left: 18px; right: 18px;
             margin: 0; font-size: 1.05rem; color: #fff; text-align: left; line-height: 1.3;
+            display: inline-block; width: fit-content; max-width: calc(100% - 36px);
+            background: rgba(0,0,0,0.5);
+            border-radius: 8px;
+            padding: 6px;
         }
         #work .work-link {
             position: absolute; bottom: 16px; right: 18px;
@@ -513,6 +528,21 @@
         }
         @media (max-width: 620px) {
             .work-grid { grid-template-columns: 1fr; }
+        }
+        @media (min-width: 621px) {
+            #work .work-thumb img { opacity: 0.8; transition: opacity .25s ease; }
+            #work .work-card:hover .work-thumb img { opacity: 0.6; }
+            #work .work-link {
+                top: 50%; left: 50%; right: auto; bottom: auto;
+                transform: translate(-50%, -50%);
+                background: #3e57a4;
+                padding: 10px 20px;
+                border-radius: 6px;
+                opacity: 0;
+                visibility: hidden;
+                transition: opacity .25s ease, visibility .25s ease;
+            }
+            #work .work-card:hover .work-link { opacity: 1; visibility: visible; }
         }
 
         /* Experience */
@@ -797,7 +827,7 @@
             <div class="hero-grid">
                 <div>
                     <div class="eyebrow">Senior Software Engineer</div>
-                    <h1>Building reliable mobile and web experiences, from architecture to production.</h1>
+                    <h1><span id="typing-text"></span><span class="typing-cursor">&nbsp;</span></h1>
                     <p class="lead">I'm a Senior Software Engineer with 7+ years of experience building high-quality mobile apps using Kotlin, Java, Android, Flutter and other cross-platform technologies.</p>
                     <div class="hero-ctas">
                         <a class="btn btn-primary" href="#work">Explore Projects <i class="fa fa-arrow-right"></i></a>
@@ -1038,6 +1068,33 @@
 
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        const heroTypingText = 'Building reliable mobile and web experiences, from architecture to production.';
+        const typingTextEl = document.getElementById('typing-text');
+        let typingIndex = 0;
+        let typingDeleting = false;
+        function typeHeroText() {
+            if (!typingDeleting) {
+                typingTextEl.textContent = heroTypingText.slice(0, typingIndex);
+                if (typingIndex < heroTypingText.length) {
+                    typingIndex++;
+                    setTimeout(typeHeroText, 35);
+                } else {
+                    typingDeleting = true;
+                    setTimeout(typeHeroText, 2000);
+                }
+            } else {
+                typingTextEl.textContent = heroTypingText.slice(0, typingIndex);
+                if (typingIndex > 0) {
+                    typingIndex--;
+                    setTimeout(typeHeroText, 18);
+                } else {
+                    typingDeleting = false;
+                    setTimeout(typeHeroText, 400);
+                }
+            }
+        }
+        typeHeroText();
 
         const hour = new Date().getHours();
         let greeting;
