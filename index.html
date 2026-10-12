@@ -176,8 +176,13 @@
             background: var(--accent);
             color: #fff;
             box-shadow: 0 10px 20px -8px rgba(36,87,245,0.55);
+            animation: btn-pulse-zoom 2.2s ease-in-out infinite;
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 24px -8px rgba(36,87,245,0.65); }
+        .btn-primary:hover { animation-play-state: paused; transform: translateY(-2px) scale(1.06); box-shadow: 0 14px 24px -8px rgba(36,87,245,0.65); }
+        @keyframes btn-pulse-zoom {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
         .btn-outline {
             border: 1px solid var(--line);
             color: var(--ink);
