@@ -28,8 +28,32 @@
             --line: #e6e9f0;
             --surface: #ffffff;
             --surface-soft: #f6f8fc;
+            --nav-bg-rgb: 255,255,255;
             --radius: 14px;
         }
+        html[data-theme="dark"] {
+            --ink: #e7ebf3;
+            --ink-soft: #aab3c5;
+            --ink-faint: #7b8499;
+            --line: #2a3142;
+            --surface: #0e1420;
+            --surface-soft: #161d2e;
+            --nav-bg-rgb: 14,20,32;
+        }
+        html[data-theme="dark"] body { background-color: var(--surface); }
+        /* Elements that keep a fixed white background in dark mode need dark-gray text/icons for readability */
+        html[data-theme="dark"] .mock-phone-screen { color: #333c4a; }
+        html[data-theme="dark"] .mock-phone-screen .mock-phone-status,
+        html[data-theme="dark"] .mock-phone-screen p,
+        html[data-theme="dark"] .mock-phone-row span { color: #6b7280; }
+        html[data-theme="dark"] .mock-phone-row i { background: #eef1f7; }
+        html[data-theme="dark"] .image-modal-close { color: #333c4a; }
+        html[data-theme="dark"] .show-more-btn {
+            background: transparent;
+            border-color: #d1d5db;
+            color: #d1d5db;
+        }
+        html[data-theme="dark"] .show-more-btn:hover { border-color: var(--accent); color: var(--accent); }
         * { box-sizing: border-box; }
         html {
             scroll-behavior: smooth;
@@ -59,7 +83,7 @@
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(255,255,255,var(--nav-bg-opacity, 1));
+            background: rgba(var(--nav-bg-rgb), var(--nav-bg-opacity, 1));
             backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--line);
             transition: background .2s ease;
@@ -108,6 +132,25 @@
             transition: all .2s ease;
         }
         .btn-resume-nav:hover { border-color: var(--accent); color: var(--accent); }
+        .theme-toggle-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 9px;
+            border: 1px solid var(--line);
+            background: transparent;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all .2s ease;
+            flex-shrink: 0;
+        }
+        .theme-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .theme-toggle-btn .fa-sun { display: none; }
+        html[data-theme="dark"] .theme-toggle-btn .fa-sun { display: inline-block; }
+        html[data-theme="dark"] .theme-toggle-btn .fa-moon { display: none; }
         @media (max-width: 860px) {
             .nav-links { display: none; }
         }
@@ -810,9 +853,15 @@
                 <a href="#projects">Projects</a>
                 <a href="#activities">Activities</a>
             </div>
-            <a class="btn-resume-nav" href="https://github.com/mikkelofficial7/" target="_blank" rel="noopener noreferrer">
-                <i class="fa-brands fa-github"></i> GitHub
-            </a>
+            <div style="display:flex; align-items:center; gap:10px;">
+                <a class="btn-resume-nav" href="https://github.com/mikkelofficial7/" target="_blank" rel="noopener noreferrer" style="margin-right:0;">
+                    <i class="fa-brands fa-github"></i> GitHub
+                </a>
+                <button class="theme-toggle-btn" id="theme-toggle-btn" type="button" aria-label="Toggle dark mode">
+                    <i class="fa-solid fa-moon"></i>
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -1071,6 +1120,16 @@
 
     <script>
         document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggleBtn.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
 
         const navEl = document.querySelector('.nav');
         const NAV_FADE_DISTANCE = 200;
