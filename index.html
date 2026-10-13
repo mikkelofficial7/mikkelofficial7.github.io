@@ -612,44 +612,123 @@
         #library-grid .work-body { padding: 20px; }
 
         /* Experience */
-        .timeline { position: relative; margin-top: 4px; }
-        .timeline-item {
-            display: grid;
-            grid-template-columns: 170px 24px 1fr 1fr;
-            gap: 20px;
-            padding: 22px 0;
-            border-bottom: 1px solid var(--line);
-        }
-        .timeline-item:last-child { border-bottom: none; }
-        .timeline-date { color: var(--ink-faint); font-size: 13px; padding-top: 2px; }
-        .timeline-dot-col { display: flex; justify-content: center; position: relative; }
-        .timeline-dot {
-            width: 9px; height: 9px; border-radius: 50%;
-            background: var(--accent);
-            margin-top: 6px;
-            z-index: 1;
-        }
-        .timeline-dot-col::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: -22px;
-            width: 1px;
-            background: var(--line);
-        }
-        .timeline-item:last-child .timeline-dot-col::before { display: none; }
-        .timeline-company { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-        .timeline-company-link { color: inherit; }
-        .timeline-company-link:hover { color: var(--accent); text-decoration: none; }
-        .timeline-logo {
-            width: 38px;
-            height: 38px;
+        .timeline { position: relative; margin-top: 4px; display: flex; flex-direction: column; gap: 28px; }
+        .exp-group { display: grid; grid-template-columns: 60px 1fr; gap: 20px; }
+        .exp-rail { display: flex; flex-direction: column; align-items: center; position: relative; }
+        .exp-logo {
+            width: 54px;
+            height: 54px;
             border-radius: 50%;
-            object-fit: cover;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             border: 1px solid var(--line);
             background: #fff;
             flex-shrink: 0;
+            z-index: 1;
         }
+        .exp-logo img { width: 100%; height: 100%; object-fit: cover; }
+        .exp-rail-line {
+            flex: 1;
+            width: 1px;
+            background: var(--line);
+            margin-top: 6px;
+        }
+        .exp-group:last-child .exp-rail-line { display: none; }
+        .exp-group-main { min-width: 0; padding-bottom: 4px; }
+        .exp-group-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .exp-group-title { display: flex; align-items: flex-start; gap: 10px; }
+        .exp-dot {
+            width: 9px; height: 9px; border-radius: 50%;
+            background: var(--accent);
+            margin-top: 8px;
+            flex-shrink: 0;
+        }
+        .exp-group-title h3 { margin: 0 0 2px; font-size: 16px; }
+        .timeline-company-link { color: inherit; }
+        .timeline-company-link:hover { color: var(--accent); text-decoration: none; }
+        .exp-meta { font-size: 13px; color: var(--ink-faint); }
+        .exp-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--surface-soft);
+            color: var(--accent);
+            border: 1px solid var(--line);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .exp-roles { display: flex; flex-direction: column; }
+        .exp-role {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 14px;
+            background: var(--surface-soft);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+        }
+        .exp-role + .exp-role { margin-top: 2px; }
+        .exp-roles .exp-role:not(:last-child) { border-radius: var(--radius) var(--radius) 0 0; }
+        .exp-roles .exp-role:not(:first-child) { border-radius: 0 0 var(--radius) var(--radius); }
+        .exp-role-rail { display: flex; flex-direction: column; align-items: center; }
+        .exp-role-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+        .exp-role-connector {
+            width: 1px;
+            flex: 1;
+            background: var(--line);
+            margin: 6px 0;
+        }
+        .exp-role-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+        .exp-role.no-icon { grid-template-columns: 1fr; }
+        .exp-role-body { min-width: 0; }
+        .exp-role-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .exp-role-body h4 { margin: 0 0 2px; font-size: 14.5px; }
+        .exp-role-date { font-size: 12.5px; color: var(--ink-faint); }
+        .exp-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            white-space: nowrap;
+        }
+        .exp-chip.promoted { background: rgba(34,197,94,0.14); color: #16a34a; }
+        html[data-theme="dark"] .exp-chip.promoted { background: rgba(34,197,94,0.18); color: #4ade80; }
+        .exp-role-body ul { margin: 0; padding-left: 18px; }
+        .exp-role-body li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+        .exp-role-body li + li { margin-top: 4px; }
         #projects-grid .work-thumb img,
         #activities-grid .work-thumb img { cursor: zoom-in; }
 
@@ -708,38 +787,14 @@
             justify-content: center;
             cursor: pointer;
         }
-        .timeline-main h3 { margin: 0 0 2px; font-size: 15.5px; }
-        .timeline-main .role { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 0; }
-        .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-        .timeline-tags span {
-            background: var(--surface-soft);
-            color: var(--ink-soft);
-            font-size: 11px;
-            font-weight: 600;
-            padding: 3px 9px;
-            border-radius: 999px;
-        }
-        .timeline-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; padding-top: 2px; }
         @media (max-width: 860px) {
-            .timeline-item {
-                grid-template-columns: 1fr;
-                gap: 12px;
-                padding: 18px;
-                margin-bottom: 14px;
-                border: 1px solid var(--line);
-                border-left: 3px solid var(--accent);
-                border-radius: var(--radius);
-            }
-            .timeline-item:last-child { margin-bottom: 0; }
-            .timeline-dot-col { display: none; }
-            .timeline-date {
-                font-weight: 700;
-                color: var(--accent);
-                font-size: 12.5px;
-                text-transform: uppercase;
-                letter-spacing: 0.04em;
-            }
-            .timeline-main .role { margin-bottom: 4px; }
+            .exp-group { grid-template-columns: 1fr; gap: 12px; }
+            .exp-rail { flex-direction: row; }
+            .exp-logo { width: 42px; height: 42px; }
+            .exp-rail-line { display: none; }
+            .exp-group-head { flex-direction: column; align-items: flex-start; }
+            .exp-role { grid-template-columns: 1fr; padding: 14px 16px; }
+            .exp-role-icon { display: none; }
         }
 
         /* Footer */
@@ -1021,65 +1076,119 @@
                 <a class="view-all" href="https://www.linkedin.com/in/mikkel-septiano/" target="_blank" rel="noopener noreferrer">View full experience <i class="fa fa-arrow-right"></i></a>
             </div>
             <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-date">Jul 2026 &mdash; Present</div>
-                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
-                    <div class="timeline-main">
-                        <div class="timeline-company">
-                            <img class="timeline-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s" alt="eWIDEPLUS Corp"/>
-                            <div>
-                                <h3><a class="timeline-company-link" href="https://www.ewideplus.com/" target="_blank" rel="noopener noreferrer">eWIDEPLUS Corp (South Korea Software Agency)</a></h3>
-                                <div class="role">Senior FullStack Engineer</div>
+                <div class="exp-group">
+                    <div class="exp-rail">
+                        <div class="exp-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s" alt="eWIDEPLUS Corp"/></div>
+                        <div class="exp-rail-line"></div>
+                    </div>
+                    <div class="exp-group-main">
+                        <div class="exp-group-head">
+                            <div class="exp-group-title">
+                                <div>
+                                    <h3><a class="timeline-company-link" href="https://www.ewideplus.com/" target="_blank" rel="noopener noreferrer">eWIDEPLUS Corp (South Korea Software Agency)</a></h3>
+                                    <div class="exp-meta">South Korea Software Agency &middot; Sep 2023 &mdash; Present</div>
+                                </div>
+                            </div>
+                            <span class="exp-badge"><i class="fa-solid fa-building"></i> Same Company &middot; 2 Roles</span>
+                        </div>
+                        <div class="exp-roles">
+                            <div class="exp-role">
+                                <div class="exp-role-rail">
+                                    <div class="exp-role-icon"><span class="exp-role-dot"></span></div>
+                                    <div class="exp-role-connector"></div>
+                                </div>
+                                <div class="exp-role-body">
+                                    <div class="exp-role-top">
+                                        <div>
+                                            <h4>Senior FullStack Engineer</h4>
+                                            <div class="exp-role-date">Jul 2026 &mdash; Present</div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li>Pragmatic engineer behind Ganes AI, working across industries (security, beauty, and more).</li>
+                                        <li>Built reliable, scalable software solutions with Python, Next.js and Panda CSS.</li>
+                                        <li>Shipped and maintained services with Docker-based deployments.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="exp-role">
+                                <div class="exp-role-rail">
+                                    <div class="exp-role-icon"><span class="exp-role-dot"></span></div>
+                                </div>
+                                <div class="exp-role-body">
+                                    <div class="exp-role-top">
+                                        <div>
+                                            <h4>Senior Software Engineer (Android)</h4>
+                                            <div class="exp-role-date">Sep 2023 &mdash; Jul 2026</div>
+                                        </div>
+                                    </div>
+                                    <ul>
+                                        <li>Built core features for the LINE Bank project, including VoIP and security modules.</li>
+                                        <li>Improved app stability and crash-free sessions through targeted engineering fixes.</li>
+                                        <li>Mentored junior engineers and collaborated with cross-functional teams.</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="timeline-tags"><span>Python</span><span>Next.js</span><span>Panda CSS</span><span>Docker</span></div>
                     </div>
-                    <div class="timeline-desc">A pragmatic engineer behind Ganes AI, working across industries (security, beauty, etc.) to build reliable and scalable software solutions.</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Sep 2023 &mdash; Present</div>
-                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
-                    <div class="timeline-main">
-                        <div class="timeline-company">
-                            <img class="timeline-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa6QYCLUBk_KpKlIujZcCz5fldn8FqEozF-A&s" alt="eWIDEPLUS Corp"/>
-                            <div>
-                                <h3><a class="timeline-company-link" href="https://www.ewideplus.com/" target="_blank" rel="noopener noreferrer">eWIDEPLUS Corp (South Korea Software Agency)</a></h3>
-                                <div class="role">Senior Software Engineer (Android)</div>
+
+                <div class="exp-group">
+                    <div class="exp-rail">
+                        <div class="exp-logo"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnI1E7KkKkGE-MPYfQnYtMOMKfqsVf-N6ZxA&s" alt="Altea Care"/></div>
+                        <div class="exp-rail-line"></div>
+                    </div>
+                    <div class="exp-group-main">
+                        <div class="exp-group-head">
+                            <div class="exp-group-title">
+                                <div>
+                                    <h3><a class="timeline-company-link" href="https://alteacare.com/" target="_blank" rel="noopener noreferrer">Altea Care (PT. Sehat Digital Nusantara)</a></h3>
+                                    <div class="exp-meta">Jakarta, Indonesia &middot; Sep 2022 &mdash; Sep 2023</div>
+                                </div>
+                            </div>
+                            <span class="exp-badge">Lead Software Engineer (Android)</span>
+                        </div>
+                        <div class="exp-roles">
+                            <div class="exp-role no-icon">
+                                <div class="exp-role-body">
+                                    <ul>
+                                        <li>Led a team of four Android engineers on the AlteaCare telemedicine platform.</li>
+                                        <li>Built the doctor-side telemedicine app from scratch using Android and React Native.</li>
+                                        <li>Cut CI/CD build time by 20% through pipeline and tooling improvements.</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="timeline-tags"><span>Kotlin</span><span>Android</span><span>VoIP</span><span>Security</span></div>
                     </div>
-                    <div class="timeline-desc">LINE Bank project. Built core features, improved stability and mentored junior engineers.</div>
                 </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Sep 2022 &mdash; Sep 2023</div>
-                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
-                    <div class="timeline-main">
-                        <div class="timeline-company">
-                            <img class="timeline-logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnI1E7KkKkGE-MPYfQnYtMOMKfqsVf-N6ZxA&s" alt="Altea Care"/>
-                            <div>
-                                <h3><a class="timeline-company-link" href="https://alteacare.com/" target="_blank" rel="noopener noreferrer">Altea Care (PT. Sehat Digital Nusantara)</a></h3>
-                                <div class="role">Lead Software Engineer (Android)</div>
+
+                <div class="exp-group">
+                    <div class="exp-rail">
+                        <div class="exp-logo"><img src="https://cdn.aptoide.com/imgs/d/2/b/d2bb88dd28a752aefc1149c0043aad41_icon.png" alt="Rupiah Cepat"/></div>
+                        <div class="exp-rail-line"></div>
+                    </div>
+                    <div class="exp-group-main">
+                        <div class="exp-group-head">
+                            <div class="exp-group-title">
+                                <div>
+                                    <h3><a class="timeline-company-link" href="https://www.rupiahcepat.co.id/" target="_blank" rel="noopener noreferrer">Rupiah Cepat (PT. Kredit Utama Fintech Indonesia)</a></h3>
+                                    <div class="exp-meta">Jakarta, Indonesia &middot; Nov 2021 &mdash; Aug 2022</div>
+                                </div>
+                            </div>
+                            <span class="exp-badge"><i class="fa-solid fa-mobile-screen"></i> Senior Android Engineer</span>
+                        </div>
+                        <div class="exp-roles">
+                            <div class="exp-role no-icon">
+                                <div class="exp-role-body">
+                                    <ul>
+                                        <li>Developed and debugged a fintech loan and investment app end to end.</li>
+                                        <li>Achieved a 95% increase in crash-free usage through stability improvements.</li>
+                                        <li>Built custom UI components tailored to fintech product requirements.</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <div class="timeline-tags"><span>Android</span><span>React Native</span><span>CI/CD</span></div>
                     </div>
-                    <div class="timeline-desc">Led a team of four Android engineers, built a doctor-side telemedicine app from scratch, and cut build time by 20%.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-date">Nov 2021 &mdash; Aug 2022</div>
-                    <div class="timeline-dot-col"><div class="timeline-dot"></div></div>
-                    <div class="timeline-main">
-                        <div class="timeline-company">
-                            <img class="timeline-logo" src="https://cdn.aptoide.com/imgs/d/2/b/d2bb88dd28a752aefc1149c0043aad41_icon.png" alt="Rupiah Cepat"/>
-                            <div>
-                                <h3><a class="timeline-company-link" href="https://www.rupiahcepat.co.id/" target="_blank" rel="noopener noreferrer">Rupiah Cepat (PT. Kredit Utama Fintech Indonesia)</a></h3>
-                                <div class="role">Senior Android Engineer</div>
-                            </div>
-                        </div>
-                        <div class="timeline-tags"><span>Android</span><span>Fintech</span><span>Custom UI</span></div>
-                    </div>
-                    <div class="timeline-desc">Developed and debugged a fintech loan and investment app, achieving a 95% increase in crash-free usage.</div>
                 </div>
             </div>
         </section>
